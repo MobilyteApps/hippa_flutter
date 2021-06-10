@@ -9,7 +9,7 @@ class Application {
   }
 
   Application._internal();
-  
+
   final List<String> supportedLanguages = [
     "English",
     "Spanish",

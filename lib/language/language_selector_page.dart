@@ -1,5 +1,3 @@
-
-
 import 'package:app/language/app_translation.dart';
 import 'package:app/language/application.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +23,7 @@ class _LanguageSelectorPageState extends State<LanguageSelectorPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-         AppTranslations.of(context).text("title_select_language"),
+          AppTranslations.of(context).text("title_select_language"),
         ),
       ),
       body: _buildLanguagesList(),

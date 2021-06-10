@@ -24,10 +24,6 @@ class NavigationService {
     return navigatorKey.currentState
         .pushNamedAndRemoveUntil(routeName, (Route<dynamic> route) => false);
   }
-   
-
-
-
 
   backPress() {
     navigatorKey.currentState.pop();

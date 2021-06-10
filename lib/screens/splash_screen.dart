@@ -1,21 +1,23 @@
-
 import 'dart:async';
 
+import 'package:app/common/constants.dart';
 import 'package:app/common/get_it.dart';
 import 'package:app/common/navigator_route.dart';
 import 'package:app/common/navigator_service.dart';
+import 'package:app/common/textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashPage extends StatefulWidget {
-  
+
   @override
   _SplashPageState createState() => _SplashPageState();
 }
 
 class _SplashPageState extends State<SplashPage> {
- double height;
- double width;
+  double height;
+  double width;
+
   navigationPage() async {
     //  final prefs = await SharedPreferences.getInstance();
     // final user = prefs.getString('user');
@@ -25,12 +27,11 @@ class _SplashPageState extends State<SplashPage> {
     // }else{
     //       locator<NavigationService>().navigateToReplace(event);
     // }
-   
-     locator<NavigationService>().navigateToReplace(home) ;
-  
+
+    locator<NavigationService>().navigateToReplace(yourphone);
   }
 
-   startTime() async {
+  startTime() async {
     final _duration = Duration(seconds: 5);
     return Timer(_duration, navigationPage);
   }
@@ -38,23 +39,30 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-   startTime();
+    startTime();
   }
 
 
   @override
   Widget build(BuildContext context) {
-   height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
+    height = MediaQuery
+        .of(context)
+        .size
+        .height;
+    width = MediaQuery
+        .of(context)
+        .size
+        .width;
     return Scaffold(
-    
-      body: Container(
-        
-       height: height,
-       width:width,
-        child:Center(child:
-        Icon(Icons.cloud,size: 150,color: Colors.black,)))
-      
+
+        body: Container(
+
+            height: height,
+            width: width,
+            child: Center(child:getBoldText(AppString().securetext,fontSize: 32)
+            // Text("SeCureText")
+            ))
+
     );
   }
 }

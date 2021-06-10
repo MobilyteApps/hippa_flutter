@@ -10,7 +10,7 @@ class AppTranslationsDelegate extends LocalizationsDelegate<AppTranslations> {
 
   const AppTranslationsDelegate({this.newLocale});
 
-@override
+  @override
   bool isSupported(Locale locale) {
     return application.supportedLanguagesCodes.contains(locale.languageCode);
   }

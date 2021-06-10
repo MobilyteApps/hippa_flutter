@@ -20,15 +20,16 @@ class AppTranslations {
   static Future<AppTranslations> load(Locale locale) async {
     AppTranslations appTranslations = AppTranslations(locale);
     String jsonContent =
-    await rootBundle.loadString("assets/locale/localization_${locale.languageCode}.json");
+    await rootBundle.loadString(
+        "assets/locale/localization_${locale.languageCode}.json");
     _localisedValues = json.decode(jsonContent);
- 
+
     return appTranslations;
   }
 
   get currentLanguage => locale.languageCode;
 
   String text(String key) {
-    return  _localisedValues[key] ?? "$key not found";
+    return _localisedValues[key] ?? "$key not found";
   }
 }
