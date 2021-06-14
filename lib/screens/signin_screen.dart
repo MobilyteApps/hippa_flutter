@@ -25,6 +25,7 @@ class _SigninState extends State<Signin> {
   );
 
   final usernameCtrl = TextEditingController();
+  final passwordCtrl = TextEditingController();
 
   Widget usernameFieldWidget() {
     return TextFormField(
@@ -54,10 +55,9 @@ class _SigninState extends State<Signin> {
       decoration: InputDecoration(
           prefixIcon: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: SvgPicture.asset(
-              'assets/images/user.svg',
+            child: Image.asset(
+              'assets/images/user.png',
               color: Colors.white,
-
               // fit: BoxFit.fill,
             ),
           ),
@@ -99,7 +99,7 @@ class _SigninState extends State<Signin> {
         return null;
       },
       keyboardType: TextInputType.text,
-      controller: usernameCtrl,
+      controller: passwordCtrl,
       maxLength: 10,
       inputFormatters: <TextInputFormatter>[
         LengthLimitingTextInputFormatter(10)
@@ -108,10 +108,9 @@ class _SigninState extends State<Signin> {
           prefixIcon:
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: SvgPicture.asset(
-                'assets/images/lock.svg',
+              child: Image.asset(
+                'assets/images/lock.png',
                 color: Colors.white,
-
 
           ),
             ),

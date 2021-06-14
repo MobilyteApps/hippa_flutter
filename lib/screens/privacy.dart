@@ -25,8 +25,14 @@ class _PrivacyState extends State<Privacy> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title:Image.asset('assets/images/maskgroup.png')
+      appBar: AppBar(backgroundColor:  HexColor('#E8F4FF'),
+        title:InkWell(
+            onTap: (){
+                  locator<NavigationService>().navigateToReplace(term);
+
+            },
+            child: Image.asset('assets/images/maskgroup.png')),
+        centerTitle: true,
       ),
       backgroundColor: HexColor('#E8F4FF'),
       body: Padding(

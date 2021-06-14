@@ -88,7 +88,7 @@ class _OtpScreenState extends State<OtpScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // SizedBox(height: AppSize().height(context) * 0.5),
-              Image.asset('assets/images/image4_3x.png',
+              Image.asset('assets/images/tmp_1623687411385.jpg',
                   width: MediaQuery.of(context).size.width,
                   fit: BoxFit.fitWidth
               ),

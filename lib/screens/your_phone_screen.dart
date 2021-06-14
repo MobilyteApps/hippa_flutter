@@ -80,7 +80,7 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset('assets/images/image3_3x.png',
+              Image.asset('assets/images/tmp_1623687415135.jpg',
                   width: MediaQuery.of(context).size.width,
                   fit: BoxFit.fitWidth),
               Padding(
