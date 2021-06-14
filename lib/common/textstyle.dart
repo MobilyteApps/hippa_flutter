@@ -7,6 +7,7 @@ Text getBoldText(String text,
       style: TextStyle(
         color: textColor,
         fontWeight: FontWeight.w700,
+        fontFamily: 'JosenfinSansBold',
         fontSize: fontSize,
       ));
 }
@@ -17,6 +18,7 @@ Text getSemiBolText(String text,
   return Text(text,
       style: TextStyle(
         color: textColor,
+        fontFamily: 'PoppinsSemiBold',
         fontWeight: FontWeight.w600,
         fontSize: fontSize,
       ));
@@ -52,6 +54,7 @@ Text getRegularText(String text,
       textAlign: alignment,
       style: TextStyle(
         color: textColor,
+        fontFamily: 'JosenfinSansRegular',
         fontWeight: FontWeight.w400,
         fontSize: fontSize,
       ));

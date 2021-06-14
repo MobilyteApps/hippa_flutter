@@ -53,16 +53,31 @@ class _SplashPageState extends State<SplashPage> {
         .of(context)
         .size
         .width;
-    return Scaffold(
+    return
+    Scaffold(
+      body:Stack(
+        children: [
+          Image.asset(
+            'assets/images/secure_text.png', height:MediaQuery
+              .of(context)
+              .size
+              .height, width : MediaQuery
+              .of(context)
+              .size
+              .width,fit:BoxFit.fill),
+          Center(child:
+          Image.asset(
+            'assets/images/logo_white.png', )),
+        ],),
+      );
+    // Container(
+    //
+    //     height: height,
+    //     width: width,
+    //     child: Center(child:getBoldText(AppString().securetext,fontSize: 32)
+    //     // Text("SeCureText")
+    //     ))
 
-        body: Container(
 
-            height: height,
-            width: width,
-            child: Center(child:getBoldText(AppString().securetext,fontSize: 32)
-            // Text("SeCureText")
-            ))
-
-    );
   }
 }

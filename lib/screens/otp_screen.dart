@@ -1,3 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:app/common/colors.dart';
+import 'package:app/common/constants.dart';
+import 'package:app/common/size.dart';
+import 'package:app/common/textstyle.dart';
+import 'package:flutter/services.dart';
 import 'package:app/common/colors.dart';
 import 'package:app/common/constants.dart';
 import 'package:app/common/size.dart';
@@ -10,42 +16,44 @@ import 'package:app/common/navigator_route.dart';
 import 'package:app/common/navigator_service.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class YourPhoneScreen extends StatefulWidget {
+class OtpScreen extends StatefulWidget {
+  const OtpScreen({Key key}) : super(key: key);
+
   @override
-  _YourPhoneScreenState createState() => _YourPhoneScreenState();
+  _OtpScreenState createState() => _OtpScreenState();
 }
 
-class _YourPhoneScreenState extends State<YourPhoneScreen> {
+class _OtpScreenState extends State<OtpScreen> {
   final border = UnderlineInputBorder(
     borderSide: BorderSide(
       color: Color(0xff000000),
     ),
   );
 
-  final phoneCtrl = TextEditingController();
+  final codeCtrl = TextEditingController();
 
-  Widget phoneFieldWidget() {
+  Widget codeFieldWidget() {
     return TextFormField(
       // onChanged: formValidatonColor(),
       validator: (value) {
         if (value?.trim()?.isEmpty ?? true) {
-          return 'Please Enter Phone Number';
-        } else if (value.length < 10) {
-          return 'Please Enter Valid Phone Number';
+          return 'Please Enter Code';
+        } else if (value.length < 4) {
+          return 'Please Enter Valid Code';
         }
         return null;
       },
       keyboardType: TextInputType.phone,
-      controller: phoneCtrl,
-      maxLength: 10,
+      controller: codeCtrl,
       style: TextStyle(
         color: HexColor("#0E3746"),
         fontSize: 16,
         fontFamily: 'PoppinsSemiBold',
         fontWeight: FontWeight.w600,
       ),
+      maxLength: 10,
       inputFormatters: <TextInputFormatter>[
-        LengthLimitingTextInputFormatter(10)
+        LengthLimitingTextInputFormatter(4)
       ],
       decoration: InputDecoration(
           enabledBorder: border,
@@ -62,7 +70,7 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
           ),
           filled: true,
           fillColor: Colors.transparent,
-          hintText: '+123 456 7890'),
+          hintText: 'Code'),
     );
   }
 
@@ -71,23 +79,25 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
     return Scaffold(
       backgroundColor: HexColor("#E8F4FF"),
       body: SingleChildScrollView(
-        // child:
-        // Padding(
-        // padding: EdgeInsets.only(
-        //     left: AppSize().width(context) * 0.1,
-        //     right: AppSize().width(context) * 0.1),
+        // child: Padding(
+        //   padding: EdgeInsets.only(
+        //       left: AppSize().width(context) * 0.1,
+        //       right: AppSize().width(context) * 0.1),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset('assets/images/image3_3x.png',
+              // SizedBox(height: AppSize().height(context) * 0.5),
+              Image.asset('assets/images/image4_3x.png',
                   width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.fitWidth),
+                  fit: BoxFit.fitWidth
+              ),
+
               Padding(
                 padding: EdgeInsets.only(
                     left: AppSize().width(context) * 0.1,
                     right: AppSize().width(context) * 0.1),
-                child: getBoldText(AppString().yourphone,
+                child: getBoldText(AppString().entercode,
                     fontSize: 22, textColor: HexColor("#0E3746")),
               ),
               // SizedBox(
@@ -117,8 +127,23 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
                     right: AppSize().width(context) * 0.1
                     // right: AppSize().width(context) * 0.1
                     ),
-                child: phoneFieldWidget(),
+                child: codeFieldWidget(),
               ),
+
+              // Padding(
+              //   padding: EdgeInsets.only(top: AppSize().height(context) * 0.01),
+              //   child: SizedBox(
+              //     width: AppSize().width(context) * 0.8,
+              //     child: RaisedButton(
+              //       color: AppColor.blue,
+              //       child: Text(AppString().verify,
+              //           style: TextStyle(color: Colors.white)),
+              //       onPressed: () {
+              //         locator<NavigationService>().navigateToReplace(signin);
+              //       },
+              //     ),
+              //   ),
+              // ),
               Padding(
                 padding: EdgeInsets.only(
                     top: AppSize().height(context) * 0.04,
@@ -126,16 +151,16 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
                     right: AppSize().width(context) * 0.1),
                 child: SizedBox(
                   width: AppSize().width(context) * 0.8,
-                  height:AppSize().height(context) * 0.06,
+                  height: AppSize().height(context) * 0.06,
                   child: RaisedButton(
                     color: HexColor('#2291FF'),
                     child: getSemiBolText(
-                      AppString().send.toUpperCase(),
+                      AppString().verify.toUpperCase(),
                       textColor: Colors.white,
                       fontSize: 14,
                     ),
                     onPressed: () {
-                      locator<NavigationService>().navigateToReplace(otpscreen);
+                      locator<NavigationService>().navigateToReplace(signin);
                     },
                   ),
                 ),
