@@ -30,7 +30,7 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
       validator: (value) {
         if (value?.trim()?.isEmpty ?? true) {
           return 'Please Enter Phone Number';
-        } else if (value.length < 10) {
+        } else if (value!.length < 10) {
           return 'Please Enter Valid Phone Number';
         }
         return null;

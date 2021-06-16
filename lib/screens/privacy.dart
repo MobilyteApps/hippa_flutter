@@ -12,10 +12,11 @@ import 'package:flutter/services.dart';
 import 'package:app/common/get_it.dart';
 import 'package:app/common/navigator_route.dart';
 import 'package:app/common/navigator_service.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class Privacy extends StatefulWidget {
-  const Privacy({Key key}) : super(key: key);
+  const Privacy({Key? key}) : super(key: key);
 
   @override
   _PrivacyState createState() => _PrivacyState();
@@ -26,6 +27,14 @@ class _PrivacyState extends State<Privacy> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(backgroundColor:  HexColor('#E8F4FF'),
+      leading: Padding(
+          padding:  EdgeInsets.all(AppSize().width(context)*0.05),
+          child: SvgPicture.asset(
+                            'assets/images/arrow_back.svg',
+                            color: AppColor.black,
+                            matchTextDirection: true,
+                          ),
+        ),
         title:InkWell(
             onTap: (){
                   locator<NavigationService>().navigateToReplace(term);
@@ -44,11 +53,11 @@ class _PrivacyState extends State<Privacy> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // SizedBox(height: AppSize().height(context) * 0.1),
-            getBoldText(AppString().privacy, textColor: HexColor('#0E3746'),fontSize:24),
+            getBoldText(AppString().privacy, textColor: AppColor.black,fontSize:24),
             SizedBox(height: AppSize().height(context) * 0.02),
             getRegularText(
                 AppString().forgot1,
-                textColor:HexColor('#0E3746'),fontSize: 16),
+                textColor:AppColor.black,fontSize: 16),
             //             InkWell(
             //   onTap: (){
             //     locator<NavigationService>().navigateToReplace(term);

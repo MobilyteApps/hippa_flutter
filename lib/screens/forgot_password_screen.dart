@@ -12,11 +12,12 @@ import 'package:flutter/services.dart';
 import 'package:app/common/get_it.dart';
 import 'package:app/common/navigator_route.dart';
 import 'package:app/common/navigator_service.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 
 class ForgotPassword extends StatefulWidget {
-  const ForgotPassword({Key key}) : super(key: key);
+  const ForgotPassword({Key? key}) : super(key: key);
 
   @override
   _ForgotPasswordState createState() => _ForgotPasswordState();
@@ -25,7 +26,7 @@ class ForgotPassword extends StatefulWidget {
 class _ForgotPasswordState extends State<ForgotPassword> {
   final border = UnderlineInputBorder(
     borderSide: BorderSide(
-      color: HexColor('#0E3746'),
+      color: AppColor.black,
     ),
   );
 
@@ -43,7 +44,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       //   return null;
       // },
       keyboardType: TextInputType.emailAddress,
-      style:TextStyle(color: HexColor('#0E3746'),
+      style:TextStyle(color: AppColor.black,
         fontFamily: 'JosenfinSansRegular',
         fontWeight: FontWeight.w400,
         fontSize: 18,),
@@ -64,7 +65,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           focusedBorder: border,
           counterText: "",
           border: border,
-          hintStyle: TextStyle(color: HexColor('#0E3746'),
+          hintStyle: TextStyle(color: AppColor.black,
             fontFamily: 'JosenfinSansRegular',
             fontWeight: FontWeight.w400,
             fontSize: 18,),
@@ -79,6 +80,17 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: HexColor('#E8F4FF'),
+      appBar: AppBar(
+        backgroundColor: HexColor('#E8F4FF'),
+        leading: Padding(
+          padding:  EdgeInsets.all(AppSize().width(context)*0.05),
+          child: SvgPicture.asset(
+                            'assets/images/arrow_back.svg',
+                            color: AppColor.black,
+                            matchTextDirection: true,
+                          ),
+        ),
+      ),
       body: Padding(
         padding: EdgeInsets.only(
             left: AppSize().width(context) * 0.1,
@@ -88,9 +100,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: AppSize().height(context) * 0.1),
-            getBoldText(AppString().forgotpass, textColor: HexColor('#0E3746'),fontSize: 24),
+            getBoldText(AppString().forgotpass, textColor: AppColor.black,fontSize: 24),
             SizedBox(height: AppSize().height(context) * 0.02),
-            getRegularText(AppString().forgotpassdesc, textColor: HexColor('#0E3746'),fontSize:18),
+            getRegularText(AppString().forgotpassdesc, textColor: AppColor.black,fontSize:18),
 
             Padding(
               padding: EdgeInsets.only(

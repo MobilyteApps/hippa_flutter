@@ -17,7 +17,7 @@ import 'package:app/common/navigator_service.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({Key key}) : super(key: key);
+  const OtpScreen({Key? key}) : super(key: key);
 
   @override
   _OtpScreenState createState() => _OtpScreenState();
@@ -38,7 +38,7 @@ class _OtpScreenState extends State<OtpScreen> {
       validator: (value) {
         if (value?.trim()?.isEmpty ?? true) {
           return 'Please Enter Code';
-        } else if (value.length < 4) {
+        } else if (value!.length < 4) {
           return 'Please Enter Valid Code';
         }
         return null;

@@ -6,3 +6,6 @@ const String signin = 'signin_screen';
 const String forgotpass = 'forgot_password';
 const String privacy = 'privacy';
 const String term = 'term';
+const String creategroup = 'creategroup';
+const String grouplisting = 'grouplisting';
+const String searchcolleagues = 'searchcolleagues';

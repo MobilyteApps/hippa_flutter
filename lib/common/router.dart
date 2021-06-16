@@ -1,9 +1,12 @@
 import 'package:app/common/navigator_route.dart';
+import 'package:app/screens/create_group.dart';
 import 'package:app/screens/forgot_password_screen.dart';
+import 'package:app/screens/group_listing.dart';
 import 'package:app/screens/home_screen.dart';
 import 'package:app/screens/login_screen.dart';
 import 'package:app/screens/otp_screen.dart';
 import 'package:app/screens/privacy.dart';
+import 'package:app/screens/search_colleagues.dart';
 import 'package:app/screens/signin_screen.dart';
 import 'package:app/screens/terms_use.dart';
 import 'package:app/screens/your_phone_screen.dart';
@@ -28,6 +31,12 @@ class Router {
         return MaterialPageRoute(builder: (_) => Privacy());
       case term:
         return MaterialPageRoute(builder: (_) => TermOfUse());
+      case creategroup:
+        return MaterialPageRoute(builder: (_) => CreateGroup());
+      case grouplisting:
+        return MaterialPageRoute(builder: (_) => GroupListing());
+        case searchcolleagues:
+        return MaterialPageRoute(builder: (_) =>SearchColleagues());
       default:
         return MaterialPageRoute(builder: (_) {
           return Scaffold(

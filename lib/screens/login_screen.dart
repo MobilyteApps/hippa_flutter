@@ -8,10 +8,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  double height;
-  double width;
+  double? height;
+  double? width;
 
-  LoginProvider loginProvider;
+  LoginProvider? loginProvider;
 
   @override
   void didChangeDependencies() {
@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: EdgeInsets.only(top: 20, bottom: 20),
               color: Colors.black,
               child: Container(
-                width: width * 0.5,
+                width: width! * 0.5,
                 child: Text(
                   'Login',
                   textAlign: TextAlign.center,

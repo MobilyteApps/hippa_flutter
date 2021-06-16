@@ -29,7 +29,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  AppTranslationsDelegate _newLocaleDelegate;
+  AppTranslationsDelegate? _newLocaleDelegate;
   DarkThemeProvider themeChangeProvider = new DarkThemeProvider();
 
   void onLocaleChange(Locale locale) {
@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
           locale: Locale('es'),
           //choose language
           localizationsDelegates: [
-            _newLocaleDelegate,
+            _newLocaleDelegate!,
             const AppTranslationsDelegate(),
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,

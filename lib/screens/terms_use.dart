@@ -12,10 +12,11 @@ import 'package:flutter/services.dart';
 import 'package:app/common/get_it.dart';
 import 'package:app/common/navigator_route.dart';
 import 'package:app/common/navigator_service.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class TermOfUse extends StatefulWidget {
-  const TermOfUse({Key key}) : super(key: key);
+  const TermOfUse({Key? key}) : super(key: key);
 
   @override
   _TermOfUseState createState() => _TermOfUseState();
@@ -27,9 +28,17 @@ class _TermOfUseState extends State<TermOfUse> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: HexColor('#E8F4FF'),
+        leading: Padding(
+          padding:  EdgeInsets.all(AppSize().width(context)*0.05),
+          child: SvgPicture.asset(
+                            'assets/images/arrow_back.svg',
+                            color: AppColor.black,
+                            matchTextDirection: true,
+                          ),
+        ),
         title: InkWell(
             onTap: () {
-              locator<NavigationService>().navigateToReplace(term);
+              locator<NavigationService>().navigateToReplace(creategroup);
             },
             child: Image.asset('assets/images/maskgroup.png')),
         centerTitle: true,
@@ -45,10 +54,10 @@ class _TermOfUseState extends State<TermOfUse> {
           children: [
             // SizedBox(height: AppSize().height(context) * 0.1),
             getBoldText(AppString().termofuse,
-                textColor: HexColor('#0E3746'), fontSize: 24),
+                textColor: AppColor.black, fontSize: 24),
             SizedBox(height: AppSize().height(context) * 0.02),
             getRegularText(AppString().term,
-                textColor: HexColor('#0E3746'), fontSize: 16),
+                textColor: AppColor.black, fontSize: 16),
 
             Padding(
               padding: EdgeInsets.only(top: AppSize().height(context) * 0.01),
@@ -57,7 +66,7 @@ class _TermOfUseState extends State<TermOfUse> {
                 child: RaisedButton(
                   color: Colors.white,
                   child: getBoldText(AppString().cancel,
-                      textColor: HexColor('#0E3746'), fontSize: 14),
+                      textColor: AppColor.black, fontSize: 14),
                   // child: Text(AppString().cancel,style:TextStyle(color:AppColor.blue,)),
                   onPressed: () {
                     locator<NavigationService>().navigateToReplace(otpscreen);

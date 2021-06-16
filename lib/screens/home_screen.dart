@@ -8,8 +8,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  double height;
-  double width;
+  double? height;
+  double? width;
 
 
   void login() {
@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
         .width;
     return Scaffold(
         appBar: AppBar(
-          title: Text(AppTranslations.of(context).text('tab_home')),),
+          title: Text(AppTranslations.of(context)!.text('tab_home')),),
         body: Container(
 
             height: height,

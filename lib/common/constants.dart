@@ -14,6 +14,7 @@ class AppString {
   String privacy = 'Privacy Policy';
   String accept = 'ACCEPT';
   String cancel = 'CANCEL';
+  String confirm = 'CONFIRM';
   String forgot1 =
       'Integer at faucibus urna. Nullam condimentum leo id elit sagittis auctor. Curabitur elementum nunc a leo imperdiet, nec elementum diam elementum. Etiam elementum euismod commodo. Proin eleifend eget quam ut efficitur. Mauris a accumsan mauris. Phasellus egestas et risus sit amet hendrerit. Nulla facilisi. Cras urna sem, vulputate sed condimentum a, posuere vel enim.\n\n Etiam elementum euismod commodo. Proin eleifend eget quam ut efficitur. Mauris a accumsan mauris. Phasellus egestas et risus sit amet hendrerit. Nulla facilisi. Cras urna sem, vulputate sed condimentum a, posuere vel enim.\n\n Integer at faucibus urna. Nullam condimentum leo id eilisi. Cras urna sem, vulputate sed condimentum a, posuere vel enim. Etiam elementum\n\n euismod commodo. Proin eleifend eget quam ut efficitur. Mauris a accumsan mauris. Phasellus egestas et risus sit amet hendrerit. Nulla facilisi. Cras urna sem, vulputate sed condimentum a, posuere veementum.';
   String term =
@@ -22,4 +23,8 @@ class AppString {
   String forgotpassdesc =
       'enter the email associated with your account and we\'ll send an email with instructions to reset your password';
 String termofuse = 'Terms of Use';
+String creategroup='Create Group';
+String groupname='Group Name';
+String addteammember='Add Team Member';
+String grouplisting ='Group Listing';
 }

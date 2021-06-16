@@ -15,8 +15,8 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  double height;
-  double width;
+  double? height;
+  double? width;
 
   navigationPage() async {
     //  final prefs = await SharedPreferences.getInstance();

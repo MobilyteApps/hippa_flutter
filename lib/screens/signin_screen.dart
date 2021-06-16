@@ -11,7 +11,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class Signin extends StatefulWidget {
-  const Signin({Key key}) : super(key: key);
+  const Signin({Key? key}) : super(key: key);
 
   @override
   _SigninState createState() => _SigninState();
@@ -35,7 +35,7 @@ class _SigninState extends State<Signin> {
             ?.trim()
             ?.isEmpty ?? true) {
           return 'Please Enter Username';
-        } else if (value.length < 10) {
+        } else if (value!.length < 10) {
           return 'Please Enter Valid Username';
         }
         return null;
@@ -93,7 +93,7 @@ class _SigninState extends State<Signin> {
             ?.trim()
             ?.isEmpty ?? true) {
           return 'Please Enter Password';
-        } else if (value.length < 10) {
+        } else if (value!.length < 10) {
           return 'Please Enter Valid Password';
         }
         return null;
