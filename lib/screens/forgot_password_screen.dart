@@ -99,7 +99,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: AppSize().height(context) * 0.1),
+            // SizedBox(height: AppSize().height(context) * 0.1),
             getBoldText(AppString().forgotpass, textColor: AppColor.black,fontSize: 24),
             SizedBox(height: AppSize().height(context) * 0.02),
             getRegularText(AppString().forgotpassdesc, textColor: AppColor.black,fontSize:18),

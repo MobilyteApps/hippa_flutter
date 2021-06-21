@@ -36,7 +36,7 @@ class _OtpScreenState extends State<OtpScreen> {
     return TextFormField(
       // onChanged: formValidatonColor(),
       validator: (value) {
-        if (value?.trim()?.isEmpty ?? true) {
+        if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Code';
         } else if (value!.length < 4) {
           return 'Please Enter Valid Code';

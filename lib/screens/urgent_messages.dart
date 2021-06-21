@@ -4,6 +4,7 @@ import 'package:app/common/colors.dart';
 import 'package:app/common/constants.dart';
 import 'package:app/common/size.dart';
 import 'package:app/common/textstyle.dart';
+import 'package:app/common/urgent_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:app/common/colors.dart';
@@ -17,14 +18,14 @@ import 'package:app/common/navigator_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class SearchColleagues extends StatefulWidget {
-  const SearchColleagues({Key? key}) : super(key: key);
+class UrgentMessages extends StatefulWidget {
+  const UrgentMessages({Key? key}) : super(key: key);
 
   @override
-  _SearchColleaguesState createState() => _SearchColleaguesState();
+  _UrgentMessagesState createState() => _UrgentMessagesState();
 }
 
-class _SearchColleaguesState extends State<SearchColleagues> {
+class _UrgentMessagesState extends State<UrgentMessages> {
   int memberCount=1;
   final creategroupctrl=TextEditingController();
   final border = OutlineInputBorder(
@@ -134,8 +135,12 @@ class _SearchColleaguesState extends State<SearchColleagues> {
 
     return Scaffold(
        appBar: AppBar(
+         bottom:PreferredSize(
+           child: Container(
+             color: Colors.grey,height:1.0),
+             preferredSize: Size.fromHeight(4.0)),
         leading: Padding(
-          padding:  EdgeInsets.only(top:AppSize().width(context)*0.05,bottom: AppSize().width(context)*0.05,right: AppSize().width(context)*0.05,left: AppSize().width(context)*0.07),
+          padding:  EdgeInsets.only(top:AppSize().width(context)*0.05,bottom: AppSize().width(context)*0.05,right: AppSize().width(context)*0.01,left: AppSize().width(context)*0.01),
           child: SvgPicture.asset(
                             'assets/images/arrow_back.svg',
                             color: AppColor.black,
@@ -143,22 +148,18 @@ class _SearchColleaguesState extends State<SearchColleagues> {
                           ),
         ),
         actions: [Padding(
-          padding:  EdgeInsets.only(right:AppSize().width(context)*0.1),
+          padding:  EdgeInsets.only(right:AppSize().width(context)*0.03),
           child: InkWell(
             onTap:(){
-                locator<NavigationService>().navigateToReplace(urgentmessages);
+                locator<NavigationService>().navigateToReplace(searchcolleagues);
       //             
             },
-                      child: SvgPicture.asset(
-                            'assets/images/settings.svg',
-                            color: AppColor.black,
-                            matchTextDirection: true,
-                          ),
+                      child: Icon(Icons.search,color:HexColor('#608795'))
           ),
         )],
-        backgroundColor: HexColor('#E8F4FF'),
+        backgroundColor: Colors.white,
         
-        title:getBoldText('Search Colleague',
+        title:getBoldText('Urgent Messages',
             textColor: AppColor.black, fontSize: 18),
         centerTitle: true,
       ),
@@ -166,36 +167,33 @@ class _SearchColleaguesState extends State<SearchColleagues> {
 
       backgroundColor: HexColor('#E8F4FF'),
       body: 
-             Padding(
-          padding: EdgeInsets.only(
-              left: AppSize().width(context) * 0.1,
-              right: AppSize().width(context) * 0.1),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+      //  Column(
+      //       mainAxisAlignment: MainAxisAlignment.start,
+      //       crossAxisAlignment: CrossAxisAlignment.start,
+      //       children: [
               
-              SizedBox(height: AppSize().height(context) * 0.02),
-              // getRegularText(AppString().groupname,
-              //     textColor: AppColor().black, fontSize: 16),
-              Container(
-              height: AppSize().height(context) * 0.07,
-                child: groupnameFieldWidget()),
-                Expanded(
+                // Expanded(
                     // width:  AppSize().width(context),
                     // height: AppSize().height(context) * 0.6,
-                    child:ListView.builder(
-                    itemCount: 5,
+                    // child:
+                    ListView.builder(
+                    itemCount: 10,
                     scrollDirection: Axis.vertical,
                     itemBuilder: (BuildContext context,int index){
                     return 
-                    ColleagueSearch();
+                    InkWell(
+                      onTap:(){
+                locator<NavigationService>().navigateToReplace(chatscreen);
+      //             
+            },
+                      child: UrgentMessage());
                     
-        })),
+        })
+        // ),
               
-            ],
-          ),
-        ),
+          //   ],
+          // ),
+      
 
     );
   }

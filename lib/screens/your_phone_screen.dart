@@ -28,7 +28,7 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
     return TextFormField(
       // onChanged: formValidatonColor(),
       validator: (value) {
-        if (value?.trim()?.isEmpty ?? true) {
+        if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Phone Number';
         } else if (value!.length < 10) {
           return 'Please Enter Valid Phone Number';

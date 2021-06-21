@@ -2,8 +2,10 @@ import 'package:app/common/colleague_detail.dart';
 import 'package:app/common/colleagues_search.dart';
 import 'package:app/common/colors.dart';
 import 'package:app/common/constants.dart';
+import 'package:app/common/sender_message.dart';
 import 'package:app/common/size.dart';
 import 'package:app/common/textstyle.dart';
+import 'package:app/common/urgent_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:app/common/colors.dart';
@@ -17,14 +19,14 @@ import 'package:app/common/navigator_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class SearchColleagues extends StatefulWidget {
-  const SearchColleagues({Key? key}) : super(key: key);
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({Key? key}) : super(key: key);
 
   @override
-  _SearchColleaguesState createState() => _SearchColleaguesState();
+  _ChatScreenState createState() => _ChatScreenState();
 }
 
-class _SearchColleaguesState extends State<SearchColleagues> {
+class _ChatScreenState extends State<ChatScreen> {
   int memberCount=1;
   final creategroupctrl=TextEditingController();
   final border = OutlineInputBorder(
@@ -134,8 +136,12 @@ class _SearchColleaguesState extends State<SearchColleagues> {
 
     return Scaffold(
        appBar: AppBar(
+         bottom:PreferredSize(
+           child: Container(
+             color: Colors.grey,height:1.0),
+             preferredSize: Size.fromHeight(4.0)),
         leading: Padding(
-          padding:  EdgeInsets.only(top:AppSize().width(context)*0.05,bottom: AppSize().width(context)*0.05,right: AppSize().width(context)*0.05,left: AppSize().width(context)*0.07),
+          padding:  EdgeInsets.only(top:AppSize().width(context)*0.05,bottom: AppSize().width(context)*0.05,right: AppSize().width(context)*0.01,left: AppSize().width(context)*0.01),
           child: SvgPicture.asset(
                             'assets/images/arrow_back.svg',
                             color: AppColor.black,
@@ -143,59 +149,104 @@ class _SearchColleaguesState extends State<SearchColleagues> {
                           ),
         ),
         actions: [Padding(
-          padding:  EdgeInsets.only(right:AppSize().width(context)*0.1),
+          padding:  EdgeInsets.only(right:AppSize().width(context)*0.03),
           child: InkWell(
             onTap:(){
-                locator<NavigationService>().navigateToReplace(urgentmessages);
+                locator<NavigationService>().navigateToReplace(settingsscreen);
       //             
             },
-                      child: SvgPicture.asset(
-                            'assets/images/settings.svg',
-                            color: AppColor.black,
-                            matchTextDirection: true,
-                          ),
+                      child: Icon(Icons.search,color:HexColor('#608795'))
           ),
         )],
-        backgroundColor: HexColor('#E8F4FF'),
+        backgroundColor: Colors.white,
+        title:        Container(
         
-        title:getBoldText('Search Colleague',
-            textColor: AppColor.black, fontSize: 18),
+        width: AppSize().width(context)*0.5,
+        height:AppSize().height(context)*0.11,
+        decoration: BoxDecoration(
+        color:Colors.white,
+          // borderRadius: BorderRadius.all(Radius.circular(10)),
+          border: Border(bottom: BorderSide(width: 1,color:Colors.grey))
+        ),
+        child:
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              // crossAxisAlignment: CrossAxisAlignment.start,
+
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: 
+                  Center(
+                    
+                     child: Container(
+                                width:  AppSize().width(context) * 0.1,
+                                height: AppSize().height(context) * 0.2,
+                                decoration: BoxDecoration(
+                                  color:Colors.blue[100],
+                                  shape: BoxShape.circle,),
+                              child: Center(child: Text('A',style: TextStyle(color:Colors.red),)),
+                              ),
+                    
+                  ),
+                ),
+
+                        Expanded(
+                                                  child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                               
+                                getBoldText('Justin Oliver',
+                    textColor: AppColor.black, fontSize: 16),
+                  // SizedBox(width:  AppSize().width(context) * 0.28,),
+                  
+                          Padding(
+                            padding:  EdgeInsets.only(top:AppSize().height(context)*0.015),
+                            child: getBoldText('Online', textColor: HexColor('#2291FF'),fontSize:12),
+                          ),
+
+           
+                              ],
+                            ),
+                          ),
+                        )
+          ],
+        ),
+      
+    ),
+        // title:getBoldText('Chat',
+        //     textColor: AppColor.black, fontSize: 18),
         centerTitle: true,
       ),
      
 
-      backgroundColor: HexColor('#E8F4FF'),
+      backgroundColor: Colors.white,
       body: 
-             Padding(
-          padding: EdgeInsets.only(
-              left: AppSize().width(context) * 0.1,
-              right: AppSize().width(context) * 0.1),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+      //  Column(
+      //       mainAxisAlignment: MainAxisAlignment.start,
+      //       crossAxisAlignment: CrossAxisAlignment.start,
+      //       children: [
               
-              SizedBox(height: AppSize().height(context) * 0.02),
-              // getRegularText(AppString().groupname,
-              //     textColor: AppColor().black, fontSize: 16),
-              Container(
-              height: AppSize().height(context) * 0.07,
-                child: groupnameFieldWidget()),
-                Expanded(
+                // Expanded(
                     // width:  AppSize().width(context),
                     // height: AppSize().height(context) * 0.6,
-                    child:ListView.builder(
-                    itemCount: 5,
+                    // child:
+                    ListView.builder(
+                    itemCount: 10,
                     scrollDirection: Axis.vertical,
                     itemBuilder: (BuildContext context,int index){
-                    return 
-                    ColleagueSearch();
+                    return index%2==0? myreceiverMessageView():myMessageView();
                     
-        })),
+                    
+        })
+        // ),
               
-            ],
-          ),
-        ),
+          //   ],
+          // ),
+      
 
     );
   }

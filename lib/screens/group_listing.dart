@@ -1,8 +1,10 @@
 import 'package:app/common/colors.dart';
 import 'package:app/common/constants.dart';
+import 'package:app/common/group.dart';
 import 'package:app/common/size.dart';
 import 'package:app/common/textstyle.dart';
 import 'package:app/screens/colleagues.dart';
+import 'package:app/screens/favourite_group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:app/common/colors.dart';
@@ -272,7 +274,7 @@ class GroupListing extends StatefulWidget {
                     ),
                   ),
                 Expanded(
-                   
+                   flex: 1,
                    child:   Tab(
                       text: 'Groups',
                         // child:Container(width: AppSize().width(context)*0.4,
@@ -293,12 +295,12 @@ class GroupListing extends StatefulWidget {
                                               ),
                       ),
           ),
-            Expanded(
+            Expanded(flex: 4,
               child: TabBarView(
                 children: [
                   Colleagues(
                   ), 
-                  Text('Person')],
+                  FavouriteGroup()],
                 controller: _tabController,
               ),
             ),

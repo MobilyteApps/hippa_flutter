@@ -33,7 +33,7 @@ class _SigninState extends State<Signin> {
       validator: (value) {
         if (value
             ?.trim()
-            ?.isEmpty ?? true) {
+            .isEmpty ?? true) {
           return 'Please Enter Username';
         } else if (value!.length < 10) {
           return 'Please Enter Valid Username';
@@ -91,7 +91,7 @@ class _SigninState extends State<Signin> {
       validator: (value) {
         if (value
             ?.trim()
-            ?.isEmpty ?? true) {
+            .isEmpty ?? true) {
           return 'Please Enter Password';
         } else if (value!.length < 10) {
           return 'Please Enter Valid Password';
