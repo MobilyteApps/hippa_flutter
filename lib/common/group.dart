@@ -7,47 +7,53 @@ import 'package:hexcolor/hexcolor.dart';
 
 class Group extends StatelessWidget {
   final int index;
+
   Group(this.index);
+
   @override
   Widget build(BuildContext context) {
-    List<String> group_name=['My Team','Our Nurses','Clinic','Add New'];
-    List<HexColor>colors=[HexColor('#F98055'),HexColor('#6A8AFC'),HexColor('#23BCA2'),HexColor('#608795')];
-    return  Container(
-        
-        width: AppSize().width(context)*0.4,
-        height:AppSize().height(context)*0.63,
+    List<String> group_name = ['My Team', 'Our Nurses', 'Clinic', 'Add New'];
+    List<Color>colors = [
+      AppColor.starOrange,
+      AppColor.starblue,
+      AppColor.starGreen,
+      AppColor.starGrey
+    ];
+    return Container(
+
+        width: AppSize().width(context) * 0.4,
+        height: AppSize().height(context) * 0.63,
         decoration: BoxDecoration(
-        color:colors[index],
+          color: colors[index],
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
         child:
-                        Padding(
-                          padding: const EdgeInsets.all(0.0),
-                          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-                             children: [
-                              
-                  
-                    
+        Padding(
+          padding: const EdgeInsets.all(0.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
 
-          SvgPicture.asset(
-                            'assets/images/stars.svg',
-        width: AppSize().width(context)*0.4,
-        height:AppSize().height(context)*0.09,
-                            color: Colors.white,
-                            matchTextDirection: true,
-                          ),
-      
-                 
-                    Padding(
-                      padding:  EdgeInsets.only(top:8.0),
-                      child: getRegularText(group_name[index], textColor: AppColor.black,fontSize:18),
-                    ),
 
-                            ],
-                          ),
-                        )
-      );
+              SvgPicture.asset(
+                'assets/images/stars.svg',
+                width: AppSize().width(context) * 0.4,
+                height: AppSize().height(context) * 0.09,
+                color: AppColor.white,
+                matchTextDirection: true,
+              ),
+
+
+              Padding(
+                padding: EdgeInsets.only(top: 8.0),
+                child: getRegularText(
+                    group_name[index], textColor: AppColor.black, fontSize: 18),
+              ),
+
+            ],
+          ),
+        )
+    );
   }
 }

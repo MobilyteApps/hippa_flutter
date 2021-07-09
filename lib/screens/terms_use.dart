@@ -3,17 +3,10 @@ import 'package:app/common/constants.dart';
 import 'package:app/common/size.dart';
 import 'package:app/common/textstyle.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:app/common/colors.dart';
-import 'package:app/common/constants.dart';
-import 'package:app/common/size.dart';
-import 'package:app/common/textstyle.dart';
-import 'package:flutter/services.dart';
 import 'package:app/common/get_it.dart';
 import 'package:app/common/navigator_route.dart';
 import 'package:app/common/navigator_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class TermOfUse extends StatefulWidget {
   const TermOfUse({Key? key}) : super(key: key);
@@ -27,14 +20,14 @@ class _TermOfUseState extends State<TermOfUse> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: HexColor('#E8F4FF'),
+        backgroundColor: AppColor.backgroundColor,
         leading: Padding(
-          padding:  EdgeInsets.all(AppSize().width(context)*0.05),
+          padding: EdgeInsets.all(AppSize().width(context) * 0.05),
           child: SvgPicture.asset(
-                            'assets/images/arrow_back.svg',
-                            color: AppColor.black,
-                            matchTextDirection: true,
-                          ),
+            'assets/images/arrow_back.svg',
+            color: AppColor.black,
+            matchTextDirection: true,
+          ),
         ),
         title: InkWell(
             onTap: () {
@@ -43,7 +36,7 @@ class _TermOfUseState extends State<TermOfUse> {
             child: Image.asset('assets/images/maskgroup.png')),
         centerTitle: true,
       ),
-      backgroundColor: HexColor('#E8F4FF'),
+      backgroundColor: AppColor.backgroundColor,
       body: Padding(
         padding: EdgeInsets.only(
             left: AppSize().width(context) * 0.1,
@@ -64,7 +57,7 @@ class _TermOfUseState extends State<TermOfUse> {
               child: SizedBox(
                 width: AppSize().width(context) * 0.8,
                 child: RaisedButton(
-                  color: Colors.white,
+                  color: AppColor.white,
                   child: getBoldText(AppString().cancel,
                       textColor: AppColor.black, fontSize: 14),
                   // child: Text(AppString().cancel,style:TextStyle(color:AppColor.blue,)),
@@ -79,10 +72,10 @@ class _TermOfUseState extends State<TermOfUse> {
               child: SizedBox(
                 width: AppSize().width(context) * 0.8,
                 child: RaisedButton(
-                  color: HexColor('#2291FF'),
+                  color: AppColor.buttonColor,
                   child: getBoldText(AppString().accept,
-                      textColor: Colors.white, fontSize: 14),
-                  // child: Text(AppString().accept,style:TextStyle(color:Colors.white)),
+                      textColor: AppColor.white, fontSize: 14),
+                  // child: Text(AppString().accept,style:TextStyle(color:AppColor.white)),
                   onPressed: () {
                     locator<NavigationService>().navigateToReplace(otpscreen);
                   },

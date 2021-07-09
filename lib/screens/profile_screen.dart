@@ -1,17 +1,9 @@
-import 'package:app/common/colleague_detail.dart';
-import 'package:app/common/colleagues_search.dart';
 import 'package:app/common/colors.dart';
-import 'package:app/common/constants.dart';
 import 'package:app/common/container_curvers.dart';
 import 'package:app/common/container_ui.dart';
 import 'package:app/common/size.dart';
 import 'package:app/common/textstyle.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:app/common/colors.dart';
-import 'package:app/common/constants.dart';
-import 'package:app/common/size.dart';
-import 'package:app/common/textstyle.dart';
 import 'package:flutter/services.dart';
 import 'package:app/common/get_it.dart';
 import 'package:app/common/navigator_route.dart';
@@ -27,279 +19,149 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  int memberCount=1;
-  final creategroupctrl=TextEditingController();
-  final border = OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-      borderSide: BorderSide(color: Colors.white,)
-      );
-  Widget groupnameFieldWidget() {
-    return TextFormField(
-      controller: creategroupctrl,
-      inputFormatters: [
-        new WhitelistingTextInputFormatter(RegExp("[a-zA-Z0-9@.+-_ ]")),
-      ],
-      decoration: InputDecoration(
-          suffixIcon: Icon(Icons.search_sharp,color:HexColor('#608795')),
-          focusedBorder: border,
-          enabledBorder: border,
-          disabledBorder: border,
-          isDense: false,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            borderSide: BorderSide(color: Colors.white,)
-          ),
-          hintStyle: TextStyle(
-            color: HexColor("#0E3746"),
-            fontSize: 16,
-            fontFamily: 'JosenfinSansRegular',
-            fontWeight: FontWeight.w400,
-          ),
-          // hintStyle: TextStyle(color: greyColor, fontSize: 16),
-          filled: true,
-          contentPadding:
-          new EdgeInsets.only(left:10,top:10),
-          fillColor: Colors.white,
-          hintText: 'Search'),
-    );
-  }
-
-  Widget addWidget(){
-    return InkWell(
-      onTap: (){
-        setState(() {
-          memberCount++;
-        });
-      },
-         
-       child:  Container(
-                          width:  AppSize().width(context) * 0.16,
-                          height: AppSize().height(context) * 0.2,
-                          decoration: BoxDecoration(
-                            color:Colors.white,
-                            shape: BoxShape.circle,),
-                            child:Icon(Icons.add,size: 40,color: Colors.blue,)),
-    );
-  }
-
-  Widget memberWidget(){
-    return Padding(
-      padding:  EdgeInsets.only(right:AppSize().width(context)*0.05),
-      child: Stack(
-                    children: [
-                      Container(
-                        width:  AppSize().width(context) * 0.16,
-                        height: AppSize().height(context) * 0.2,
-                        decoration: BoxDecoration(
-                          color:Colors.white,
-                          shape: BoxShape.circle,),
-                      child: Center(child: Text('A',style: TextStyle(color:Colors.red),)),
-                      ),
-                      Positioned(
-                        left: AppSize().width(context) * 0.11,
-                          // alignment: Alignment.topRight,
-                      child:InkWell(
-                        onTap: (){
-                          setState(() {
-                            memberCount--;
-                          });
-                        },
-                        child: Container(
-                          width:  AppSize().width(context) * 0.05,
-                          height: AppSize().height(context) * 0.09,
-                          decoration: BoxDecoration(
-                            color:HexColor('#FF0000'),
-                            shape: BoxShape.circle,),
-                            child:Icon(Icons.close,size: 10,color: Colors.white,)),
-                      )),
-                     
-                  // Align(
-                  //   alignment: Alignment.topRight,
-                  //   child: CircleAvatar(
-                  //     radius:8,child: Icon(Icons.close,size: 10,),backgroundColor:HexColor('#FF0000'),),
-                  // )
-                    ],
-      ),
-    );
-  }
-
-  Widget memberlist(){
-    return ListView.builder(
-      itemCount: memberCount,
-      itemBuilder: (BuildContext context,int index){
-        return memberWidget();
-      });
-  }
-
-
-
-bool isSwitched = false;  
-  var textValue = 'Switch is OFF';  
-  
-  void toggleSwitch(bool value) {  
-  
-    if(isSwitched == false)  
-    {  
-      setState(() {  
-        isSwitched = true;  
-        textValue = 'Switch Button is ON';  
-      });  
-      print('Switch Button is ON');  
-    }  
-    else  
-    {  
-      setState(() {  
-        isSwitched = false;  
-        textValue = 'Switch Button is OFF';  
-      });  
-      print('Switch Button is OFF');  
-    }  
-  }  
-
 
   @override
   Widget build(BuildContext context) {
-
-   double screenWidth = MediaQuery.of(context).size.width;
+    double screenWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
     return Scaffold(
-       appBar: AppBar(
-         leading: Padding(
-          padding:  EdgeInsets.only(top:AppSize().width(context)*0.05,bottom: AppSize().width(context)*0.05,right: AppSize().width(context)*0.05,left: AppSize().width(context)*0.07),
-          child: SvgPicture.asset(
-                            'assets/images/arrow_back.svg',
-                            color: Colors.white,
-                            matchTextDirection: true,
-                          ),
-        ),
-        actions: [Padding(
-          padding:  EdgeInsets.only(right:AppSize().width(context)*0.1),
-          child: InkWell(
-            onTap:(){
+        appBar: AppBar(
+          leading: Padding(
+            padding: EdgeInsets.only(top: AppSize().width(context) * 0.05,
+                bottom: AppSize().width(context) * 0.05,
+                right: AppSize().width(context) * 0.05,
+                left: AppSize().width(context) * 0.07),
+            child: SvgPicture.asset(
+              'assets/images/arrow_back.svg',
+              color: AppColor.white,
+              matchTextDirection: true,
+            ),
+          ),
+          actions: [Padding(
+            padding: EdgeInsets.only(right: AppSize().width(context) * 0.1),
+            child: InkWell(
+              onTap: () {
                 locator<NavigationService>().navigateToReplace(manageprofile);
-      //             
-            },
-                      child: SvgPicture.asset(
-                            'assets/images/settings.svg',
-                            color: Colors.white,
-                            matchTextDirection: true,
-                          ),
-          ),
-        )],
-        backgroundColor: HexColor('#2291FF'),
-        title:getBoldText('Profile',
-        textColor: Colors.white, fontSize: 18),
-        centerTitle: true,
-      ),
-      backgroundColor:Colors.white,
-    body:
-    //  Column(
-    //   mainAxisAlignment: MainAxisAlignment.start,
-    //     children: [
-    //       Container(
-    //         color:HexColor('#2291FF'),
-    //         height: AppSize().height(context)*0.15,
-    //       ),
-    //       ClipPath(
-    //         clipper: ProsteBezierCurve(
-    //           position: ClipPosition.bottom,
-    //           list: [
-    //             BezierCurveSection(
-    //               start: Offset(0, 100),
-    //               top: Offset(screenWidth / 2, 140),
-    //               end: Offset(screenWidth, 100),
-    //             ),
-    //           ],
-    //         ),
-    //         child: Container(
-    //           height:500,width: AppSize().width(context),
-    //           color: HexColor('#2291FF'),
-    //         ),
-    //       ),
-          
-    //     ],
-    //   ),
-  Column(
-    children: [
-      Container(
-          color: Colors.white,
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 2.0),
-                  child:ClipPath(
-                    clipper: ClippingClass(),
-                  child: Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width,
-                    height: AppSize().height(context)*0.4,
-                    decoration: BoxDecoration(
-                      color: Colors.blue
-                       ),
-                  ),
-                ),
+                //
+              },
+              child: SvgPicture.asset(
+                'assets/images/settings.svg',
+                color: AppColor.white,
+                matchTextDirection: true,
               ),
-
-Padding(
-                padding: const EdgeInsets.only(bottom: 2.0),
-                  child:ClipPath(
-                    clipper: ClippingClass(),
-                  child: Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width,
-                    height: AppSize().height(context)*0.4,
-                    decoration: BoxDecoration(
-                      color: Colors.transparent
-                       ),
-                       child: Column(children: [
-                         Container(
-                                    width:  AppSize().width(context) * 0.25,
-                                    height: AppSize().height(context) * 0.2,
-                                    decoration: BoxDecoration(
-                                      color:Colors.blue[100],
-                                      shape: BoxShape.circle,),
-                                  child: Center(child: Text('A',style: TextStyle(color:Colors.red),)),
-                                  ),
-                                  Padding(
-                                    padding:  EdgeInsets.only(bottom:AppSize().height(context) * 0.01),
-                                    child: getBoldText('John Appleseed',textColor:Colors.white,fontSize:20),
-                                  ),
-                                  Padding(
-                                    padding:  EdgeInsets.only(bottom:AppSize().height(context) * 0.01),
-                                    child: getRegularText('Chief of Medicine',textColor:Colors.white,fontSize:16),
-                                  ),
-                                  getRegularText('Department of Medicine',textColor:Colors.white,fontSize:16),
-                                  
-                       ],),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          )
+          ],
+          backgroundColor: AppColor.buttonColor,
+          title: getBoldText('Profile',
+              textColor: AppColor.white, fontSize: 18),
+          centerTitle: true,
         ),
-         Padding(
-                                    padding:  EdgeInsets.only(bottom:AppSize().height(context) * 0.01,top:AppSize().height(context) * 0.05),
-                                    child: getBoldText('Address'.toUpperCase(),textColor:Colors.black,fontSize:14),
-                                  ),
-                                  Padding(
-                                    padding:  EdgeInsets.only(bottom:AppSize().height(context) * 0.01),
-                                    child: getRegularText('4331 Oliver Street White Settlement',textColor:Colors.black,fontSize:16),
-                                  ),
+        backgroundColor: AppColor.skyblue,
+        body:
+        Column(
+          children: [
+            Container(
+              color: AppColor.skyblue,
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 2.0),
+                    child: ClipPath(
+                      clipper: ClippingClass(),
+                      child: Container(
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width,
+                        height: AppSize().height(context) * 0.4,
+                        decoration: BoxDecoration(
+                            color: AppColor.blue
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 2.0),
+                    child: ClipPath(
+                      clipper: ClippingClass(),
+                      child: Container(
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width,
+                        height: AppSize().height(context) * 0.4,
+                        decoration: BoxDecoration(
+                            color: AppColor.transparent
+                        ),
+                        child: Column(children: [
+                          Container(
+                            width: AppSize().width(context) * 0.25,
+                            height: AppSize().height(context) * 0.2,
+                            decoration: BoxDecoration(
+                              color: AppColor.lightBlue,
+                              shape: BoxShape.circle,),
+                            child: Center(child: Text(
+                              'A', style: TextStyle(color: Colors.red),)),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                bottom: AppSize().height(context) * 0.01),
+                            child: getBoldText(
+                                'John Appleseed', textColor: AppColor.white,
+                                fontSize: 20),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                bottom: AppSize().height(context) * 0.01),
+                            child: getRegularText(
+                                'Chief of Medicine', textColor: AppColor.white,
+                                fontSize: 16),
+                          ),
+                          getRegularText(
+                              'Department of Medicine', textColor: AppColor.white,
+                              fontSize: 16),
+
+                        ],),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: AppSize().height(context) * 0.01,
+                  top: AppSize().height(context) * 0.05),
+              child: getBoldText(
+                  'Address'.toUpperCase(), textColor: Colors.black,
+                  fontSize: 14),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  bottom: AppSize().height(context) * 0.01),
+              child: getRegularText('4331 Oliver Street White Settlement',
+                  textColor: Colors.black, fontSize: 16),
+            ),
 
 
-                                   Padding(
-                                    padding:  EdgeInsets.only(bottom:AppSize().height(context) * 0.01,top:AppSize().height(context) * 0.01),
-                                    child: getBoldText('Office Phone'.toUpperCase(),textColor:Colors.black,fontSize:14),
-                                  ),
-                                  Padding(
-                                    padding:  EdgeInsets.only(bottom:AppSize().height(context) * 0.01),
-                                    child: getRegularText('972-951-6563',textColor:Colors.black,fontSize:16),
-                                  ),
-    ],
-  ));
+            Padding(
+              padding: EdgeInsets.only(bottom: AppSize().height(context) * 0.01,
+                  top: AppSize().height(context) * 0.01),
+              child: getBoldText(
+                  'Office Phone'.toUpperCase(), textColor: Colors.black,
+                  fontSize: 14),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  bottom: AppSize().height(context) * 0.01),
+              child: getRegularText(
+                  '972-951-6563', textColor: Colors.black, fontSize: 16),
+            ),
+          ],
+        ));
   }
 }
 
@@ -307,7 +169,7 @@ class ClippingClass extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();
-    path.lineTo(0.0, size.height-40);
+    path.lineTo(0.0, size.height - 40);
     path.quadraticBezierTo(size.width / 4, size.height,
         size.width / 2, size.height);
     path.quadraticBezierTo(size.width - (size.width / 4), size.height,
@@ -320,11 +182,6 @@ class ClippingClass extends CustomClipper<Path> {
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
-    // ),
-//     }
-// }
-
-
 
 
 class CustomSelfClipper1 extends CustomClipper<Path> {

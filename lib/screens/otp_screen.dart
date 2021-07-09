@@ -4,18 +4,19 @@ import 'package:app/common/constants.dart';
 import 'package:app/common/size.dart';
 import 'package:app/common/textstyle.dart';
 import 'package:flutter/services.dart';
-import 'package:app/common/colors.dart';
-import 'package:app/common/constants.dart';
-import 'package:app/common/size.dart';
-import 'package:app/common/textstyle.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'dart:async';
 import 'package:app/common/get_it.dart';
 import 'package:app/common/navigator_route.dart';
 import 'package:app/common/navigator_service.dart';
-import 'package:hexcolor/hexcolor.dart';
 
+import 'package:app/common/get_it.dart';
+import 'package:app/common/navigator_route.dart';
+import 'package:app/common/navigator_service.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:app/network/api_provider.dart';
+import 'package:app/providers/signin_provider.dart';
+import 'package:app/models/loader.dart';
+import 'package:app/common/utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class OtpScreen extends StatefulWidget {
   const OtpScreen({Key? key}) : super(key: key);
 
@@ -26,10 +27,12 @@ class OtpScreen extends StatefulWidget {
 class _OtpScreenState extends State<OtpScreen> {
   final border = UnderlineInputBorder(
     borderSide: BorderSide(
-      color: Color(0xff000000),
+      color: AppColor.dark,
     ),
   );
 
+Loader loader = Loader();
+SignInProvider signInProvider=SignInProvider();
   final codeCtrl = TextEditingController();
 
   Widget codeFieldWidget() {
@@ -46,7 +49,7 @@ class _OtpScreenState extends State<OtpScreen> {
       keyboardType: TextInputType.phone,
       controller: codeCtrl,
       style: TextStyle(
-        color: HexColor("#0E3746"),
+        color: AppColor.textColor,
         fontSize: 16,
         fontFamily: 'PoppinsSemiBold',
         fontWeight: FontWeight.w600,
@@ -63,62 +66,104 @@ class _OtpScreenState extends State<OtpScreen> {
           counterText: "",
           border: border,
           hintStyle: TextStyle(
-            color: HexColor("#0E3746"),
+            color: AppColor.textColor,
             fontSize: 16,
             fontFamily: 'PoppinsSemiBold',
             fontWeight: FontWeight.w600,
           ),
           filled: true,
-          fillColor: Colors.transparent,
+          fillColor: AppColor.transparent,
           hintText: 'Code'),
     );
   }
 
+
+  formValidation() async{
+    FocusScope.of(context).requestFocus(new FocusNode());
+    // if (usernameCtrl?.text?.trim()?.isEmpty ?? true) {
+    //   ApiProvider().showToastMsg("Please Enter email address");
+    // } else if (!validateEmail(usernameCtrl?.text?.trim())) {
+    //   ApiProvider().showToastMsg("Please Enter a valid email address");
+    // } else if (passwordCtrl?.text?.trim()?.isEmpty ?? true) {
+    //   passwordCtrl.clear();
+    //   ApiProvider().showToastMsg("Please Enter password");
+    // } else if (!validatePassword(passwordCtrl?.text?.trim())) {
+    //   ApiProvider().showToastMsg("Incorrect username / password");
+    // }
+    //  else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      print(prefs.getString('phonenumber'));
+      print(prefs.getString('countryCode'));
+      var input = {
+        "phonenumber": "${prefs.getString('phonenumber')}",
+        "countryCode": "${prefs.getString('countryCode')}"
+      };
+      signInProvider.resendotpApi(loader, input,);
+    // }
+  }
+
+
+  verifyValidation() async{
+    FocusScope.of(context).requestFocus(new FocusNode());
+    if (codeCtrl.text.trim().isEmpty == true) {
+      ApiProvider().showToastMsg("Please Enter Otp");
+    }
+    //  else if (!validateEmail(usernameCtrl?.text?.trim())) {
+    //   ApiProvider().showToastMsg("Please Enter a valid email address");
+    // } else if (passwordCtrl?.text?.trim()?.isEmpty ?? true) {
+    //   passwordCtrl.clear();
+    //   ApiProvider().showToastMsg("Please Enter password");
+    // } else if (!validatePassword(passwordCtrl?.text?.trim())) {
+    //   ApiProvider().showToastMsg("Incorrect username / password");
+    // }
+     else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      print(prefs.getString('phonenumber'));
+      print(prefs.getString('countryCode'));
+      var input = {
+        "phonenumber": "${prefs.getString('phonenumber')}",
+        "countryCode": "${prefs.getString('countryCode')}",
+        "otp": codeCtrl.text
+      };
+      signInProvider.verifyOTPApi(loader, input,);
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HexColor("#E8F4FF"),
+      backgroundColor: AppColor.backgroundColor,
       body: SingleChildScrollView(
-        // child: Padding(
-        //   padding: EdgeInsets.only(
-        //       left: AppSize().width(context) * 0.1,
-        //       right: AppSize().width(context) * 0.1),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // SizedBox(height: AppSize().height(context) * 0.5),
               Image.asset('assets/images/tmp_1623687411385.jpg',
                   width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.fitWidth
-              ),
-
+                  fit: BoxFit.fitWidth),
               Padding(
                 padding: EdgeInsets.only(
                     left: AppSize().width(context) * 0.1,
                     right: AppSize().width(context) * 0.1),
                 child: getBoldText(AppString().entercode,
-                    fontSize: 22, textColor: HexColor("#0E3746")),
+                    fontSize: 22, textColor: AppColor.textColor),
               ),
-              // SizedBox(
-              //   height: AppSize().height(context)*0.05
-              // ),
               Padding(
                 padding: EdgeInsets.only(
                     top: AppSize().height(context) * 0.01,
                     left: AppSize().width(context) * 0.1,
                     right: AppSize().width(context) * 0.1),
                 child: getRegularText(AppString().readyToUse,
-                    textColor: HexColor("#0E3746"), fontSize: 14),
+                    textColor: AppColor.textColor, fontSize: 14),
               ),
-
               Padding(
                 padding: EdgeInsets.only(
                     left: AppSize().width(context) * 0.1,
                     right: AppSize().width(context) * 0.1,
                     top: AppSize().height(context) * 0.01),
                 child: getRegularText(AppString().verifyPhone,
-                    textColor: HexColor("#0E3746"), fontSize: 14),
+                    textColor: AppColor.textColor, fontSize: 14),
               ),
               Padding(
                 padding: EdgeInsets.only(
@@ -129,21 +174,6 @@ class _OtpScreenState extends State<OtpScreen> {
                     ),
                 child: codeFieldWidget(),
               ),
-
-              // Padding(
-              //   padding: EdgeInsets.only(top: AppSize().height(context) * 0.01),
-              //   child: SizedBox(
-              //     width: AppSize().width(context) * 0.8,
-              //     child: RaisedButton(
-              //       color: AppColor.blue,
-              //       child: Text(AppString().verify,
-              //           style: TextStyle(color: Colors.white)),
-              //       onPressed: () {
-              //         locator<NavigationService>().navigateToReplace(signin);
-              //       },
-              //     ),
-              //   ),
-              // ),
               Padding(
                 padding: EdgeInsets.only(
                     top: AppSize().height(context) * 0.04,
@@ -153,18 +183,32 @@ class _OtpScreenState extends State<OtpScreen> {
                   width: AppSize().width(context) * 0.8,
                   height: AppSize().height(context) * 0.06,
                   child: RaisedButton(
-                    color: HexColor('#2291FF'),
+                    color: AppColor.buttonColor,
                     child: getSemiBolText(
                       AppString().verify.toUpperCase(),
-                      textColor: Colors.white,
+                      textColor: AppColor.white,
                       fontSize: 14,
                     ),
                     onPressed: () {
-                      locator<NavigationService>().navigateToReplace(signin);
+                      verifyValidation();
+                      // locator<NavigationService>().navigateToReplace(signin);
                     },
                   ),
                 ),
               ),
+              Padding(
+                padding: EdgeInsets.only(
+                    top:AppSize().height(context) * 0.03,
+                    left: AppSize().width(context) * 0.1,
+                    right: AppSize().width(context) * 0.1),
+                child:Center(child:InkWell(
+                  onTap:(){
+                  formValidation();
+                    // signInProvider.sendotpApi(true);
+                  },
+                  child: getSemiBolText('Resend',
+                    fontSize: 14, textColor: AppColor.textColor),
+              ))),
             ]),
       ),
       // ),

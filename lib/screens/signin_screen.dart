@@ -8,7 +8,14 @@ import 'package:app/common/get_it.dart';
 import 'package:app/common/navigator_route.dart';
 import 'package:app/common/navigator_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hexcolor/hexcolor.dart';
+import 'package:app/network/api_provider.dart';
+import 'package:app/providers/signin_provider.dart';
+import 'package:app/models/loader.dart';
+import 'package:app/common/utils.dart';
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_local_auth_invisible/flutter_local_auth_invisible.dart';
 
 class Signin extends StatefulWidget {
   const Signin({Key? key}) : super(key: key);
@@ -20,20 +27,24 @@ class Signin extends StatefulWidget {
 class _SigninState extends State<Signin> {
   final border = UnderlineInputBorder(
     borderSide: BorderSide(
-      color: Colors.white,
+      color: AppColor.white,
     ),
   );
+Loader loader = Loader();
+  final LocalAuthentication auth = LocalAuthentication();
+
+  bool _canCheckBiometrics = false;
+  List<BiometricType>? _availableBiometrics;
+  String _authorized = 'Not Authorized';
 
   final usernameCtrl = TextEditingController();
-  final passwordCtrl = TextEditingController();
-
+  final  passwordCtrl = TextEditingController();
+SignInProvider signInProvider=SignInProvider();
   Widget usernameFieldWidget() {
     return TextFormField(
       // onChanged: formValidatonColor(),
       validator: (value) {
-        if (value
-            ?.trim()
-            .isEmpty ?? true) {
+        if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Username';
         } else if (value!.length < 10) {
           return 'Please Enter Valid Username';
@@ -43,44 +54,44 @@ class _SigninState extends State<Signin> {
       keyboardType: TextInputType.text,
       controller: usernameCtrl,
       style: TextStyle(
-        color: Colors.white,
+        color: AppColor.white,
         fontFamily: 'JosenfinSansRegular',
         fontWeight: FontWeight.w400,
         fontSize: 16,
       ),
-      maxLength: 10,
+      // maxLength: 10,
       inputFormatters: <TextInputFormatter>[
-        LengthLimitingTextInputFormatter(10)
+        // LengthLimitingTextInputFormatter(10)
       ],
       decoration: InputDecoration(
           prefixIcon: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Image.asset(
               'assets/images/user.png',
-              color: Colors.white,
+              color: AppColor.white,
               // fit: BoxFit.fill,
             ),
           ),
-          labelStyle: TextStyle(color: Colors.white),
+          labelStyle: TextStyle(color: AppColor.white),
           enabledBorder: border,
           contentPadding:
-          new EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+              new EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
           focusedBorder: border,
           counterText: "",
           border: border,
           hintStyle: TextStyle(
-            color: Colors.white,
+            color: AppColor.white,
             fontFamily: 'JosenfinSansRegular',
             fontWeight: FontWeight.w400,
             fontSize: 16,
           ),
           filled: true,
-          counterStyle: TextStyle(color: Colors.white),
-          suffixStyle: TextStyle(color: Colors.white),
-          helperStyle: TextStyle(color: Colors.white),
-          errorStyle: TextStyle(color: Colors.white),
-          prefixStyle: TextStyle(color: Colors.white),
-          fillColor: Colors.transparent,
+          counterStyle: TextStyle(color: AppColor.white),
+          suffixStyle: TextStyle(color: AppColor.white),
+          helperStyle: TextStyle(color: AppColor.white),
+          errorStyle: TextStyle(color: AppColor.white),
+          prefixStyle: TextStyle(color: AppColor.white),
+          fillColor: AppColor.transparent,
           hintText: 'Username'),
     );
   }
@@ -89,9 +100,7 @@ class _SigninState extends State<Signin> {
     return TextFormField(
       // onChanged: formValidatonColor(),
       validator: (value) {
-        if (value
-            ?.trim()
-            .isEmpty ?? true) {
+        if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Password';
         } else if (value!.length < 10) {
           return 'Please Enter Valid Password';
@@ -105,44 +114,90 @@ class _SigninState extends State<Signin> {
         LengthLimitingTextInputFormatter(10)
       ],
       decoration: InputDecoration(
-          prefixIcon:
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Image.asset(
-                'assets/images/lock.png',
-                color: Colors.white,
-
-          ),
+          prefixIcon: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Image.asset(
+              'assets/images/lock.png',
+              color: AppColor.white,
             ),
-          labelStyle: TextStyle(color: Colors.white),
+          ),
+          labelStyle: TextStyle(color: AppColor.white),
           enabledBorder: border,
           contentPadding:
-          new EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+              new EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
           focusedBorder: border,
           counterText: "",
           border: border,
           hintStyle: TextStyle(
-            color: Colors.white,
+            color: AppColor.white,
             fontFamily: 'JosenfinSansRegular',
             fontWeight: FontWeight.w400,
             fontSize: 16,
           ),
           filled: true,
-          counterStyle: TextStyle(color: Colors.white),
-          suffixStyle: TextStyle(color: Colors.white),
-          helperStyle: TextStyle(color: Colors.white),
-          errorStyle: TextStyle(color: Colors.white),
-          prefixStyle: TextStyle(color: Colors.white),
-          fillColor: Colors.transparent,
+          counterStyle: TextStyle(color: AppColor.white),
+          suffixStyle: TextStyle(color: AppColor.white),
+          helperStyle: TextStyle(color: AppColor.white),
+          errorStyle: TextStyle(color: AppColor.white),
+          prefixStyle: TextStyle(color: AppColor.white),
+          fillColor: AppColor.transparent,
           hintText: 'Password'),
       style: TextStyle(
-        color: Colors.white,
+        color: AppColor.white,
         fontFamily: 'JosenfinSansRegular',
         fontWeight: FontWeight.w400,
         fontSize: 16,
       ),
     );
   }
+
+  formValidation() {
+    FocusScope.of(context).requestFocus(new FocusNode());
+    if (usernameCtrl.text.trim().isEmpty == true) {
+      ApiProvider().showToastMsg("Please Enter email address");
+    } else if (!validateEmail(usernameCtrl.text.trim())) {
+      ApiProvider().showToastMsg("Please Enter a valid email address");
+    } else if (passwordCtrl.text.trim().isEmpty ==true) {
+      passwordCtrl.clear();
+      ApiProvider().showToastMsg("Please Enter password");
+    } else if (!validatePassword(passwordCtrl.text.trim())) {
+      ApiProvider().showToastMsg("Incorrect username / password");
+    }
+     else {
+      var input = {
+        "email": usernameCtrl.text.trim(),
+        "password": passwordCtrl.text.trim()
+      };
+      signInProvider.loginWithEmail(loader, input);
+    }
+  }
+
+  Future<void> _authenticate() async {
+    bool authenticated = false;
+    try {
+      ApiProvider().showToastMsg("Fingerprint scanning starts");
+      authenticated = await auth.authenticateWithBiometrics(
+        localizedReason: 'Scan your fingerprint to authenticate',
+        useErrorDialogs: true,
+        stickyAuth: false,
+      );
+    } on PlatformException catch (e) {
+      print(e);
+    }
+    if (!mounted) return;
+
+    setState(() {
+      _authorized = authenticated ? 'Authorized' : 'Not Authorized';
+    });
+    if(_authorized=='Authorized'){
+      ApiProvider().showToastMsg("Scanned successfully");
+              locator<NavigationService>().navigateToReplace(grouplisting);
+
+    }else{
+      ApiProvider().showToastMsg("Try again");
+    }
+  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -152,14 +207,8 @@ class _SigninState extends State<Signin> {
         child: Stack(
           children: [
             Image.asset('assets/images/secure_text.png',
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height,
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
                 fit: BoxFit.fill),
             Padding(
               padding: EdgeInsets.only(
@@ -174,7 +223,7 @@ class _SigninState extends State<Signin> {
                       padding: EdgeInsets.only(
                           top: AppSize().height(context) * 0.01),
                       child: getRegularText(AppString().welcome,
-                          textColor: Colors.white, fontSize: 28),
+                          textColor: AppColor.white, fontSize: 28),
                     ),
                     Padding(
                       padding: EdgeInsets.only(
@@ -182,41 +231,35 @@ class _SigninState extends State<Signin> {
                       child: Row(
                         children: [
                           getRegularText('to',
-                              textColor: Colors.white, fontSize: 28),
+                              textColor: AppColor.white, fontSize: 28),
                           SizedBox(width: AppSize().width(context) * 0.03),
                           getBoldText(AppString().securetext + '!',
-                              textColor: Colors.white, fontSize: 28),
+                              textColor: AppColor.white, fontSize: 28),
                         ],
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(
                         top: AppSize().height(context) * 0.03,
-                        // left: AppSize().width(context) * 0.1,
-                        // right: AppSize().width(context) * 0.1
                       ),
                       child: getRegularText(AppString().readyToUse,
-                          textColor: Colors.white, fontSize: 14),
+                          textColor: AppColor.white, fontSize: 14),
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                        // left: AppSize().width(context) * 0.1,
-                        // right: AppSize().width(context) * 0.1,
                           top: AppSize().height(context) * 0.01),
                       child: getRegularText(AppString().verifyPhone,
-                          textColor: Colors.white, fontSize: 14),
+                          textColor: AppColor.white, fontSize: 14),
                     ),
                     Padding(
                       padding: EdgeInsets.only(
                         top: AppSize().height(context) * 0.05,
-                        // right: AppSize().width(context) * 0.1
                       ),
                       child: usernameFieldWidget(),
                     ),
                     Padding(
                       padding: EdgeInsets.only(
                         top: AppSize().height(context) * 0.01,
-                        // right: AppSize().width(context) * 0.1
                       ),
                       child: passwordFieldWidget(),
                     ),
@@ -232,7 +275,7 @@ class _SigninState extends State<Signin> {
                                 .navigateToReplace(forgotpass);
                           },
                           child: getRegularText(AppString().forgotpass,
-                              textColor: Colors.white,fontSize:16),
+                              textColor: AppColor.white, fontSize: 16),
                         ),
                       ),
                     ),
@@ -242,12 +285,12 @@ class _SigninState extends State<Signin> {
                       child: SizedBox(
                         width: AppSize().width(context) * 0.8,
                         child: RaisedButton(
-                          color: Colors.white,
+                          color: AppColor.white,
                           child: getRegularText(AppString().signin,
-                              textColor: HexColor('#2291FF'),fontSize:16),
-                          // child: Text(AppString().signin,
-                          //     style: TextStyle(color: AppColor.lightBlue)),
-                          onPressed: () {},
+                              textColor: AppColor.buttonColor, fontSize: 16),
+                          onPressed: () {
+                            formValidation();
+                          },
                         ),
                       ),
                     ),
@@ -258,19 +301,24 @@ class _SigninState extends State<Signin> {
                       child: Align(
                         alignment: Alignment.topCenter,
                         child: getRegularText(AppString().donthaveaccount,
-                            textColor: Colors.white,fontSize:16),
+                            textColor: AppColor.white, fontSize: 16),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(
                         top: AppSize().height(context) * 0.06,
                       ),
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: SvgPicture.asset(
-                          'assets/images/fingerprint.svg',
-                          color: Colors.white,
-                          matchTextDirection: true,
+                      child: InkWell(
+                        onTap: () {
+                           _authenticate();
+                          },
+                                              child: Align(
+                          alignment: Alignment.topCenter,
+                          child: SvgPicture.asset(
+                            'assets/images/fingerprint.svg',
+                            color: AppColor.white,
+                            matchTextDirection: true,
+                          ),
                         ),
                       ),
                     ),

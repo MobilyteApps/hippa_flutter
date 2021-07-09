@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Application {
-
   static final Application _application = Application._internal();
 
   factory Application() {

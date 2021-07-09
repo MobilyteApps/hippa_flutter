@@ -1,7 +1,5 @@
 import 'package:app/common/navigator_service.dart';
 import 'package:app/language/application.dart';
-import 'package:app/providers/loader_provider.dart';
-import 'package:app/providers/login_provider.dart';
 import 'package:app/screens/splash_screen.dart';
 import 'package:app/theme/dark_theme_provider.dart';
 import 'package:app/theme/dark_theme_styles.dart';
@@ -13,7 +11,6 @@ import 'package:provider/provider.dart';
 import 'package:app/common/router.dart' as route;
 import 'common/get_it.dart';
 import 'language/app_translation_delegate.dart';
-
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,7 +45,7 @@ class _MyAppState extends State<MyApp> {
 
   void getCurrentAppTheme() async {
     themeChangeProvider.darkTheme =
-    await themeChangeProvider.darkThemePreference.getTheme();
+        await themeChangeProvider.darkThemePreference.getTheme();
   }
 
   @override
@@ -57,14 +54,10 @@ class _MyAppState extends State<MyApp> {
         providers: [
           ChangeNotifierProvider<DarkThemeProvider>(
               create: (_) => themeChangeProvider),
-          ChangeNotifierProvider<LoaderProvider>(
-              create: (_) => LoaderProvider()),
-          ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider()),
-
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
+          title: 'Hippa',
           locale: Locale('es'),
           //choose language
           localizationsDelegates: [
@@ -83,4 +76,3 @@ class _MyAppState extends State<MyApp> {
         ));
   }
 }
-
