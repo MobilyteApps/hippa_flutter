@@ -67,6 +67,7 @@ class _OtpScreenState extends State<OtpScreen> {
       },
       keyboardType: TextInputType.phone,
       controller: codeCtrl,
+      enabled: false,
       style: TextStyle(
         color: AppColor.textColor,
         fontSize: 16,

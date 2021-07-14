@@ -338,24 +338,24 @@ class _SigninState extends State<Signin> {
                     //         textColor: AppColor.white, fontSize: 16),
                     //   ),
                     // ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        top: AppSize().height(context) * 0.06,
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          _authenticate();
-                        },
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: SvgPicture.asset(
-                            'assets/images/fingerprint.svg',
-                            color: AppColor.white,
-                            matchTextDirection: true,
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.only(
+                    //     top: AppSize().height(context) * 0.06,
+                    //   ),
+                    //   child: InkWell(
+                    //     onTap: () {
+                    //       _authenticate();
+                    //     },
+                    //     child: Align(
+                    //       alignment: Alignment.topCenter,
+                    //       child: SvgPicture.asset(
+                    //         'assets/images/fingerprint.svg',
+                    //         color: AppColor.white,
+                    //         matchTextDirection: true,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ]),
             ),
             loader.isLoading == false

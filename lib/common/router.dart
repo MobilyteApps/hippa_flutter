@@ -2,6 +2,7 @@ import 'package:app/common/navigator_route.dart';
 import 'package:app/screens/CameraScreen.dart';
 import 'package:app/screens/change_password.dart';
 import 'package:app/screens/chat_screen.dart';
+import 'package:app/screens/country_testing.dart';
 import 'package:app/screens/create_group.dart';
 import 'package:app/screens/fingerprint.dart';
 import 'package:app/screens/forgot_password_screen.dart';
@@ -67,6 +68,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => CameraScreen());
       case n:
         return MaterialPageRoute(builder: (_) => N());
+      case country:
+        return MaterialPageRoute(builder: (_) => CountryTesting());
       default:
         return MaterialPageRoute(builder: (_) {
           return Scaffold(

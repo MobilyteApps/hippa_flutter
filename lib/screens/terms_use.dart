@@ -54,7 +54,7 @@ class _TermOfUseState extends State<TermOfUse> {
             getBoldText(AppString().termofuse,
                 textColor: AppColor.black, fontSize: 24),
             SizedBox(height: AppSize().height(context) * 0.02),
-            getRegularText(AppString().term,
+            getRegularText('Coming soon...',
                 textColor: AppColor.black, fontSize: 16),
 
             Padding(

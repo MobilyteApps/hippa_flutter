@@ -19,3 +19,4 @@ const String youremail = 'youremail';
 const String changepass = 'changepass';
 const String camera = 'camera';
 const String n = 'n';
+const String country = 'country';

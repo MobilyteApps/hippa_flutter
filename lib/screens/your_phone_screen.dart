@@ -8,6 +8,10 @@ import 'package:app/common/get_it.dart';
 import 'package:app/common/navigator_route.dart';
 import 'package:app/common/navigator_service.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:country_code_picker/country_code_picker.dart';
+import 'package:country_code_picker/country_localizations.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:app/common/get_it.dart';
@@ -34,6 +38,7 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
 
   final phoneCtrl = TextEditingController();
   final counrtyCtrl = TextEditingController();
+  String country = '+91';
   Widget countryFieldWidget() {
     return TextFormField(
       // onChanged: formValidatonColor(),
@@ -120,15 +125,17 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
 
   formValidation() async {
     FocusScope.of(context).requestFocus(new FocusNode());
-    if (counrtyCtrl.text.trim().isEmpty == true) {
-      ApiProvider().showToastMsg("Please Enter valid country code");
-    } else if (counrtyCtrl.text.trim() == '0') {
-      ApiProvider().showToastMsg("Please Enter valid country code");
-    } else if (counrtyCtrl.text.trim() == '00') {
-      ApiProvider().showToastMsg("Please Enter valid country code");
-    } else if (counrtyCtrl.text.trim() == '000') {
-      ApiProvider().showToastMsg("Please Enter valid country code");
-    } else if (phoneCtrl.text.trim().isEmpty == true) {
+    // if (counrtyCtrl.text.trim().isEmpty == true) {
+    //   ApiProvider().showToastMsg("Please Enter valid country code");
+    // } else if (counrtyCtrl.text.trim() == '0') {
+    //   ApiProvider().showToastMsg("Please Enter valid country code");
+    // } else if (counrtyCtrl.text.trim() == '00') {
+    //   ApiProvider().showToastMsg("Please Enter valid country code");
+    // } else if (counrtyCtrl.text.trim() == '000') {
+    //   ApiProvider().showToastMsg("Please Enter valid country code");
+    // }
+    //  else
+    if (phoneCtrl.text.trim().isEmpty == true) {
       ApiProvider().showToastMsg("Please Enter valid phone number");
     } else if (phoneCtrl.text.trim() == '00000') {
       ApiProvider().showToastMsg("Please Enter valid phone number");
@@ -152,7 +159,7 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
     else {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('phonenumber', phoneCtrl.text.trim());
-      prefs.setString('countryCode', counrtyCtrl.text.trim());
+      prefs.setString('countryCode', country);
       var input = {
         "phonenumber": phoneCtrl.text.trim(),
         "countryCode": counrtyCtrl.text.trim()
@@ -166,127 +173,241 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: HexColor('#E8F4FF'),
-      body: Stack(children: [
-        SingleChildScrollView(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Image.asset('assets/images/tmp_1623687415135.jpg',
-                    width: MediaQuery.of(context).size.width,
-                    fit: BoxFit.fitWidth),
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: AppSize().width(context) * 0.1,
-                      right: AppSize().width(context) * 0.1),
-                  child: InkWell(
-                    onTap: () {},
-                    child: getBoldText(AppString().yourphone,
-                        fontSize: 22, textColor: AppColor.textColor),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: AppSize().height(context) * 0.01,
-                      left: AppSize().width(context) * 0.1,
-                      right: AppSize().width(context) * 0.1),
-                  child: getRegularText(AppString().readyToUse,
-                      textColor: AppColor.textColor, fontSize: 14),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: AppSize().width(context) * 0.1,
-                      right: AppSize().width(context) * 0.1,
-                      top: AppSize().height(context) * 0.01),
-                  child: getRegularText(AppString().verifyPhone,
-                      textColor: AppColor.textColor, fontSize: 14),
-                ),
-                Padding(
+    return MaterialApp(
+      supportedLocales: [
+        Locale("af"),
+        Locale("am"),
+        Locale("ar"),
+        Locale("az"),
+        Locale("be"),
+        Locale("bg"),
+        Locale("bn"),
+        Locale("bs"),
+        Locale("ca"),
+        Locale("cs"),
+        Locale("da"),
+        Locale("de"),
+        Locale("el"),
+        Locale("en"),
+        Locale("es"),
+        Locale("et"),
+        Locale("fa"),
+        Locale("fi"),
+        Locale("fr"),
+        Locale("gl"),
+        Locale("ha"),
+        Locale("he"),
+        Locale("hi"),
+        Locale("hr"),
+        Locale("hu"),
+        Locale("hy"),
+        Locale("id"),
+        Locale("is"),
+        Locale("it"),
+        Locale("ja"),
+        Locale("ka"),
+        Locale("kk"),
+        Locale("km"),
+        Locale("ko"),
+        Locale("ku"),
+        Locale("ky"),
+        Locale("lt"),
+        Locale("lv"),
+        Locale("mk"),
+        Locale("ml"),
+        Locale("mn"),
+        Locale("ms"),
+        Locale("nb"),
+        Locale("nl"),
+        Locale("nn"),
+        Locale("no"),
+        Locale("pl"),
+        Locale("ps"),
+        Locale("pt"),
+        Locale("ro"),
+        Locale("ru"),
+        Locale("sd"),
+        Locale("sk"),
+        Locale("sl"),
+        Locale("so"),
+        Locale("sq"),
+        Locale("sr"),
+        Locale("sv"),
+        Locale("ta"),
+        Locale("tg"),
+        Locale("th"),
+        Locale("tk"),
+        Locale("tr"),
+        Locale("tt"),
+        Locale("uk"),
+        Locale("ug"),
+        Locale("ur"),
+        Locale("uz"),
+        Locale("vi"),
+        Locale("zh")
+      ],
+      localizationsDelegates: [
+        CountryLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      home: Scaffold(
+        backgroundColor: HexColor('#E8F4FF'),
+        body: Stack(children: [
+          SingleChildScrollView(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.asset('assets/images/tmp_1623687415135.jpg',
+                      width: MediaQuery.of(context).size.width,
+                      fit: BoxFit.fitWidth),
+                  Padding(
                     padding: EdgeInsets.only(
-                        top: AppSize().height(context) * 0.02,
                         left: AppSize().width(context) * 0.1,
                         right: AppSize().width(context) * 0.1),
-                    child: Row(children: [
-                      Expanded(
-                        flex: 2,
-                        // padding: EdgeInsets.only(
-                        //     top: AppSize().height(context) * 0.02,
-                        //     left: AppSize().width(context) * 0.1,
-                        //     right: AppSize().width(context) * 0.1),
-                        child: countryFieldWidget(),
-                      ),
-                      Expanded(
-                        flex: 6,
-                        // padding: EdgeInsets.only(
-                        //     top: AppSize().height(context) * 0.02,
-                        //     left: AppSize().width(context) * 0.1,
-                        //     right: AppSize().width(context) * 0.1),
-                        child: phoneFieldWidget(),
-                      ),
-                    ])),
-                // Padding(
-                //   padding: EdgeInsets.only(
-                //       top: AppSize().height(context) * 0.02,
-                //       left: AppSize().width(context) * 0.1,
-                //       right: AppSize().width(context) * 0.1),
-                //   child: phoneFieldWidget(),
-                // ),
-                // Padding(
-                //   padding: EdgeInsets.only(
-                //       top: AppSize().height(context) * 0.04,
-                //       left: AppSize().width(context) * 0.1,
-                //       right: AppSize().width(context) * 0.1),
-                //   child: InkWell(
-                //     onTap: () {
-                //       formValidation();
-                //       // locator<NavigationService>().navigateToReplace(otpscreen);
-                //     },
-                //     child: Container(
-                //       width: AppSize().width(context) * 0.8,
-                //       height: AppSize().height(context) * 0.06,
-                //       color: AppColor.buttonColor,
-                //       child: getSemiBolText(
-                //         AppString().send.toUpperCase(),
-                //         textColor: AppColor.white,
-                //         fontSize: 14,
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: AppSize().height(context) * 0.04,
-                      left: AppSize().width(context) * 0.1,
-                      right: AppSize().width(context) * 0.1),
-                  child: SizedBox(
-                    width: AppSize().width(context) * 0.8,
-                    height: AppSize().height(context) * 0.06,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            AppColor.buttonColor),
-                      ),
-                      // color: AppColor.buttonColor,
-                      child: getSemiBolText(
-                        AppString().send.toUpperCase(),
-                        textColor: AppColor.white,
-                        fontSize: 14,
-                      ),
-                      onPressed: () {
-                        formValidation();
-                        // locator<NavigationService>().navigateToReplace(otpscreen);
-                      },
+                    child: InkWell(
+                      onTap: () {},
+                      child: getBoldText(AppString().yourphone,
+                          fontSize: 22, textColor: AppColor.textColor),
                     ),
                   ),
-                ),
-              ]),
-        ),
-        loader.isLoading == false
-            ? Container()
-            : Center(child: CircularProgressIndicator())
-      ]),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: AppSize().height(context) * 0.01,
+                        left: AppSize().width(context) * 0.1,
+                        right: AppSize().width(context) * 0.1),
+                    child: getRegularText(AppString().readyToUse,
+                        textColor: AppColor.textColor, fontSize: 14),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: AppSize().width(context) * 0.1,
+                        right: AppSize().width(context) * 0.1,
+                        top: AppSize().height(context) * 0.01),
+                    child: getRegularText(AppString().verifyPhone,
+                        textColor: AppColor.textColor, fontSize: 14),
+                  ),
+                  Padding(
+                      padding: EdgeInsets.only(
+                          top: AppSize().height(context) * 0.02,
+                          left: AppSize().width(context) * 0.1,
+                          right: AppSize().width(context) * 0.1),
+                      child: Row(children: [
+                        Expanded(
+                          flex: 3,
+                          // padding: EdgeInsets.only(
+                          //     top: AppSize().height(context) * 0.02,
+                          //     left: AppSize().width(context) * 0.1,
+                          //     right: AppSize().width(context) * 0.1),
+                          child: CountryCodePicker(
+                            textStyle: TextStyle(
+                              color: AppColor.textColor,
+                              fontSize: 16,
+                              fontFamily: 'PoppinsSemiBold',
+                              fontWeight: FontWeight.w600,
+                            ),
+                            onChanged: (val) {
+                              setState(() {
+                                country = val.dialCode.toString();
+                              });
+                              print('12+11' + val.dialCode.toString());
+                            },
+                            // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
+                            initialSelection: 'IN',
+                            // favorite: ['+39', 'FR'],
+                            // countryFilter: ['IT', 'FR'],
+                            // flag can be styled with BoxDecoration's `borderRadius` and `shape` fields
+                            // flagDecoration: BoxDecoration(
+                            //   borderRadius: BorderRadius.circular(1),
+                            // ),
+                            showFlag: false,
+                          ),
+                          // countryFieldWidget(),
+                        ),
+                        Expanded(
+                          flex: 6,
+                          // padding: EdgeInsets.only(
+                          //     top: AppSize().height(context) * 0.02,
+                          //     left: AppSize().width(context) * 0.1,
+                          //     right: AppSize().width(context) * 0.1),
+                          child: phoneFieldWidget(),
+                        ),
+                      ])),
+                  // Text(country),
+                  // CountryCodePicker(
+                  //   onChanged: print,
+                  //   // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
+                  //   initialSelection: 'IN',
+                  //   // favorite: ['+39', 'FR'],
+                  //   // countryFilter: ['IT', 'FR'],
+                  //   // flag can be styled with BoxDecoration's `borderRadius` and `shape` fields
+                  //   flagDecoration: BoxDecoration(
+                  //     borderRadius: BorderRadius.circular(7),
+                  //   ),
+                  // ),
+                  // Padding(
+                  //   padding: EdgeInsets.only(
+                  //       top: AppSize().height(context) * 0.02,
+                  //       left: AppSize().width(context) * 0.1,
+                  //       right: AppSize().width(context) * 0.1),
+                  //   child: phoneFieldWidget(),
+                  // ),
+                  // Padding(
+                  //   padding: EdgeInsets.only(
+                  //       top: AppSize().height(context) * 0.04,
+                  //       left: AppSize().width(context) * 0.1,
+                  //       right: AppSize().width(context) * 0.1),
+                  //   child: InkWell(
+                  //     onTap: () {
+                  //       formValidation();
+                  //       // locator<NavigationService>().navigateToReplace(otpscreen);
+                  //     },
+                  //     child: Container(
+                  //       width: AppSize().width(context) * 0.8,
+                  //       height: AppSize().height(context) * 0.06,
+                  //       color: AppColor.buttonColor,
+                  //       child: getSemiBolText(
+                  //         AppString().send.toUpperCase(),
+                  //         textColor: AppColor.white,
+                  //         fontSize: 14,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: AppSize().height(context) * 0.04,
+                        left: AppSize().width(context) * 0.1,
+                        right: AppSize().width(context) * 0.1),
+                    child: SizedBox(
+                      width: AppSize().width(context) * 0.8,
+                      height: AppSize().height(context) * 0.06,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              AppColor.buttonColor),
+                        ),
+                        // color: AppColor.buttonColor,
+                        child: getSemiBolText(
+                          AppString().send.toUpperCase(),
+                          textColor: AppColor.white,
+                          fontSize: 14,
+                        ),
+                        onPressed: () {
+                          formValidation();
+                          // locator<NavigationService>().navigateToReplace(otpscreen);
+                        },
+                      ),
+                    ),
+                  ),
+                ]),
+          ),
+          loader.isLoading == false
+              ? Container()
+              : Center(child: CircularProgressIndicator())
+        ]),
+      ),
     );
   }
 }

@@ -49,8 +49,7 @@ class _GroupListingState extends State<GroupListing>
               padding: EdgeInsets.only(right: AppSize().width(context) * 0.1),
               child: InkWell(
                 onTap: () {
-                  locator<NavigationService>()
-                      .navigateToReplace(settingsscreen);
+                  locator<NavigationService>().navigateTo(settingsscreen);
                   //
                 },
                 child: SvgPicture.asset(

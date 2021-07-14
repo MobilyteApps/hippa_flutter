@@ -54,7 +54,7 @@ class _PrivacyState extends State<Privacy> {
             getBoldText(AppString().privacy,
                 textColor: AppColor.black, fontSize: 24),
             SizedBox(height: AppSize().height(context) * 0.02),
-            getRegularText(AppString().forgot1,
+            getRegularText('Coming soon...',
                 textColor: AppColor.black, fontSize: 16),
           ],
         ),
