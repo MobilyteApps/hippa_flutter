@@ -162,7 +162,7 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
       prefs.setString('countryCode', country);
       var input = {
         "phonenumber": phoneCtrl.text.trim(),
-        "countryCode": counrtyCtrl.text.trim()
+        "countryCode": country
       };
       signInProvider.sendotpApi(
         loader,
