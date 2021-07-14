@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class AppColor {
-
   static const Color lightOrange = Color(0xffffc730);
   static const Color lightBlue = Color(0xFF7698CF);
-  static Color blue =Colors.blue;
+  static Color blue = Colors.blue;
   static Color? lightgrey = Colors.grey[50];
   static Color black = HexColor('#0E3746');
   static const Color dark = Color(0xff000000);

@@ -25,12 +25,12 @@ class ProsteBezierCurve extends CustomClipper<Path> {
 
   static BezierCurveDots calcCurveDots(BezierCurveSection param) {
     double x = (param.top.dx -
-        (param.start.dx * pow((1 - param.proportion), 2) +
-            pow(param.proportion, 2) * param.end.dx)) /
+            (param.start.dx * pow((1 - param.proportion), 2) +
+                pow(param.proportion, 2) * param.end.dx)) /
         (2 * param.proportion * (1 - param.proportion));
     double y = (param.top.dy -
-        (param.start.dy * pow((1 - param.proportion), 2) +
-            pow(param.proportion, 2) * param.end.dy)) /
+            (param.start.dy * pow((1 - param.proportion), 2) +
+                pow(param.proportion, 2) * param.end.dy)) /
         (2 * param.proportion * (1 - param.proportion));
 
     return BezierCurveDots(x, y, param.end.dx, param.end.dy);

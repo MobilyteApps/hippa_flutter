@@ -21,17 +21,22 @@ class _TermOfUseState extends State<TermOfUse> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.backgroundColor,
-        leading: Padding(
-          padding: EdgeInsets.all(AppSize().width(context) * 0.05),
-          child: SvgPicture.asset(
-            'assets/images/arrow_back.svg',
-            color: AppColor.black,
-            matchTextDirection: true,
+        leading: InkWell(
+          onTap: () {
+            locator<NavigationService>().backPress();
+          },
+          child: Padding(
+            padding: EdgeInsets.all(AppSize().width(context) * 0.05),
+            child: SvgPicture.asset(
+              'assets/images/arrow_back.svg',
+              color: AppColor.black,
+              matchTextDirection: true,
+            ),
           ),
         ),
         title: InkWell(
             onTap: () {
-              locator<NavigationService>().navigateToReplace(creategroup);
+              // locator<NavigationService>().navigateToReplace(creategroup);
             },
             child: Image.asset('assets/images/maskgroup.png')),
         centerTitle: true,
@@ -56,13 +61,19 @@ class _TermOfUseState extends State<TermOfUse> {
               padding: EdgeInsets.only(top: AppSize().height(context) * 0.01),
               child: SizedBox(
                 width: AppSize().width(context) * 0.8,
-                child: RaisedButton(
-                  color: AppColor.white,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      AppColor.white,
+                    ),
+                  ),
+                  // RaisedButton(
+                  //   color: AppColor.white,
                   child: getBoldText(AppString().cancel,
                       textColor: AppColor.black, fontSize: 14),
                   // child: Text(AppString().cancel,style:TextStyle(color:AppColor.blue,)),
                   onPressed: () {
-                    locator<NavigationService>().navigateToReplace(otpscreen);
+                    locator<NavigationService>().navigateToReplace(signin);
                   },
                 ),
               ),
@@ -71,13 +82,19 @@ class _TermOfUseState extends State<TermOfUse> {
               padding: EdgeInsets.only(top: AppSize().height(context) * 0.01),
               child: SizedBox(
                 width: AppSize().width(context) * 0.8,
-                child: RaisedButton(
-                  color: AppColor.buttonColor,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      AppColor.buttonColor,
+                    ),
+                  ),
+                  //  RaisedButton(
+                  //   color: AppColor.buttonColor,
                   child: getBoldText(AppString().accept,
                       textColor: AppColor.white, fontSize: 14),
                   // child: Text(AppString().accept,style:TextStyle(color:AppColor.white)),
                   onPressed: () {
-                    locator<NavigationService>().navigateToReplace(otpscreen);
+                    locator<NavigationService>().navigateToReplace(signin);
                   },
                 ),
               ),

@@ -1,8 +1,10 @@
 import 'package:app/common/navigator_service.dart';
 import 'package:app/language/application.dart';
+import 'package:app/network/api_provider.dart';
 import 'package:app/screens/splash_screen.dart';
 import 'package:app/theme/dark_theme_provider.dart';
 import 'package:app/theme/dark_theme_styles.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,14 +14,32 @@ import 'package:app/common/router.dart' as route;
 import 'common/get_it.dart';
 import 'language/app_translation_delegate.dart';
 
-void main() {
+List<CameraDescription> cameras = [];
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  cameras = await availableCameras();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   setupLocator();
-  runApp(MyApp());
+  runApp(MyApp(
+    cameras: cameras,
+  ));
+  // runApp(MyApp());
 }
 
+// void main() {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+//   setupLocator();
+//   runApp(MyApp());
+// }
+
 class MyApp extends StatefulWidget {
+  final List<CameraDescription> cameras;
+
+  MyApp({Key? key, required this.cameras}) : super(key: key);
+  // List<CameraDescription> cameras = [];
+  // MyApp({required this.cameras});
   // This widget is the root of your application.
   @override
   _MyAppState createState() => _MyAppState();
@@ -28,7 +48,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   AppTranslationsDelegate? _newLocaleDelegate;
   DarkThemeProvider themeChangeProvider = new DarkThemeProvider();
-
+  ApiProvider apiprovider = ApiProvider();
   void onLocaleChange(Locale locale) {
     setState(() {
       _newLocaleDelegate = AppTranslationsDelegate(newLocale: locale);
@@ -41,11 +61,16 @@ class _MyAppState extends State<MyApp> {
     getCurrentAppTheme();
     _newLocaleDelegate = AppTranslationsDelegate(newLocale: null);
     application.onLocaleChanged = onLocaleChange;
+    cam();
   }
 
   void getCurrentAppTheme() async {
     themeChangeProvider.darkTheme =
         await themeChangeProvider.darkThemePreference.getTheme();
+  }
+
+  void cam() {
+    apiprovider.cameras = widget.cameras;
   }
 
   @override

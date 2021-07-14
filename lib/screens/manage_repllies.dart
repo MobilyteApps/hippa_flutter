@@ -9,7 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class ManageReply extends StatefulWidget {
-  const ManageReply({ Key? key }) : super(key: key);
+  const ManageReply({Key? key}) : super(key: key);
 
   @override
   _ManageReplyState createState() => _ManageReplyState();
@@ -21,7 +21,8 @@ class _ManageReplyState extends State<ManageReply> {
     return Scaffold(
         appBar: AppBar(
           leading: Padding(
-            padding: EdgeInsets.only(top: AppSize().width(context) * 0.05,
+            padding: EdgeInsets.only(
+                top: AppSize().width(context) * 0.05,
                 bottom: AppSize().width(context) * 0.05,
                 right: AppSize().width(context) * 0.05,
                 left: AppSize().width(context) * 0.07),
@@ -31,20 +32,22 @@ class _ManageReplyState extends State<ManageReply> {
               matchTextDirection: true,
             ),
           ),
-          actions: [Padding(
-            padding: EdgeInsets.only(right: AppSize().width(context) * 0.1),
-            child: InkWell(
-              onTap: () {
-                locator<NavigationService>().navigateToReplace(urgentmessages);
-                //
-              },
-              child: SvgPicture.asset(
-                'assets/images/settings.svg',
-                color: AppColor.black,
-                matchTextDirection: true,
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(right: AppSize().width(context) * 0.1),
+              child: InkWell(
+                onTap: () {
+                  locator<NavigationService>()
+                      .navigateToReplace(urgentmessages);
+                  //
+                },
+                child: SvgPicture.asset(
+                  'assets/images/settings.svg',
+                  color: AppColor.black,
+                  matchTextDirection: true,
+                ),
               ),
-            ),
-          )
+            )
           ],
           backgroundColor: AppColor.white,
           title: getBoldText('Manage Replies',
@@ -67,19 +70,16 @@ class _ManageReplyState extends State<ManageReply> {
               ),
               title: getRegularText("I'm in a rounding. Call you soon.",
                   textColor: AppColor.black, fontSize: 16),
-              trailing:
-              Padding(
-                padding: EdgeInsets.only(
-                    right: AppSize().width(context) * 0.06),
-                child:
-                SvgPicture.asset(
+              trailing: Padding(
+                padding:
+                    EdgeInsets.only(right: AppSize().width(context) * 0.06),
+                child: SvgPicture.asset(
                   'assets/images/edit.svg',
                   color: AppColor.lightGrey,
                   matchTextDirection: true,
                 ),
               ),
             ),
-
             ListTile(
               leading: Padding(
                 padding: EdgeInsets.only(left: AppSize().width(context) * 0.02),
@@ -91,69 +91,18 @@ class _ManageReplyState extends State<ManageReply> {
               ),
               title: getRegularText(
                   "I'm out of the hospital. Call you when I get back.",
-                  textColor: AppColor.black, fontSize: 16),
-              trailing:
-              Padding(
-                padding: EdgeInsets.only(
-                    right: AppSize().width(context) * 0.06),
-                child:
-                SvgPicture.asset(
-                  'assets/images/edit.svg',
-                  color: AppColor.lightGrey,
-                  matchTextDirection: true,
-                ),
-              ),
-            ),
-
-            ListTile(
-              leading: Padding(
-                padding: EdgeInsets.only(left: AppSize().width(context) * 0.02),
-                child: SvgPicture.asset(
-                  'assets/images/menu.svg',
-                  color: AppColor.starGrey,
-                  matchTextDirection: true,
-                ),
-              ),
-              title: getRegularText(
-                  "May I help you?", textColor: AppColor.black, fontSize: 16),
-              trailing:
-              Padding(
-                padding: EdgeInsets.only(
-                    right: AppSize().width(context) * 0.06),
-                child:
-                SvgPicture.asset(
-                  'assets/images/edit.svg',
-                  color: AppColor.lightGrey,
-                  matchTextDirection: true,
-                ),
-              ),
-            ),
-
-            ListTile(
-              leading: Padding(
-                padding: EdgeInsets.only(left: AppSize().width(context) * 0.02),
-                child: SvgPicture.asset(
-                  'assets/images/menu.svg',
-                  color: AppColor.starGrey,
-                  matchTextDirection: true,
-                ),
-              ),
-              title: getRegularText(
-                  "I'm in meeting. Call you soon", textColor: AppColor.black,
+                  textColor: AppColor.black,
                   fontSize: 16),
-              trailing:
-              Padding(
-                padding: EdgeInsets.only(
-                    right: AppSize().width(context) * 0.06),
-                child:
-                SvgPicture.asset(
+              trailing: Padding(
+                padding:
+                    EdgeInsets.only(right: AppSize().width(context) * 0.06),
+                child: SvgPicture.asset(
                   'assets/images/edit.svg',
                   color: AppColor.lightGrey,
                   matchTextDirection: true,
                 ),
               ),
             ),
-
             ListTile(
               leading: Padding(
                 padding: EdgeInsets.only(left: AppSize().width(context) * 0.02),
@@ -163,24 +112,61 @@ class _ManageReplyState extends State<ManageReply> {
                   matchTextDirection: true,
                 ),
               ),
-              title: getRegularText(
-                  "I'm Busy", textColor: AppColor.black, fontSize: 16),
-              trailing:
-              Padding(
-                padding: EdgeInsets.only(
-                    right: AppSize().width(context) * 0.06),
-                child:
-                SvgPicture.asset(
+              title: getRegularText("May I help you?",
+                  textColor: AppColor.black, fontSize: 16),
+              trailing: Padding(
+                padding:
+                    EdgeInsets.only(right: AppSize().width(context) * 0.06),
+                child: SvgPicture.asset(
                   'assets/images/edit.svg',
                   color: AppColor.lightGrey,
                   matchTextDirection: true,
                 ),
               ),
             ),
-
-
+            ListTile(
+              leading: Padding(
+                padding: EdgeInsets.only(left: AppSize().width(context) * 0.02),
+                child: SvgPicture.asset(
+                  'assets/images/menu.svg',
+                  color: AppColor.starGrey,
+                  matchTextDirection: true,
+                ),
+              ),
+              title: getRegularText("I'm in meeting. Call you soon",
+                  textColor: AppColor.black, fontSize: 16),
+              trailing: Padding(
+                padding:
+                    EdgeInsets.only(right: AppSize().width(context) * 0.06),
+                child: SvgPicture.asset(
+                  'assets/images/edit.svg',
+                  color: AppColor.lightGrey,
+                  matchTextDirection: true,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Padding(
+                padding: EdgeInsets.only(left: AppSize().width(context) * 0.02),
+                child: SvgPicture.asset(
+                  'assets/images/menu.svg',
+                  color: AppColor.starGrey,
+                  matchTextDirection: true,
+                ),
+              ),
+              title: getRegularText("I'm Busy",
+                  textColor: AppColor.black, fontSize: 16),
+              trailing: Padding(
+                padding:
+                    EdgeInsets.only(right: AppSize().width(context) * 0.06),
+                child: SvgPicture.asset(
+                  'assets/images/edit.svg',
+                  color: AppColor.lightGrey,
+                  matchTextDirection: true,
+                ),
+              ),
+            ),
           ],
-        )
-    );
+        ));
   }
 }

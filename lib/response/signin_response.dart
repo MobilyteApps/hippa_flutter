@@ -1,9 +1,9 @@
 class SigninResponse {
-   int? status;
-   Data? data;
-   String? message;
+  int? status;
+  Data? data;
+  String? message;
 
-  SigninResponse({ this.status, this.data, this.message});
+  SigninResponse({this.status, this.data, this.message});
 
   SigninResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
@@ -26,8 +26,7 @@ class Data {
   User? user;
   String? token;
 
-  Data( {this.user, this.token
-  });
+  Data({this.user, this.token});
 
   Data.fromJson(Map<String, dynamic> json) {
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
@@ -45,58 +44,62 @@ class Data {
 }
 
 class User {
+  bool? active;
+  bool? deleted;
+  String? role;
+  bool? passwordModified;
   String? sId;
   String? name;
-  String ?email;
-  String ?gender;
-  String ?departmentname;
-  String ?address;
-  String? phonenumber;
-  String? username;
+  String? email;
+  String? address;
+  String? gender;
+  int? phonenumber;
   String? createdAt;
   String? updatedAt;
-  String? profilePicture;
 
   User(
+      {this.active,
+      this.deleted,
+      this.role,
+      this.passwordModified,
       this.sId,
       this.name,
       this.email,
-      this.gender,
-      this.departmentname,
       this.address,
+      this.gender,
       this.phonenumber,
-      this.username,
       this.createdAt,
-      this.updatedAt,
-      this.profilePicture);
+      this.updatedAt});
 
   User.fromJson(Map<String, dynamic> json) {
+    active = json['active'];
+    deleted = json['deleted'];
+    role = json['role'];
+    passwordModified = json['passwordModified'];
     sId = json['_id'];
     name = json['name'];
     email = json['email'];
-    gender = json['gender'];
-    departmentname = json['departmentname'];
     address = json['address'];
+    gender = json['gender'];
     phonenumber = json['phonenumber'];
-    username = json['username'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    profilePicture = json['profilePicture'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['active'] = this.active;
+    data['deleted'] = this.deleted;
+    data['role'] = this.role;
+    data['passwordModified'] = this.passwordModified;
     data['_id'] = this.sId;
     data['name'] = this.name;
     data['email'] = this.email;
-    data['gender'] = this.gender;
-    data['departmentname'] = this.departmentname;
     data['address'] = this.address;
+    data['gender'] = this.gender;
     data['phonenumber'] = this.phonenumber;
-    data['username'] = this.username;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
-    data['profilePicture'] = this.profilePicture;
     return data;
   }
 }

@@ -23,7 +23,7 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   int memberCount = 1;
 
-SigninResponse signinresponse= SigninResponse();
+  SigninResponse signinresponse = SigninResponse();
   bool isSwitched = false;
   var textValue = 'Switch is OFF';
 
@@ -43,6 +43,16 @@ SigninResponse signinresponse= SigninResponse();
     }
   }
 
+  void getotp() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      prefs.setString('islogged', '');
+    });
+    locator<NavigationService>().navigateToReplace(selection);
+
+    // startTime();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,16 +60,21 @@ SigninResponse signinresponse= SigninResponse();
         bottom: PreferredSize(
             child: Container(color: AppColor.grey, height: 1.0),
             preferredSize: Size.fromHeight(4.0)),
-        leading: Padding(
-          padding: EdgeInsets.only(
-              top: AppSize().width(context) * 0.05,
-              bottom: AppSize().width(context) * 0.05,
-              right: AppSize().width(context) * 0.05,
-              left: AppSize().width(context) * 0.07),
-          child: SvgPicture.asset(
-            'assets/images/arrow_back.svg',
-            color: AppColor.black,
-            matchTextDirection: true,
+        leading: InkWell(
+          onTap: () {
+            locator<NavigationService>().backPress();
+          },
+          child: Padding(
+            padding: EdgeInsets.only(
+                top: AppSize().width(context) * 0.05,
+                bottom: AppSize().width(context) * 0.05,
+                right: AppSize().width(context) * 0.05,
+                left: AppSize().width(context) * 0.07),
+            child: SvgPicture.asset(
+              'assets/images/arrow_back.svg',
+              color: AppColor.black,
+              matchTextDirection: true,
+            ),
           ),
         ),
         actions: [
@@ -67,7 +82,7 @@ SigninResponse signinresponse= SigninResponse();
             padding: EdgeInsets.only(right: AppSize().width(context) * 0.1),
             child: InkWell(
               onTap: () {
-                locator<NavigationService>().navigateToReplace(urgentmessages);
+                // locator<NavigationService>().navigateToReplace(urgentmessages);
                 //
               },
               child: SvgPicture.asset(
@@ -79,8 +94,7 @@ SigninResponse signinresponse= SigninResponse();
           )
         ],
         backgroundColor: AppColor.white,
-        title:
-            getBoldText('Settinngs', textColor: AppColor.black, fontSize: 18),
+        title: getBoldText('Settings', textColor: AppColor.black, fontSize: 18),
         centerTitle: true,
       ),
       backgroundColor: AppColor.white,
@@ -90,7 +104,7 @@ SigninResponse signinresponse= SigninResponse();
         children: [
           InkWell(
             onTap: () {
-              locator<NavigationService>().navigateToReplace(profile);
+              // locator<NavigationService>().navigateToReplace(profile);
             },
             child: Container(
               width: AppSize().width(context),
@@ -98,8 +112,8 @@ SigninResponse signinresponse= SigninResponse();
               decoration: BoxDecoration(
                   color: AppColor.white,
                   // borderRadius: BorderRadius.all(Radius.circular(10)),
-                  border:
-                      Border(bottom: BorderSide(width: 1, color: AppColor.grey))),
+                  border: Border(
+                      bottom: BorderSide(width: 1, color: AppColor.grey))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -182,7 +196,7 @@ SigninResponse signinresponse= SigninResponse();
           ),
           InkWell(
             onTap: () {
-              locator<NavigationService>().navigateToReplace(managereply);
+              // locator<NavigationService>().navigateToReplace(managereply);
             },
             child: Container(
               width: AppSize().width(context),
@@ -190,8 +204,8 @@ SigninResponse signinresponse= SigninResponse();
               decoration: BoxDecoration(
                   color: AppColor.white,
                   // borderRadius: BorderRadius.all(Radius.circular(10)),
-                  border:
-                      Border(bottom: BorderSide(width: 1, color: AppColor.grey))),
+                  border: Border(
+                      bottom: BorderSide(width: 1, color: AppColor.grey))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -257,12 +271,15 @@ SigninResponse signinresponse= SigninResponse();
                         CupertinoDialogAction(
                           child: getBoldText('CANCEL',
                               textColor: AppColor.black, fontSize: 14),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                         ),
                         CupertinoDialogAction(
                           child: getBoldText('SIGNOUT',
                               textColor: AppColor.buttonColor, fontSize: 14),
                           onPressed: () {
+                            getotp();
                             // SharedPreferences prefs = await SharedPreferences.getInstance();
                             // String abc = prefs.getString('user');
                             // print(abc);
@@ -279,8 +296,8 @@ SigninResponse signinresponse= SigninResponse();
               decoration: BoxDecoration(
                   color: AppColor.white,
                   // borderRadius: BorderRadius.all(Radius.circular(10)),
-                  border:
-                      Border(bottom: BorderSide(width: 1, color: AppColor.grey))),
+                  border: Border(
+                      bottom: BorderSide(width: 1, color: AppColor.grey))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,

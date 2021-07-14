@@ -14,8 +14,7 @@ class BezierCurveSection {
     required this.top,
     required this.end,
     this.proportion = 1 / 2,
-  })
-      : assert(proportion > 0),
+  })  : assert(proportion > 0),
         assert(proportion < 1);
 }
 
@@ -36,8 +35,7 @@ class ThirdOrderBezierCurveSection {
     required this.p3,
     required this.p4,
     this.smooth = .5,
-  })
-      : assert(smooth >= 0),
+  })  : assert(smooth >= 0),
         assert(smooth <= 1);
 }
 
@@ -50,10 +48,12 @@ class BezierCurveDots {
 
   double y2;
 
-  BezierCurveDots(this.x1,
-      this.y1,
-      this.x2,
-      this.y2,);
+  BezierCurveDots(
+    this.x1,
+    this.y1,
+    this.x2,
+    this.y2,
+  );
 
   List<double> getList() {
     return [x1, y1, x2, y2];
@@ -82,12 +82,14 @@ class ThirdOrderBezierCurveDots {
 
   double y3;
 
-  ThirdOrderBezierCurveDots(this.x1,
-      this.y1,
-      this.x2,
-      this.y2,
-      this.x3,
-      this.y3,);
+  ThirdOrderBezierCurveDots(
+    this.x1,
+    this.y1,
+    this.x2,
+    this.y2,
+    this.x3,
+    this.y3,
+  );
 
   List<double> getList() {
     return [x1, y1, x2, y2, x3, y3];

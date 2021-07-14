@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:app/common/colors.dart';
 import 'package:app/common/constants.dart';
@@ -30,16 +31,17 @@ class _SigninState extends State<Signin> {
       color: AppColor.white,
     ),
   );
-Loader loader = Loader();
+  Loader loader = Loader();
+  int a = 0;
   final LocalAuthentication auth = LocalAuthentication();
-
+  bool value = false;
   bool _canCheckBiometrics = false;
   List<BiometricType>? _availableBiometrics;
   String _authorized = 'Not Authorized';
 
   final usernameCtrl = TextEditingController();
-  final  passwordCtrl = TextEditingController();
-SignInProvider signInProvider=SignInProvider();
+  final passwordCtrl = TextEditingController();
+  SignInProvider signInProvider = SignInProvider();
   Widget usernameFieldWidget() {
     return TextFormField(
       // onChanged: formValidatonColor(),
@@ -92,7 +94,7 @@ SignInProvider signInProvider=SignInProvider();
           errorStyle: TextStyle(color: AppColor.white),
           prefixStyle: TextStyle(color: AppColor.white),
           fillColor: AppColor.transparent,
-          hintText: 'Username'),
+          hintText: 'Username/Email'),
     );
   }
 
@@ -157,13 +159,14 @@ SignInProvider signInProvider=SignInProvider();
       ApiProvider().showToastMsg("Please Enter email address");
     } else if (!validateEmail(usernameCtrl.text.trim())) {
       ApiProvider().showToastMsg("Please Enter a valid email address");
-    } else if (passwordCtrl.text.trim().isEmpty ==true) {
+    } else if (passwordCtrl.text.trim().isEmpty == true) {
       passwordCtrl.clear();
       ApiProvider().showToastMsg("Please Enter password");
     } else if (!validatePassword(passwordCtrl.text.trim())) {
       ApiProvider().showToastMsg("Incorrect username / password");
-    }
-     else {
+    } else if (value == false) {
+      ApiProvider().showToastMsg("requires agree term and conditions");
+    } else {
       var input = {
         "email": usernameCtrl.text.trim(),
         "password": passwordCtrl.text.trim()
@@ -189,15 +192,13 @@ SignInProvider signInProvider=SignInProvider();
     setState(() {
       _authorized = authenticated ? 'Authorized' : 'Not Authorized';
     });
-    if(_authorized=='Authorized'){
+    if (_authorized == 'Authorized') {
       ApiProvider().showToastMsg("Scanned successfully");
-              locator<NavigationService>().navigateToReplace(grouplisting);
-
-    }else{
+      locator<NavigationService>().navigateToReplace(grouplisting);
+    } else {
       ApiProvider().showToastMsg("Try again");
     }
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -271,21 +272,54 @@ SignInProvider signInProvider=SignInProvider();
                         alignment: Alignment.topRight,
                         child: InkWell(
                           onTap: () {
-                            locator<NavigationService>()
-                                .navigateToReplace(forgotpass);
+                            locator<NavigationService>().navigateTo(forgotpass);
                           },
                           child: getRegularText(AppString().forgotpass,
                               textColor: AppColor.white, fontSize: 16),
                         ),
                       ),
                     ),
+                    Row(
+                      children: [
+                        Checkbox(
+                            focusColor: Colors.grey,
+                            activeColor: Colors.white,
+                            checkColor: Colors.blue,
+                            value: this.value,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                this.value = value!;
+                              });
+                            }),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: AppSize().height(context) * 0.0,
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              locator<NavigationService>().navigateTo(privacy);
+                            },
+                            child: getRegularText(
+                                'I agree to all Term and conditions',
+                                textColor: AppColor.white,
+                                fontSize: 14),
+                          ),
+                        ),
+                      ],
+                    ),
                     Padding(
                       padding: EdgeInsets.only(
                           top: AppSize().height(context) * 0.03),
                       child: SizedBox(
                         width: AppSize().width(context) * 0.8,
-                        child: RaisedButton(
-                          color: AppColor.white,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              AppColor.white,
+                            ),
+                          ),
+                          // RaisedButton(
+                          //   color: AppColor.white,
                           child: getRegularText(AppString().signin,
                               textColor: AppColor.buttonColor, fontSize: 16),
                           onPressed: () {
@@ -294,25 +328,25 @@ SignInProvider signInProvider=SignInProvider();
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        top: AppSize().height(context) * 0.05,
-                      ),
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: getRegularText(AppString().donthaveaccount,
-                            textColor: AppColor.white, fontSize: 16),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.only(
+                    //     top: AppSize().height(context) * 0.05,
+                    //   ),
+                    //   child: Align(
+                    //     alignment: Alignment.topCenter,
+                    //     child: getRegularText(AppString().donthaveaccount,
+                    //         textColor: AppColor.white, fontSize: 16),
+                    //   ),
+                    // ),
                     Padding(
                       padding: EdgeInsets.only(
                         top: AppSize().height(context) * 0.06,
                       ),
                       child: InkWell(
                         onTap: () {
-                           _authenticate();
-                          },
-                                              child: Align(
+                          _authenticate();
+                        },
+                        child: Align(
                           alignment: Alignment.topCenter,
                           child: SvgPicture.asset(
                             'assets/images/fingerprint.svg',
@@ -324,6 +358,9 @@ SignInProvider signInProvider=SignInProvider();
                     ),
                   ]),
             ),
+            loader.isLoading == false
+                ? Container()
+                : Center(child: CircularProgressIndicator())
           ],
         ),
       ),

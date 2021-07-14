@@ -19,17 +19,14 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
           leading: Padding(
-            padding: EdgeInsets.only(top: AppSize().width(context) * 0.05,
+            padding: EdgeInsets.only(
+                top: AppSize().width(context) * 0.05,
                 bottom: AppSize().width(context) * 0.05,
                 right: AppSize().width(context) * 0.05,
                 left: AppSize().width(context) * 0.07),
@@ -39,29 +36,29 @@ class _ProfileState extends State<Profile> {
               matchTextDirection: true,
             ),
           ),
-          actions: [Padding(
-            padding: EdgeInsets.only(right: AppSize().width(context) * 0.1),
-            child: InkWell(
-              onTap: () {
-                locator<NavigationService>().navigateToReplace(manageprofile);
-                //
-              },
-              child: SvgPicture.asset(
-                'assets/images/settings.svg',
-                color: AppColor.white,
-                matchTextDirection: true,
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(right: AppSize().width(context) * 0.1),
+              child: InkWell(
+                onTap: () {
+                  locator<NavigationService>().navigateToReplace(manageprofile);
+                  //
+                },
+                child: SvgPicture.asset(
+                  'assets/images/settings.svg',
+                  color: AppColor.white,
+                  matchTextDirection: true,
+                ),
               ),
-            ),
-          )
+            )
           ],
           backgroundColor: AppColor.buttonColor,
-          title: getBoldText('Profile',
-              textColor: AppColor.white, fontSize: 18),
+          title:
+              getBoldText('Profile', textColor: AppColor.white, fontSize: 18),
           centerTitle: true,
         ),
         backgroundColor: AppColor.skyblue,
-        body:
-        Column(
+        body: Column(
           children: [
             Container(
               color: AppColor.skyblue,
@@ -72,60 +69,51 @@ class _ProfileState extends State<Profile> {
                     child: ClipPath(
                       clipper: ClippingClass(),
                       child: Container(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width,
+                        width: MediaQuery.of(context).size.width,
                         height: AppSize().height(context) * 0.4,
-                        decoration: BoxDecoration(
-                            color: AppColor.blue
-                        ),
+                        decoration: BoxDecoration(color: AppColor.blue),
                       ),
                     ),
                   ),
-
                   Padding(
                     padding: const EdgeInsets.only(bottom: 2.0),
                     child: ClipPath(
                       clipper: ClippingClass(),
                       child: Container(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width,
+                        width: MediaQuery.of(context).size.width,
                         height: AppSize().height(context) * 0.4,
-                        decoration: BoxDecoration(
-                            color: AppColor.transparent
+                        decoration: BoxDecoration(color: AppColor.transparent),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: AppSize().width(context) * 0.25,
+                              height: AppSize().height(context) * 0.2,
+                              decoration: BoxDecoration(
+                                color: AppColor.lightBlue,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                  child: Text(
+                                'A',
+                                style: TextStyle(color: Colors.red),
+                              )),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  bottom: AppSize().height(context) * 0.01),
+                              child: getBoldText('John Appleseed',
+                                  textColor: AppColor.white, fontSize: 20),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  bottom: AppSize().height(context) * 0.01),
+                              child: getRegularText('Chief of Medicine',
+                                  textColor: AppColor.white, fontSize: 16),
+                            ),
+                            getRegularText('Department of Medicine',
+                                textColor: AppColor.white, fontSize: 16),
+                          ],
                         ),
-                        child: Column(children: [
-                          Container(
-                            width: AppSize().width(context) * 0.25,
-                            height: AppSize().height(context) * 0.2,
-                            decoration: BoxDecoration(
-                              color: AppColor.lightBlue,
-                              shape: BoxShape.circle,),
-                            child: Center(child: Text(
-                              'A', style: TextStyle(color: Colors.red),)),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                bottom: AppSize().height(context) * 0.01),
-                            child: getBoldText(
-                                'John Appleseed', textColor: AppColor.white,
-                                fontSize: 20),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                bottom: AppSize().height(context) * 0.01),
-                            child: getRegularText(
-                                'Chief of Medicine', textColor: AppColor.white,
-                                fontSize: 16),
-                          ),
-                          getRegularText(
-                              'Department of Medicine', textColor: AppColor.white,
-                              fontSize: 16),
-
-                        ],),
                       ),
                     ),
                   ),
@@ -133,32 +121,30 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: AppSize().height(context) * 0.01,
+              padding: EdgeInsets.only(
+                  bottom: AppSize().height(context) * 0.01,
                   top: AppSize().height(context) * 0.05),
-              child: getBoldText(
-                  'Address'.toUpperCase(), textColor: Colors.black,
-                  fontSize: 14),
+              child: getBoldText('Address'.toUpperCase(),
+                  textColor: Colors.black, fontSize: 14),
             ),
             Padding(
-              padding: EdgeInsets.only(
-                  bottom: AppSize().height(context) * 0.01),
+              padding:
+                  EdgeInsets.only(bottom: AppSize().height(context) * 0.01),
               child: getRegularText('4331 Oliver Street White Settlement',
                   textColor: Colors.black, fontSize: 16),
             ),
-
-
-            Padding(
-              padding: EdgeInsets.only(bottom: AppSize().height(context) * 0.01,
-                  top: AppSize().height(context) * 0.01),
-              child: getBoldText(
-                  'Office Phone'.toUpperCase(), textColor: Colors.black,
-                  fontSize: 14),
-            ),
             Padding(
               padding: EdgeInsets.only(
-                  bottom: AppSize().height(context) * 0.01),
-              child: getRegularText(
-                  '972-951-6563', textColor: Colors.black, fontSize: 16),
+                  bottom: AppSize().height(context) * 0.01,
+                  top: AppSize().height(context) * 0.01),
+              child: getBoldText('Office Phone'.toUpperCase(),
+                  textColor: Colors.black, fontSize: 14),
+            ),
+            Padding(
+              padding:
+                  EdgeInsets.only(bottom: AppSize().height(context) * 0.01),
+              child: getRegularText('972-951-6563',
+                  textColor: Colors.black, fontSize: 16),
             ),
           ],
         ));
@@ -170,8 +156,8 @@ class ClippingClass extends CustomClipper<Path> {
   Path getClip(Size size) {
     var path = Path();
     path.lineTo(0.0, size.height - 40);
-    path.quadraticBezierTo(size.width / 4, size.height,
-        size.width / 2, size.height);
+    path.quadraticBezierTo(
+        size.width / 4, size.height, size.width / 2, size.height);
     path.quadraticBezierTo(size.width - (size.width / 4), size.height,
         size.width, size.height - 40);
     path.lineTo(size.width, 0.0);
@@ -182,7 +168,6 @@ class ClippingClass extends CustomClipper<Path> {
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
-
 
 class CustomSelfClipper1 extends CustomClipper<Path> {
   @override

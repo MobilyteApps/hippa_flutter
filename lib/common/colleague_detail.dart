@@ -17,29 +17,28 @@ class ColleagueDetail extends StatelessWidget {
           color: AppColor.white,
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
-        child:
-        Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
-
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Center(
-
                 child: Container(
                   width: AppSize().width(context) * 0.16,
                   height: AppSize().height(context) * 0.2,
                   decoration: BoxDecoration(
                     color: AppColor.lightBlue,
-                    shape: BoxShape.circle,),
+                    shape: BoxShape.circle,
+                  ),
                   child: Center(
-                      child: Text('A', style: TextStyle(color: Colors.red),)),
+                      child: Text(
+                    'A',
+                    style: TextStyle(color: Colors.red),
+                  )),
                 ),
-
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -48,12 +47,10 @@ class ColleagueDetail extends StatelessWidget {
                 children: [
                   getBoldText('Justin Oliver',
                       textColor: AppColor.black, fontSize: 16),
-                  getRegularText(
-                      'physician', textColor: AppColor.black, fontSize: 14),
-                  getRegularText(
-                      '12 Johnson Thoroughway', textColor: AppColor.black,
-                      fontSize: 14),
-
+                  getRegularText('physician',
+                      textColor: AppColor.black, fontSize: 14),
+                  getRegularText('12 Johnson Thoroughway',
+                      textColor: AppColor.black, fontSize: 14),
                 ],
               ),
             )

@@ -30,7 +30,7 @@ class AppString {
   String creategroup = 'Create Group';
   String groupname = 'Group Name';
   String addteammember = 'Add Team Member';
-  String chooseverification= 'Choose Login Options';
+  String chooseverification = 'Choose Login Options';
   String grouplisting = 'Group Listing';
   String signInUrl = 'signin';
 }

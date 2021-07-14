@@ -16,3 +16,6 @@ const String manageprofile = 'manageprofile';
 const String fingerprint = 'fingerprint';
 const String selection = 'selection';
 const String youremail = 'youremail';
+const String changepass = 'changepass';
+const String camera = 'camera';
+const String n = 'n';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 Text getBoldText(String text,
     {Color textColor = const Color.fromRGBO(52, 52, 52, 1.0),
-      double fontSize = 16}) {
+    double fontSize = 16}) {
   return Text(text,
       style: TextStyle(
         color: textColor,
@@ -14,7 +14,7 @@ Text getBoldText(String text,
 
 Text getSemiBolText(String text,
     {Color textColor = const Color.fromRGBO(52, 52, 52, 1.0),
-      double fontSize = 16}) {
+    double fontSize = 16}) {
   return Text(text,
       style: TextStyle(
         color: textColor,
@@ -26,7 +26,7 @@ Text getSemiBolText(String text,
 
 Text getLightText(String text,
     {Color textColor = const Color.fromRGBO(52, 52, 52, 1.0),
-      double fontSize = 16}) {
+    double fontSize = 16}) {
   return Text(text,
       style: TextStyle(
         color: textColor,
@@ -37,7 +37,7 @@ Text getLightText(String text,
 
 Text getMediumText(String text,
     {Color textColor = const Color.fromRGBO(52, 52, 52, 1.0),
-      double fontSize = 16}) {
+    double fontSize = 16}) {
   return Text(text,
       style: TextStyle(
         color: textColor,
@@ -48,8 +48,8 @@ Text getMediumText(String text,
 
 Text getRegularText(String text,
     {Color textColor = const Color.fromRGBO(52, 52, 52, 1.0),
-      double fontSize = 16,
-      dynamic alignment = TextAlign.center}) {
+    double fontSize = 16,
+    dynamic alignment = TextAlign.center}) {
   return Text(text,
       textAlign: alignment,
       style: TextStyle(

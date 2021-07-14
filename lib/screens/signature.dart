@@ -247,8 +247,8 @@ class _SignaturePageState extends State<SignaturePage> {
           height: AppSize().height(context) * 0.05,
           width: AppSize().width(context) * 0.35,
           child: Center(
-              child:
-                  getBoldText('SEND', textColor: AppColor.white, fontSize: 14))));
+              child: getBoldText('SEND',
+                  textColor: AppColor.white, fontSize: 14))));
 
   Widget buildClear() => InkWell(
       onTap: () => controller.clear(),

@@ -22,8 +22,9 @@ class _CreateGroupState extends State<CreateGroup> {
   final creategroupctrl = TextEditingController();
   final border = OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(10.0)),
-      borderSide: BorderSide(color: AppColor.white,)
-  );
+      borderSide: BorderSide(
+        color: AppColor.white,
+      ));
 
   Widget groupnameFieldWidget() {
     return TextFormField(
@@ -38,8 +39,9 @@ class _CreateGroupState extends State<CreateGroup> {
           isDense: true,
           border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
-              borderSide: BorderSide(color: AppColor.white,)
-          ),
+              borderSide: BorderSide(
+                color: AppColor.white,
+              )),
           hintStyle: TextStyle(
             color: AppColor.textColor,
             fontSize: 16,
@@ -60,14 +62,18 @@ class _CreateGroupState extends State<CreateGroup> {
           memberCount++;
         });
       },
-
       child: Container(
           width: AppSize().width(context) * 0.16,
           height: AppSize().height(context) * 0.2,
           decoration: BoxDecoration(
             color: AppColor.white,
-            shape: BoxShape.circle,),
-          child: Icon(Icons.add, size: 40, color: AppColor.blue,)),
+            shape: BoxShape.circle,
+          ),
+          child: Icon(
+            Icons.add,
+            size: 40,
+            color: AppColor.blue,
+          )),
     );
   }
 
@@ -81,9 +87,13 @@ class _CreateGroupState extends State<CreateGroup> {
             height: AppSize().height(context) * 0.2,
             decoration: BoxDecoration(
               color: AppColor.white,
-              shape: BoxShape.circle,),
+              shape: BoxShape.circle,
+            ),
             child: Center(
-                child: Text('A', style: TextStyle(color: Colors.red),)),
+                child: Text(
+              'A',
+              style: TextStyle(color: Colors.red),
+            )),
           ),
           Positioned(
               left: AppSize().width(context) * 0.11,
@@ -98,8 +108,13 @@ class _CreateGroupState extends State<CreateGroup> {
                     height: AppSize().height(context) * 0.09,
                     decoration: BoxDecoration(
                       color: AppColor.red,
-                      shape: BoxShape.circle,),
-                    child: Icon(Icons.close, size: 10, color: AppColor.white,)),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.close,
+                      size: 10,
+                      color: AppColor.white,
+                    )),
               )),
         ],
       ),
@@ -126,14 +141,15 @@ class _CreateGroupState extends State<CreateGroup> {
             matchTextDirection: true,
           ),
         ),
-        actions: [Padding(
-          padding: EdgeInsets.only(right: AppSize().width(context) * 0.03),
-          child: SvgPicture.asset(
-            'assets/images/settings.svg',
-            color: AppColor.black,
-            matchTextDirection: true,
-          ),
-        )
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: AppSize().width(context) * 0.03),
+            child: SvgPicture.asset(
+              'assets/images/settings.svg',
+              color: AppColor.black,
+              matchTextDirection: true,
+            ),
+          )
         ],
         backgroundColor: AppColor.backgroundColor,
         title: getBoldText(AppString().creategroup,
@@ -157,7 +173,6 @@ class _CreateGroupState extends State<CreateGroup> {
               SizedBox(height: AppSize().height(context) * 0.02),
               getBoldText(AppString().addteammember,
                   textColor: AppColor.black, fontSize: 16),
-
               Container(
                   width: AppSize().width(context),
                   height: AppSize().height(context) * 0.14,
@@ -165,16 +180,21 @@ class _CreateGroupState extends State<CreateGroup> {
                       itemCount: memberCount + 1,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (BuildContext context, int index) {
-                        return
-                          index != memberCount ? memberWidget() : addWidget();
+                        return index != memberCount
+                            ? memberWidget()
+                            : addWidget();
                       })),
               Padding(
                 padding: EdgeInsets.only(top: AppSize().height(context) * 0.02),
                 child: SizedBox(
                   height: AppSize().height(context) * 0.07,
                   width: AppSize().width(context) * 0.8,
-                  child: RaisedButton(
-                    color: AppColor.white,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        AppColor.white,
+                      ),
+                    ),
                     child: getBoldText(AppString().cancel,
                         textColor: AppColor.black, fontSize: 14),
                     onPressed: () {
@@ -188,13 +208,19 @@ class _CreateGroupState extends State<CreateGroup> {
                 child: SizedBox(
                   height: AppSize().height(context) * 0.07,
                   width: AppSize().width(context) * 0.8,
-                  child: RaisedButton(
-                    color: AppColor.buttonColor,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        AppColor.buttonColor,
+                      ),
+                    ),
+                    //  RaisedButton(
+                    //   color: AppColor.buttonColor,
                     child: getBoldText(AppString().confirm,
                         textColor: AppColor.white, fontSize: 14),
                     onPressed: () {
-                      locator<NavigationService>().navigateToReplace(
-                          grouplisting);
+                      locator<NavigationService>()
+                          .navigateToReplace(grouplisting);
                     },
                   ),
                 ),

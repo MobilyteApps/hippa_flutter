@@ -4,6 +4,7 @@ import 'package:app/common/size.dart';
 import 'package:app/common/textstyle.dart';
 import 'package:app/screens/colleagues.dart';
 import 'package:app/screens/favourite_group.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:app/common/get_it.dart';
 import 'package:app/common/navigator_route.dart';
@@ -20,7 +21,7 @@ class GroupListing extends StatefulWidget {
 class _GroupListingState extends State<GroupListing>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
-
+  int a = 0;
   @override
   void initState() {
     _tabController = new TabController(length: 2, vsync: this);
@@ -31,18 +32,18 @@ class _GroupListingState extends State<GroupListing>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: Padding(
-            padding: EdgeInsets.only(
-                top: AppSize().width(context) * 0.05,
-                bottom: AppSize().width(context) * 0.05,
-                right: AppSize().width(context) * 0.05,
-                left: AppSize().width(context) * 0.07),
-            child: SvgPicture.asset(
-              'assets/images/arrow_back.svg',
-              color: AppColor.black,
-              matchTextDirection: true,
-            ),
-          ),
+          // leading: Padding(
+          //   padding: EdgeInsets.only(
+          //       top: AppSize().width(context) * 0.05,
+          //       bottom: AppSize().width(context) * 0.05,
+          //       right: AppSize().width(context) * 0.05,
+          //       left: AppSize().width(context) * 0.07),
+          //   child: SvgPicture.asset(
+          //     'assets/images/arrow_back.svg',
+          //     color: AppColor.black,
+          //     matchTextDirection: true,
+          //   ),
+          // ),
           actions: [
             Padding(
               padding: EdgeInsets.only(right: AppSize().width(context) * 0.1),

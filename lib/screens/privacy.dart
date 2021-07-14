@@ -21,17 +21,22 @@ class _PrivacyState extends State<Privacy> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.backgroundColor,
-        leading: Padding(
-          padding: EdgeInsets.all(AppSize().width(context) * 0.05),
-          child: SvgPicture.asset(
-            'assets/images/arrow_back.svg',
-            color: AppColor.black,
-            matchTextDirection: true,
+        leading: InkWell(
+          onTap: () {
+            locator<NavigationService>().backPress();
+          },
+          child: Padding(
+            padding: EdgeInsets.all(AppSize().width(context) * 0.05),
+            child: SvgPicture.asset(
+              'assets/images/arrow_back.svg',
+              color: AppColor.black,
+              matchTextDirection: true,
+            ),
           ),
         ),
         title: InkWell(
             onTap: () {
-              locator<NavigationService>().navigateToReplace(term);
+              locator<NavigationService>().navigateTo(term);
             },
             child: Image.asset('assets/images/maskgroup.png')),
         centerTitle: true,

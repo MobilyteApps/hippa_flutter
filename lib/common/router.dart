@@ -1,4 +1,6 @@
 import 'package:app/common/navigator_route.dart';
+import 'package:app/screens/CameraScreen.dart';
+import 'package:app/screens/change_password.dart';
 import 'package:app/screens/chat_screen.dart';
 import 'package:app/screens/create_group.dart';
 import 'package:app/screens/fingerprint.dart';
@@ -6,6 +8,7 @@ import 'package:app/screens/forgot_password_screen.dart';
 import 'package:app/screens/group_listing.dart';
 import 'package:app/screens/manage_profile.dart';
 import 'package:app/screens/manage_repllies.dart';
+import 'package:app/screens/notification.dart';
 import 'package:app/screens/otp_screen.dart';
 import 'package:app/screens/privacy.dart';
 import 'package:app/screens/profile_screen.dart';
@@ -44,6 +47,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => UrgentMessages());
       case chatscreen:
         return MaterialPageRoute(builder: (_) => ChatScreen());
+      case changepass:
+        return MaterialPageRoute(builder: (_) => ChangePassword());
       case settingsscreen:
         return MaterialPageRoute(builder: (_) => Settings());
       case profile:
@@ -55,9 +60,13 @@ class Router {
       case fingerprint:
         return MaterialPageRoute(builder: (_) => FingerPrint());
       case selection:
-        return MaterialPageRoute(builder: (_) => Selection()); 
+        return MaterialPageRoute(builder: (_) => Selection());
       case youremail:
-        return MaterialPageRoute(builder: (_) => YourEmailScreen());    
+        return MaterialPageRoute(builder: (_) => YourEmailScreen());
+      case camera:
+        return MaterialPageRoute(builder: (_) => CameraScreen());
+      case n:
+        return MaterialPageRoute(builder: (_) => N());
       default:
         return MaterialPageRoute(builder: (_) {
           return Scaffold(

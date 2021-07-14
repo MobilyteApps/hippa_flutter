@@ -16,22 +16,17 @@ class ManageProfile extends StatefulWidget {
 }
 
 class _ManageProfileState extends State<ManageProfile> {
-
-
   final usernameCtrl = TextEditingController();
   final chiefofmedCtrl = TextEditingController();
   final deptnameCtrl = TextEditingController();
   final addressCtrl = TextEditingController();
   final officenameCtrl = TextEditingController();
 
-
   Widget usernamesFieldWidget() {
     return TextFormField(
       // onChanged: formValidatonColor(),
       validator: (value) {
-        if (value
-            ?.trim()
-            .isEmpty ?? true) {
+        if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Username';
         } else if (value!.length < 10) {
           return 'Please Enter Valid Username';
@@ -52,16 +47,16 @@ class _ManageProfileState extends State<ManageProfile> {
         LengthLimitingTextInputFormatter(10)
       ],
       decoration: InputDecoration(
-
           labelStyle: TextStyle(color: AppColor.white),
           enabledBorder: border,
           contentPadding:
-          new EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
+              new EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
           focusedBorder: border,
           counterText: "",
           border: border,
           hintStyle: TextStyle(
-            color: AppColor.white, fontWeight: FontWeight.w700,
+            color: AppColor.white,
+            fontWeight: FontWeight.w700,
             fontFamily: 'JosenfinSansBold',
             fontSize: 20,
           ),
@@ -80,9 +75,7 @@ class _ManageProfileState extends State<ManageProfile> {
     return TextFormField(
       // onChanged: formValidatonColor(),
       validator: (value) {
-        if (value
-            ?.trim()
-            .isEmpty ?? true) {
+        if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Username';
         } else if (value!.length < 10) {
           return 'Please Enter Valid Username';
@@ -96,22 +89,23 @@ class _ManageProfileState extends State<ManageProfile> {
         color: Colors.black,
         fontFamily: 'JosenfinSansRegular',
         fontWeight: FontWeight.w400,
-        fontSize: 16,),
+        fontSize: 16,
+      ),
       maxLength: 10,
       inputFormatters: <TextInputFormatter>[
         LengthLimitingTextInputFormatter(10)
       ],
       decoration: InputDecoration(
-
           labelStyle: TextStyle(color: AppColor.white),
           enabledBorder: borders,
           contentPadding:
-          new EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
+              new EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
           focusedBorder: borders,
           counterText: "",
           border: borders,
           hintStyle: TextStyle(
-            color: Colors.black, fontFamily: 'JosenfinSansRegular',
+            color: Colors.black,
+            fontFamily: 'JosenfinSansRegular',
             fontWeight: FontWeight.w400,
             fontSize: 16,
           ),
@@ -126,14 +120,11 @@ class _ManageProfileState extends State<ManageProfile> {
     );
   }
 
-
   Widget officeFieldWidget() {
     return TextFormField(
       // onChanged: formValidatonColor(),
       validator: (value) {
-        if (value
-            ?.trim()
-            .isEmpty ?? true) {
+        if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Username';
         } else if (value!.length < 10) {
           return 'Please Enter Valid Username';
@@ -144,7 +135,8 @@ class _ManageProfileState extends State<ManageProfile> {
       controller: officenameCtrl,
       textAlign: TextAlign.center,
       style: TextStyle(
-        color: Colors.black, fontFamily: 'JosenfinSansRegular',
+        color: Colors.black,
+        fontFamily: 'JosenfinSansRegular',
         fontWeight: FontWeight.w400,
         fontSize: 16,
       ),
@@ -153,16 +145,16 @@ class _ManageProfileState extends State<ManageProfile> {
         LengthLimitingTextInputFormatter(10)
       ],
       decoration: InputDecoration(
-
           labelStyle: TextStyle(color: AppColor.white),
           enabledBorder: borders,
           contentPadding:
-          new EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
+              new EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
           focusedBorder: borders,
           counterText: "",
           border: borders,
           hintStyle: TextStyle(
-            color: Colors.black, fontFamily: 'JosenfinSansRegular',
+            color: Colors.black,
+            fontFamily: 'JosenfinSansRegular',
             fontWeight: FontWeight.w400,
             fontSize: 16,
           ),
@@ -181,9 +173,7 @@ class _ManageProfileState extends State<ManageProfile> {
     return TextFormField(
       // onChanged: formValidatonColor(),
       validator: (value) {
-        if (value
-            ?.trim()
-            .isEmpty ?? true) {
+        if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Username';
         } else if (value!.length < 10) {
           return 'Please Enter Valid Username';
@@ -204,11 +194,10 @@ class _ManageProfileState extends State<ManageProfile> {
         LengthLimitingTextInputFormatter(10)
       ],
       decoration: InputDecoration(
-
           labelStyle: TextStyle(color: AppColor.white),
           enabledBorder: border,
           contentPadding:
-          new EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
+              new EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
           focusedBorder: border,
           counterText: "",
           border: border,
@@ -233,9 +222,7 @@ class _ManageProfileState extends State<ManageProfile> {
     return TextFormField(
       // onChanged: formValidatonColor(),
       validator: (value) {
-        if (value
-            ?.trim()
-            .isEmpty ?? true) {
+        if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Username';
         } else if (value!.length < 10) {
           return 'Please Enter Valid Username';
@@ -256,11 +243,10 @@ class _ManageProfileState extends State<ManageProfile> {
         LengthLimitingTextInputFormatter(10)
       ],
       decoration: InputDecoration(
-
           labelStyle: TextStyle(color: AppColor.white),
           enabledBorder: border,
           contentPadding:
-          new EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
+              new EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
           focusedBorder: border,
           counterText: "",
           border: border,
@@ -271,7 +257,6 @@ class _ManageProfileState extends State<ManageProfile> {
             fontSize: 16,
           ),
           filled: true,
-
           counterStyle: TextStyle(color: AppColor.white),
           suffixStyle: TextStyle(color: AppColor.white),
           helperStyle: TextStyle(color: AppColor.white),
@@ -294,13 +279,13 @@ class _ManageProfileState extends State<ManageProfile> {
     ),
   );
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           leading: Padding(
-            padding: EdgeInsets.only(top: AppSize().width(context) * 0.05,
+            padding: EdgeInsets.only(
+                top: AppSize().width(context) * 0.05,
                 bottom: AppSize().width(context) * 0.05,
                 right: AppSize().width(context) * 0.05,
                 left: AppSize().width(context) * 0.07),
@@ -316,8 +301,7 @@ class _ManageProfileState extends State<ManageProfile> {
           centerTitle: true,
         ),
         backgroundColor: AppColor.skyblue,
-        body:
-        SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Column(
             children: [
               Container(
@@ -329,61 +313,57 @@ class _ManageProfileState extends State<ManageProfile> {
                       child: ClipPath(
                         clipper: ClippingClass(),
                         child: Container(
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width,
+                          width: MediaQuery.of(context).size.width,
                           height: AppSize().height(context) * 0.43,
-                          decoration: BoxDecoration(
-                              color: AppColor.blue
-                          ),
+                          decoration: BoxDecoration(color: AppColor.blue),
                         ),
                       ),
                     ),
-
                     Padding(
                       padding: const EdgeInsets.only(bottom: 2.0),
                       child: ClipPath(
                         clipper: ClippingClass(),
                         child: Container(
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width,
+                          width: MediaQuery.of(context).size.width,
                           height: AppSize().height(context) * 0.4,
-                          decoration: BoxDecoration(
-                              color: AppColor.transparent
+                          decoration:
+                              BoxDecoration(color: AppColor.transparent),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: AppSize().width(context) * 0.25,
+                                height: AppSize().height(context) * 0.14,
+                                decoration: BoxDecoration(
+                                  color: AppColor.lightBlue,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                    child: Text(
+                                  'A',
+                                  style: TextStyle(color: Colors.red),
+                                )),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: AppSize().height(context) * 0.001,
+                                    left: AppSize().width(context) * 0.1,
+                                    right: AppSize().width(context) * 0.1),
+                                child: usernamesFieldWidget(),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: AppSize().width(context) * 0.1,
+                                    right: AppSize().width(context) * 0.1),
+                                child: chiefofmedFieldWidget(),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: AppSize().width(context) * 0.1,
+                                    right: AppSize().width(context) * 0.1),
+                                child: departmentnameFieldWidget(),
+                              ),
+                            ],
                           ),
-                          child: Column(children: [
-                            Container(
-                              width: AppSize().width(context) * 0.25,
-                              height: AppSize().height(context) * 0.14,
-                              decoration: BoxDecoration(
-                                color: AppColor.lightBlue,
-                                shape: BoxShape.circle,),
-                              child: Center(child: Text(
-                                'A', style: TextStyle(color: Colors.red),)),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: AppSize().height(context) * 0.001,
-                                  left: AppSize().width(context) * 0.1,
-                                  right: AppSize().width(context) * 0.1),
-                              child: usernamesFieldWidget(),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: AppSize().width(context) * 0.1,
-                                  right: AppSize().width(context) * 0.1),
-                              child: chiefofmedFieldWidget(),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: AppSize().width(context) * 0.1,
-                                  right: AppSize().width(context) * 0.1),
-                              child: departmentnameFieldWidget(),
-                            ),
-                          ],),
                         ),
                       ),
                     ),
@@ -394,9 +374,8 @@ class _ManageProfileState extends State<ManageProfile> {
                 padding: EdgeInsets.only(
                     bottom: AppSize().height(context) * 0.01,
                     top: AppSize().height(context) * 0.05),
-                child: getBoldText(
-                    'Address'.toUpperCase(), textColor: Colors.black,
-                    fontSize: 14),
+                child: getBoldText('Address'.toUpperCase(),
+                    textColor: Colors.black, fontSize: 14),
               ),
               Padding(
                 padding: EdgeInsets.only(
@@ -405,14 +384,12 @@ class _ManageProfileState extends State<ManageProfile> {
                     right: AppSize().width(context) * 0.1),
                 child: addressFieldWidget(),
               ),
-
               Padding(
                 padding: EdgeInsets.only(
                     bottom: AppSize().height(context) * 0.01,
                     top: AppSize().height(context) * 0.05),
-                child: getBoldText(
-                    'Office Phone'.toUpperCase(), textColor: Colors.black,
-                    fontSize: 14),
+                child: getBoldText('Office Phone'.toUpperCase(),
+                    textColor: Colors.black, fontSize: 14),
               ),
               Padding(
                 padding: EdgeInsets.only(
@@ -432,8 +409,8 @@ class ClippingClass extends CustomClipper<Path> {
   Path getClip(Size size) {
     var path = Path();
     path.lineTo(0.0, size.height - 40);
-    path.quadraticBezierTo(size.width / 4, size.height,
-        size.width / 2, size.height);
+    path.quadraticBezierTo(
+        size.width / 4, size.height, size.width / 2, size.height);
     path.quadraticBezierTo(size.width - (size.width / 4), size.height,
         size.width, size.height - 40);
     path.lineTo(size.width, 0.0);
@@ -444,7 +421,6 @@ class ClippingClass extends CustomClipper<Path> {
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
-
 
 class CustomSelfClipper1 extends CustomClipper<Path> {
   @override
