@@ -5,12 +5,6 @@ import 'package:app/common/textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app/common/get_it.dart';
-import 'package:app/common/navigator_route.dart';
-import 'package:app/common/navigator_service.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
-import 'package:app/common/get_it.dart';
-import 'package:app/common/navigator_route.dart';
 import 'package:app/common/navigator_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:app/network/api_provider.dart';
@@ -47,7 +41,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       controller: emailCtrl,
       // maxLength: 10,
       inputFormatters: <TextInputFormatter>[
-        new WhitelistingTextInputFormatter(RegExp("[a-zA-Z0-9@.+-_ ]")),
+        new FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9@.+-_ ]")),
       ],
       decoration: InputDecoration(
           enabledBorder: border,
