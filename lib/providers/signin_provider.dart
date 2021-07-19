@@ -93,7 +93,7 @@ class SignInProvider with ChangeNotifier {
     });
   }
 
-  createGroup(Loader loader, Map<String, String> input) async {
+  createGroup(Loader loader, Map<String, dynamic> input) async {
     ApiProvider().creategroup(loader, input).then((value) {
       if (value != null) {
         this.createGroupResponse = value;

@@ -377,20 +377,24 @@ class ApiProvider {
   }
 
   Future<CreateGroupResponse> creategroup(
-      Loader loader, Map<String, String> input) async {
+      Loader loader, Map<String, dynamic> input) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, String> header = new Map();
-    print("sign in api $input----${baseurl + AppString().signInUrl}");
+    // print("sign in api $input----${baseurl + AppString().signInUrl}");
     header["content-type"] = "application/x-www-form-urlencoded";
     String? token = prefs.getString('token');
-    print(prefs.getString('token'));
+    // print("__________");
+    print(json.encode(input));
+    print("#####");
+    // print(prefs.getString('token'));
     loader.setloader(true);
     try {
       var postUri = Uri.parse('$userurl' + 'createGroup');
-      print(input.toString().toString());
-      final response = await http.post(postUri, body: input, headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json',
+      // print(input.toString().toString());
+      print(postUri);
+      final response = await http.post(postUri, body: json.encode(input), headers: {
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        // 'Accept': 'application/json',
         'Authorization': 'Bearer ${token.toString()}',
       });
       // final response = await http.post(postUri, body: input, headers: header);
@@ -431,6 +435,7 @@ class ApiProvider {
     header["content-type"] = "application/x-www-form-urlencoded";
     String? token = prefs.getString('token');
     print(prefs.getString('token'));
+    print(token);
     loader.setloader(true);
     try {
       var postUri = Uri.parse('$userurl' + 'getAllUsers' + '?search=$search');

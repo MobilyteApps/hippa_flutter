@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:app/aws/aws_page.dart';
 import 'package:app/common/colleague_detail.dart';
 import 'package:app/common/colors.dart';
@@ -267,13 +269,20 @@ class _CreateGroupState extends State<CreateGroup> {
     //   ApiProvider().showToastMsg("Please Select Group image");
     // }
     else {
-    var input = {
-    "admin_id":  "${id.toString()}",
-        "members_id": "${ids.toList()}",
-        "title": "${creategroupctrl.text.trim()}",
-        "groupImage":""
-        // "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.pexels.com%2Fphotos%2F2486168%2Fpexels-photo-2486168.jpeg%3Fauto%3Dcompress%26cs%3Dtinysrgb%26dpr%3D1%26w%3D500&imgrefurl=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fiphone%2520wallpaper%2F&tbnid=RJHvAPiXhbzXuM&vet=12ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ..i&docid=M2xUUjytt6PtMM&w=500&h=750&q=wallpaper&ved=2ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ"
-    };
+        var input = {
+          "admin_id": "${id.toString()}",
+          "members_id": ids,
+          "title": "${creategroupctrl.text.trim()}",
+          // "groupImage": ''
+          // "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.pexels.com%2Fphotos%2F2486168%2Fpexels-photo-2486168.jpeg%3Fauto%3Dcompress%26cs%3Dtinysrgb%26dpr%3D1%26w%3D500&imgrefurl=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fiphone%2520wallpaper%2F&tbnid=RJHvAPiXhbzXuM&vet=12ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ..i&docid=M2xUUjytt6PtMM&w=500&h=750&q=wallpaper&ved=2ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ"
+        };
+    // var input = {
+    //     "admin_id":  "${id.toString()}",
+    //     "members_id": json.encode(ids),
+    //     "title": "${creategroupctrl.text.trim()}",
+    //     "groupImage":
+    //     "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.pexels.com%2Fphotos%2F2486168%2Fpexels-photo-2486168.jpeg%3Fauto%3Dcompress%26cs%3Dtinysrgb%26dpr%3D1%26w%3D500&imgrefurl=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fiphone%2520wallpaper%2F&tbnid=RJHvAPiXhbzXuM&vet=12ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ..i&docid=M2xUUjytt6PtMM&w=500&h=750&q=wallpaper&ved=2ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ"
+    // };
     print(input.toString());
     print("________-");
     // print(ids.toList().toString());
