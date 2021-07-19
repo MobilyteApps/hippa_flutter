@@ -2,10 +2,16 @@ import 'package:app/common/colleague_detail.dart';
 import 'package:app/common/colors.dart';
 import 'package:app/common/size.dart';
 import 'package:app/common/textstyle.dart';
+import 'package:app/common/utils.dart';
+import 'package:app/models/loader.dart';
+import 'package:app/network/api_provider.dart';
+import 'package:app/providers/signin_provider.dart';
+import 'package:app/response/getalluser_response.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:provider/provider.dart';
 
 class Colleagues extends StatefulWidget {
   const Colleagues({Key? key}) : super(key: key);
@@ -15,23 +21,54 @@ class Colleagues extends StatefulWidget {
 }
 
 class _ColleaguesState extends State<Colleagues> {
+  ApiProvider apiProvider = ApiProvider();
+  final _debouncer = Debouncer(milliseconds: 500);
   int memberCount = 1;
   final creategroupctrl = TextEditingController();
+  SignInProvider signInProvider = SignInProvider();
+  Loader loader = Loader();
   final border = OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(10.0)),
       borderSide: BorderSide(
         color: AppColor.white,
       ));
   int a = 0;
+  GetAllUserResponse response=GetAllUserResponse();
+  late Future<GetAllUserResponse> responses;
+  formValidation() {
+    FocusScope.of(context).requestFocus(new FocusNode());
+    if (creategroupctrl.text.trim().isEmpty == true) {
+      ApiProvider().showToastMsg("Please Enter email address");
+    }
+      signInProvider.getallusers(loader, creategroupctrl.text.trim());
+  }
+
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final signInProvider = Provider.of<SignInProvider>(context);
+    final loader = Provider.of<Loader>(context);
+
+    if (this.signInProvider != signInProvider || this.loader != loader) {
+      this.signInProvider = signInProvider;
+      this.loader = loader;
+
+      Future.microtask(() async {
+        signInProvider.getallusers(loader, '');
+      });
+    }
   }
 
   Widget groupnameFieldWidget() {
     return TextFormField(
       controller: creategroupctrl,
+      onChanged: (v) {
+        _debouncer.run(() {
+          // signInProvider.getallusers(loader, creategroupctrl.text.trim());
+          signInProvider.getallusers(loader, v.trim());
+        });
+      },
       inputFormatters: [
         new WhitelistingTextInputFormatter(RegExp("[a-zA-Z0-9@.+-_ ]")),
       ],
@@ -68,8 +105,8 @@ class _ColleaguesState extends State<Colleagues> {
         children: [
           Padding(
             padding: EdgeInsets.only(
-                left: AppSize().width(context) * 0.1,
-                right: AppSize().width(context) * 0.1),
+                left: AppSize().width(context) * 0.05,
+                right: AppSize().width(context) * 0.05),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,121 +115,19 @@ class _ColleaguesState extends State<Colleagues> {
                 Container(
                     height: AppSize().height(context) * 0.07,
                     child: groupnameFieldWidget()),
+                apiProvider.getAllUserResponse.data==null?Center(child: CircularProgressIndicator()):
                 Expanded(
                     child: ListView.builder(
-                        itemCount: 5,
+                        itemCount: apiProvider.getAllUserResponse.data!.users!.length,
                         scrollDirection: Axis.vertical,
                         itemBuilder: (BuildContext context, int index) {
-                          return ColleagueDetail();
+                          return
+                            apiProvider.getAllUserResponse.data!.users![index].username==null ?Container():
+                            ColleagueDetail(apiProvider.getAllUserResponse,index);
                         })),
               ],
             ),
           ),
-          //        a == 0?
-          //   showCupertinoDialog(
-          //       context: context,
-          //       builder: (BuildContext context) {
-          //         return CupertinoAlertDialog(
-          //           title: getBoldText('Camera Access',
-          //               textColor: AppColor.black, fontSize: 18),
-          //           content: getRegularText(
-          //               'SecureText needs permission to access your camera',
-          //               textColor: AppColor.black,
-          //               fontSize: 18),
-          //           actions: [
-          //             CupertinoDialogAction(
-          //               child: getBoldText('DENY',
-          //                   textColor: AppColor.black, fontSize: 14),
-          //               onPressed: () {
-          //                 Navigator.pop(context);
-          //                 setState(() {
-          //                   a = 1;
-          //                 });
-          //               },
-          //             ),
-          //             CupertinoDialogAction(
-          //               child: getBoldText('ALLOW',
-          //                   textColor: AppColor.buttonColor, fontSize: 14),
-          //               onPressed: () {
-          //                 Navigator.pop(context);
-          //                 setState(() {
-          //                   a = 1;
-          //                 });
-          //               },
-          //             ),
-          //           ],
-          //         );
-          //       }):
-          // a == 1?
-          //   showCupertinoDialog(
-          //       context: context,
-          //       builder: (BuildContext context) {
-          //         return CupertinoAlertDialog(
-          //           title: getBoldText('Microphone Access',
-          //               textColor: AppColor.black, fontSize: 18),
-          //           content: getRegularText(
-          //               'SecureText needs permission to access your microphone',
-          //               textColor: AppColor.black,
-          //               fontSize: 18),
-          //           actions: [
-          //             CupertinoDialogAction(
-          //               child: getBoldText('DENY',
-          //                   textColor: AppColor.black, fontSize: 14),
-          //               onPressed: () {
-          //                 Navigator.pop(context);
-          //                 setState(() {
-          //                   a = 2;
-          //                 });
-          //               },
-          //             ),
-          //             CupertinoDialogAction(
-          //               child: getBoldText('ALLOW',
-          //                   textColor: AppColor.buttonColor, fontSize: 14),
-          //               onPressed: () {
-          //                 Navigator.pop(context);
-          //                 setState(() {
-          //                   a = 2;
-          //                 });
-          //               },
-          //             ),
-          //           ],
-          //         );
-          //       }):
-          // a == 2?
-          //   showCupertinoDialog(
-          //       context: context,
-          //       builder: (BuildContext context) {
-          //         return CupertinoAlertDialog(
-          //           title: getBoldText('Push Notifications',
-          //               textColor: AppColor.black, fontSize: 18),
-          //           content: getRegularText(
-          //               'SecureText needs permission to send you push notifications',
-          //               textColor: AppColor.black,
-          //               fontSize: 18),
-          //           actions: [
-          //             CupertinoDialogAction(
-          //               child: getBoldText('DENY',
-          //                   textColor: AppColor.black, fontSize: 14),
-          //               onPressed: () {
-          //                 setState(() {
-          //                   a = 3;
-          //                 });
-          //                 Navigator.pop(context);
-          //               },
-          //             ),
-          //             CupertinoDialogAction(
-          //               child: getBoldText('ALLOW',
-          //                   textColor: AppColor.buttonColor, fontSize: 14),
-          //               onPressed: () {
-          //                 Navigator.pop(context);
-          //                 setState(() {
-          //                   a = 3;
-          //                 });
-          //               },
-          //             ),
-          //           ],
-          //         );
-          //       }):
         ],
       ),
     );

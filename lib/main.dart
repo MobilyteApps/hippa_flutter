@@ -1,6 +1,8 @@
 import 'package:app/common/navigator_service.dart';
 import 'package:app/language/application.dart';
+import 'package:app/models/loader.dart';
 import 'package:app/network/api_provider.dart';
+import 'package:app/providers/signin_provider.dart';
 import 'package:app/screens/splash_screen.dart';
 import 'package:app/theme/dark_theme_provider.dart';
 import 'package:app/theme/dark_theme_styles.dart';
@@ -79,6 +81,12 @@ class _MyAppState extends State<MyApp> {
         providers: [
           ChangeNotifierProvider<DarkThemeProvider>(
               create: (_) => themeChangeProvider),
+          ChangeNotifierProvider<Loader>(
+            create: (context) => Loader(),
+          ),
+          ChangeNotifierProvider<SignInProvider>(
+            create: (context) => SignInProvider(),
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

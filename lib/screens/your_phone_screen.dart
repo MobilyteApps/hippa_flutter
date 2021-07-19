@@ -174,6 +174,7 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       supportedLocales: [
         Locale("af"),
         Locale("am"),

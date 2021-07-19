@@ -20,3 +20,6 @@ const String changepass = 'changepass';
 const String camera = 'camera';
 const String n = 'n';
 const String country = 'country';
+const String colleagues ='colleagues';
+const String groupdetail = 'groupdetail';
+const String createmessage ='createmessage';

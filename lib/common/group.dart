@@ -12,8 +12,9 @@ class Group extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> group_name = ['My Team', 'Our Nurses', 'Clinic', 'Add New'];
+    List<String> group_name = [ 'Add New'];
     List<Color> colors = [
+      AppColor.starGrey,
       AppColor.starOrange,
       AppColor.starblue,
       AppColor.starGreen,
@@ -33,7 +34,7 @@ class Group extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SvgPicture.asset(
-                'assets/images/stars.svg',
+                'assets/images/add-circle.svg',
                 width: AppSize().width(context) * 0.4,
                 height: AppSize().height(context) * 0.09,
                 color: AppColor.white,
@@ -41,8 +42,8 @@ class Group extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(top: 8.0),
-                child: getRegularText(group_name[index],
-                    textColor: AppColor.black, fontSize: 18),
+                child: getMediumText(group_name[index],
+                    textColor: AppColor.white, fontSize: 18),
               ),
             ],
           ),

@@ -1,3 +1,7 @@
+import 'package:app/response/addusertogroup_response.dart';
+import 'package:app/response/create_group_response.dart';
+import 'package:app/response/delete_group_response.dart';
+import 'package:app/response/getalluser_response.dart';
 import 'package:app/screens/change_password.dart';
 import 'package:flutter/material.dart';
 import 'package:app/common/constants.dart';
@@ -22,6 +26,10 @@ class SignInProvider with ChangeNotifier {
   SendOtpResponse sendotpresponse = SendOtpResponse();
   ForgotPasswordResponse forgotpassresp = ForgotPasswordResponse();
   VerifyOtpResponse verifyotpresponse = VerifyOtpResponse();
+  CreateGroupResponse createGroupResponse = CreateGroupResponse();
+  GetAllUserResponse getAllUserResponse = GetAllUserResponse();
+  AddUsertoGroupResponse addUsertoGroupResponse = AddUsertoGroupResponse();
+  DeleteGroupResponse deleteGroupResponse = DeleteGroupResponse();
   loginWithEmail(Loader loader, Map<String, String> input) async {
     ApiProvider().sigInApi(loader, input).then((value) {
       if (value != null) {
@@ -80,6 +88,42 @@ class SignInProvider with ChangeNotifier {
     ApiProvider().changepassword(loader, input).then((value) {
       if (value != null) {
         this.verifyotpresponse = value;
+        // locator<NavigationService>().navigateToReplace(grouplisting);
+      }
+    });
+  }
+
+  createGroup(Loader loader, Map<String, String> input) async {
+    ApiProvider().creategroup(loader, input).then((value) {
+      if (value != null) {
+        this.createGroupResponse = value;
+        // locator<NavigationService>().navigateToReplace(grouplisting);
+      }
+    });
+  }
+
+  getallusers(Loader loader, String search) async {
+    ApiProvider().getallusers(loader, search).then((value) {
+      if (value != null) {
+        this.getAllUserResponse = value;
+        // locator<NavigationService>().navigateToReplace(grouplisting);
+      }
+    });
+  }
+
+  addusertogroup(Loader loader, Map<String, String> input) async {
+    ApiProvider().adduserstogroup(loader, input).then((value) {
+      if (value != null) {
+        this.addUsertoGroupResponse = value;
+        // locator<NavigationService>().navigateToReplace(grouplisting);
+      }
+    });
+  }
+
+  deletegroup(Loader loader, Map<String, String> input) async {
+    ApiProvider().deletegroup(loader, input).then((value) {
+      if (value != null) {
+        this.deleteGroupResponse = value;
         // locator<NavigationService>().navigateToReplace(grouplisting);
       }
     });

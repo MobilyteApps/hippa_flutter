@@ -32,18 +32,6 @@ class _GroupListingState extends State<GroupListing>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          // leading: Padding(
-          //   padding: EdgeInsets.only(
-          //       top: AppSize().width(context) * 0.05,
-          //       bottom: AppSize().width(context) * 0.05,
-          //       right: AppSize().width(context) * 0.05,
-          //       left: AppSize().width(context) * 0.07),
-          //   child: SvgPicture.asset(
-          //     'assets/images/arrow_back.svg',
-          //     color: AppColor.black,
-          //     matchTextDirection: true,
-          //   ),
-          // ),
           actions: [
             Padding(
               padding: EdgeInsets.only(right: AppSize().width(context) * 0.1),
@@ -74,8 +62,8 @@ class _GroupListingState extends State<GroupListing>
                 preferredSize: Size.fromHeight(100),
                 child: Padding(
                   padding: EdgeInsets.only(
-                      left: AppSize().width(context) * 0.1,
-                      right: AppSize().width(context) * 0.1),
+                      left: AppSize().width(context) * 0.05,
+                      right: AppSize().width(context) * 0.05),
                   child: TabBar(
                     isScrollable: false,
                     indicator: BoxDecoration(
@@ -88,12 +76,13 @@ class _GroupListingState extends State<GroupListing>
                     labelColor: AppColor.white,
                     tabs: [
                       Expanded(
+                        // flex: 1,
                         child: Tab(
                           text: 'Colleagues',
                         ),
                       ),
                       Expanded(
-                        flex: 1,
+                        // flex: 1,
                         child: Tab(
                           text: 'Groups',
                           // // icon: Icon(Icons.person),
@@ -107,7 +96,7 @@ class _GroupListingState extends State<GroupListing>
               ),
             ),
             Expanded(
-              flex: 4,
+              // flex: 4,
               child: TabBarView(
                 children: [Colleagues(), FavouriteGroup()],
                 controller: _tabController,
