@@ -25,7 +25,8 @@ class ColleagueDetail extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding:  EdgeInsets.symmetric(horizontal: AppSize().width(context) * 0.04,
+                vertical: AppSize().height(context) * 0.01,),
               child: Center(
                 child: Container(
                   width: AppSize().width(context) * 0.13,

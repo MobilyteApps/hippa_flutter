@@ -51,6 +51,21 @@ class _CreateGroupState extends State<CreateGroup> {
   List<User> userids = <User>[];
   String documentPath = "";
   String url='';
+  late String sids;
+  bool check=false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    sid();
+  }
+  void sid() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    sids= prefs.getString('sid')!;
+    setState(() {
+      check=true;
+    });
+  }
 
   Widget groupnameFieldWidget() {
     return TextFormField(
@@ -262,7 +277,7 @@ class _CreateGroupState extends State<CreateGroup> {
     //   ApiProvider().showToastMsg("Please Select member");
     // }
     // else
-      if (creategroupctrl.text.trim().isEmpty == true) {
+      if (creategroupctrl.text.trim() == '') {
       ApiProvider().showToastMsg("Please Enter Group Name");
     }
     // else if (url == '') {
@@ -299,7 +314,7 @@ class _CreateGroupState extends State<CreateGroup> {
             locator<NavigationService>().backPress();
           },
           child: Padding(
-            padding: EdgeInsets.all(AppSize().width(context) * 0.05),
+            padding: EdgeInsets.all(AppSize().width(context) * 0.04),
             child: SvgPicture.asset(
               'assets/images/arrow_back.svg',
               color: AppColor.black,
@@ -310,7 +325,7 @@ class _CreateGroupState extends State<CreateGroup> {
         actions: [
           InkWell(
             onTap: (){
-              locator<NavigationService>().navigateTo(groupdetail);
+              locator<NavigationService>().navigateTo(groupdetails);
             },
             child: Padding(
               padding: EdgeInsets.only(right: AppSize().width(context) * 0.03),
@@ -374,7 +389,7 @@ class _CreateGroupState extends State<CreateGroup> {
                           width: AppSize().width(context) * 0.18,
                         ),
                       ))),
-
+              SizedBox(height: AppSize().height(context) * 0.02),
               getBoldText(AppString().groupname,
                   textColor: AppColor.black, fontSize: 16),
               SizedBox(height: AppSize().height(context) * 0.02),
@@ -382,14 +397,16 @@ class _CreateGroupState extends State<CreateGroup> {
               SizedBox(height: AppSize().height(context) * 0.02),
               getBoldText(AppString().addteammember,
                   textColor: AppColor.black, fontSize: 16),
+              SizedBox(height: AppSize().height(context) * 0.02),
               Container(
                   height: AppSize().height(context) * 0.07,
                   child: addmemberFieldWidget()),
-              apiProvider.getAllUserResponse.data==null?Center(child: CircularProgressIndicator()):
+              SizedBox(height: AppSize().height(context) * 0.02),
+              apiProvider.getAllUserResponse.data!=null && check==true ?
               Container(
                 // fit: FlexFit.tight,
                 width: AppSize().width(context),
-                height: AppSize().height(context) * 0.34,
+                // height: AppSize().height(context) * 0.34,
                     child: ListView.builder(
                         itemCount: apiProvider.getAllUserResponse.data!.users!.length,
                         scrollDirection: Axis.vertical,
@@ -411,27 +428,36 @@ print(userids.toList().toString());
 
                               },
                               child:
-                              apiProvider.getAllUserResponse.data!.users![index].username==null ?Container():
 
-                              ColleagueDetail(apiProvider.getAllUserResponse,index));
-                        })),
+
+                              // apiProvider.getAllUserResponse.data!.users![index].username==null ?Container():
+                              apiProvider.getAllUserResponse.data!.users![index].username!=null &&
+                                  apiProvider.getAllUserResponse.data!.users![index].sId! != sids
+                                  ?
+                              ColleagueDetail(apiProvider.getAllUserResponse,index):Container()
+
+                            );
+                        })):Center(child: CircularProgressIndicator()),
 
               Container(
                   width: AppSize().width(context),
                   height: AppSize().height(context) * 0.14,
                   child: ListView.builder(
-                      itemCount: userids.length + 1,
+                    shrinkWrap: true,
+                      itemCount: userids.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (BuildContext context, int index) {
-                        return index != userids.length
-                            ? memberWidget(userids, index)
-                            : addWidget();
+                        return
+                          // index != userids.length
+                          //   ?
+                        memberWidget(userids, index);
+                            // : addWidget();
                       })),
               Padding(
                 padding: EdgeInsets.only(top: AppSize().height(context) * 0.02),
                 child: SizedBox(
                   height: AppSize().height(context) * 0.07,
-                  width: AppSize().width(context) * 0.8,
+                  width: AppSize().width(context),
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
@@ -451,7 +477,7 @@ print(userids.toList().toString());
                 padding: EdgeInsets.only(top: AppSize().height(context) * 0.02),
                 child: SizedBox(
                   height: AppSize().height(context) * 0.07,
-                  width: AppSize().width(context) * 0.8,
+                  width: AppSize().width(context) ,
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(

@@ -83,7 +83,7 @@ class Policy {
 
   Policy(this.key, this.bucket, this.datetime, this.expiration, this.credential,
       this.maxFileSize, this.sessionToken,
-      {this.region = 'us-south-1'});
+      {this.region = 'us-east-2'});
 
   factory Policy.fromS3PreSignedPost(
       String key,

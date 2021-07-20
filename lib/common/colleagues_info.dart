@@ -2,13 +2,17 @@ import 'package:app/common/colors.dart';
 import 'package:app/common/size.dart';
 import 'package:app/common/textstyle.dart';
 import 'package:app/response/getalluser_response.dart';
+import 'package:app/response/groupdetail_response.dart';
 import 'package:flutter/material.dart';
 
 class ColleagueInfo extends StatelessWidget {
-  // final GetAllUserResponse getAllUserResponse;
-  // final int index;
-  const ColleagueInfo(
-      // this.getAllUserResponse, this.index,
+  final GroupDetailResponse groupDetailResponse;
+  final int index;
+  final String sid;
+  var  callback;
+  ColleagueInfo(
+      this.groupDetailResponse, this.index,this.sid,
+      this.callback,
       {Key? key}) : super(key: key);
 
   @override
@@ -42,7 +46,7 @@ class ColleagueInfo extends StatelessWidget {
                         shape: BoxShape.circle,
                       ),
                       child: Center(
-                          child: Text('R',
+                          child: Text(groupDetailResponse.data![0].members![index].username![0],
                             // getAllUserResponse.data!.users![index].name![0],
                             style: TextStyle(color: Colors.red),
                           )),
@@ -55,17 +59,19 @@ class ColleagueInfo extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      getBoldText('name',
+                      getBoldText(groupDetailResponse.data![0].members![index].username!,
                           textColor: AppColor.black, fontSize: 16),
                     ],
                   ),
                 ),
               ],
             ),
+           sid!=groupDetailResponse.data![0].admin?Container():
             InkWell(
               onTap: (){
+                callback();
 
-              },
+groupDetailResponse.data![0].members!.removeAt(index);              },
               child: Padding(
                   padding: EdgeInsets.only(right: AppSize().width(context) * 0.03),
 

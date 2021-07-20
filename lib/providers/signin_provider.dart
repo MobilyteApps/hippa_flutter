@@ -2,6 +2,8 @@ import 'package:app/response/addusertogroup_response.dart';
 import 'package:app/response/create_group_response.dart';
 import 'package:app/response/delete_group_response.dart';
 import 'package:app/response/getalluser_response.dart';
+import 'package:app/response/groupdetail_response.dart';
+import 'package:app/response/groupleave_response.dart';
 import 'package:app/screens/change_password.dart';
 import 'package:flutter/material.dart';
 import 'package:app/common/constants.dart';
@@ -30,6 +32,8 @@ class SignInProvider with ChangeNotifier {
   GetAllUserResponse getAllUserResponse = GetAllUserResponse();
   AddUsertoGroupResponse addUsertoGroupResponse = AddUsertoGroupResponse();
   DeleteGroupResponse deleteGroupResponse = DeleteGroupResponse();
+  GroupDetailResponse groupDetailResponse =GroupDetailResponse();
+  GroupLeaveResponse groupLeaveResponse = GroupLeaveResponse();
   loginWithEmail(Loader loader, Map<String, String> input) async {
     ApiProvider().sigInApi(loader, input).then((value) {
       if (value != null) {
@@ -78,7 +82,7 @@ class SignInProvider with ChangeNotifier {
   verifyOTPApi(Loader loader, Map<String, String> input) async {
     ApiProvider().verifyOtpApi(loader, input).then((value) {
       if (value != null) {
-        this.verifyotpresponse = value;
+        this.userResponse = value;
         // locator<NavigationService>().navigateToReplace(grouplisting);
       }
     });
@@ -111,7 +115,7 @@ class SignInProvider with ChangeNotifier {
     });
   }
 
-  addusertogroup(Loader loader, Map<String, String> input) async {
+  addusertogroup(Loader loader, Map<String, dynamic> input) async {
     ApiProvider().adduserstogroup(loader, input).then((value) {
       if (value != null) {
         this.addUsertoGroupResponse = value;
@@ -128,4 +132,42 @@ class SignInProvider with ChangeNotifier {
       }
     });
   }
+
+  groupdetail(Loader loader, Map<String, String> input) async {
+    ApiProvider().groupdetail(loader, input).then((value) {
+      if (value != null) {
+        this.groupDetailResponse= value;
+        // locator<NavigationService>().navigateToReplace(grouplisting);
+      }
+    });
+  }
+
+  groupleave(Loader loader, Map<String, String> input) async {
+    ApiProvider().groupleave(loader, input).then((value) {
+      if (value != null) {
+        this.groupLeaveResponse= value;
+        // locator<NavigationService>().navigateToReplace(grouplisting);
+      }
+    });
+  }
+
+  addfav(Loader loader, Map<String, String> input) async {
+    ApiProvider().addfav(loader, input).then((value) {
+      if (value != null) {
+        this.groupLeaveResponse= value;
+        // locator<NavigationService>().navigateToReplace(grouplisting);
+      }
+    });
+  }
+
+  remfav(Loader loader, Map<String, String> input) async {
+    ApiProvider().rewmfav(loader, input).then((value) {
+      if (value != null) {
+        this.groupLeaveResponse= value;
+        // locator<NavigationService>().navigateToReplace(grouplisting);
+      }
+    });
+  }
+
+
 }

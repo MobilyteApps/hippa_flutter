@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Colleagues extends StatefulWidget {
   const Colleagues({Key? key}) : super(key: key);
@@ -41,6 +42,17 @@ class _ColleaguesState extends State<Colleagues> {
       ApiProvider().showToastMsg("Please Enter email address");
     }
       signInProvider.getallusers(loader, creategroupctrl.text.trim());
+  }
+  late String sids;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    sid();
+  }
+  void sid() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+   sids= prefs.getString('sid')!;
   }
 
 
@@ -115,15 +127,19 @@ class _ColleaguesState extends State<Colleagues> {
                 Container(
                     height: AppSize().height(context) * 0.07,
                     child: groupnameFieldWidget()),
-                apiProvider.getAllUserResponse.data==null?Center(child: CircularProgressIndicator()):
+                apiProvider.getAllUserResponse.data==null ?Center(child: CircularProgressIndicator()):
                 Expanded(
                     child: ListView.builder(
                         itemCount: apiProvider.getAllUserResponse.data!.users!.length,
                         scrollDirection: Axis.vertical,
                         itemBuilder: (BuildContext context, int index) {
                           return
-                            apiProvider.getAllUserResponse.data!.users![index].username==null ?Container():
-                            ColleagueDetail(apiProvider.getAllUserResponse,index);
+                            apiProvider.getAllUserResponse.data!.users![index].username!=null &&
+                          apiProvider.getAllUserResponse.data!.users![index].sId != sids
+                                ?
+                            ColleagueDetail(apiProvider.getAllUserResponse,index):
+                            Container();
+
                         })),
               ],
             ),

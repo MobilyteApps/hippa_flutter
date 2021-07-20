@@ -89,13 +89,7 @@ class AwsPage {
     const s3Endpoint =
         'https://securetext.s3.us-east-2.amazonaws.com/';
     const _identityPoolId = 'us-east-2:c74bec24-9b83-481a-b53b-d4dd4a4544a1';
-    //
-    // const _awsUserPoolId = 'eu-central-1_ccPStM14Y';
-    // const _awsClientId = '3qmqjlsffg2j0i0a4kgob6o6ro';
-    // const _region = 'eu-central-1';
-    // const s3Endpoint =
-    //     'https://feedback-app-dev.s3.eu-central-1.amazonaws.com/';
-    // const _identityPoolId = 'eu-central-1:a5f053f6-5283-473d-aa3c-fc7e54866fd5';
+
 
     final _userPool = CognitoUserPool(_awsUserPoolId, _awsClientId);
 

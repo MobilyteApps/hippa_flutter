@@ -41,7 +41,7 @@ class Group extends StatelessWidget {
                 matchTextDirection: true,
               ),
               Padding(
-                padding: EdgeInsets.only(top: 8.0),
+                padding: EdgeInsets.only(top:AppSize().height(context)*0.03 ),
                 child: getMediumText(group_name[index],
                     textColor: AppColor.white, fontSize: 18),
               ),

@@ -71,7 +71,7 @@ class Router {
         return MaterialPageRoute(builder: (_) => CameraScreen());
       case colleagues:
         return MaterialPageRoute(builder: (_) => Colleagues());
-      case groupdetail:
+      case groupdetails:
         return MaterialPageRoute(builder: (_) => GroupDetail());
       case country:
         return MaterialPageRoute(builder: (_) => CountryTesting());

@@ -38,7 +38,7 @@ class _SigninState extends State<Signin> {
   bool _canCheckBiometrics = false;
   List<BiometricType>? _availableBiometrics;
   String _authorized = 'Not Authorized';
-
+  bool showpass=false;
   final usernameCtrl = TextEditingController();
   final passwordCtrl = TextEditingController();
   SignInProvider signInProvider = SignInProvider();
@@ -109,9 +109,10 @@ class _SigninState extends State<Signin> {
         }
         return null;
       },
+      obscureText: showpass,
       keyboardType: TextInputType.text,
       controller: passwordCtrl,
-      maxLength: 10,
+      // maxLength: 10,
       inputFormatters: <TextInputFormatter>[
         LengthLimitingTextInputFormatter(10)
       ],
@@ -121,6 +122,19 @@ class _SigninState extends State<Signin> {
             child: Image.asset(
               'assets/images/lock.png',
               color: AppColor.white,
+            ),
+          ),
+          suffixIcon: InkWell(
+            onTap: (){
+              setState(() {
+                showpass=!showpass;
+              });
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child:showpass==true?
+              Icon(Icons.visibility_off,color: AppColor.white,) :
+              Icon(Icons.visibility,color: AppColor.white,)
             ),
           ),
           labelStyle: TextStyle(color: AppColor.white),
