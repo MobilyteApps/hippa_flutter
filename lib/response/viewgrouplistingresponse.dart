@@ -1,11 +1,11 @@
-class GroupDetailResponse {
+class ViewGroupListingResponse {
   int? status;
   List<Data>? data;
-  String ?message;
+  String? message;
 
-  GroupDetailResponse({this.status, this.data, this.message});
+  ViewGroupListingResponse({this.status, this.data, this.message});
 
-  GroupDetailResponse.fromJson(Map<String, dynamic> json) {
+  ViewGroupListingResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
       data = <Data>[];
@@ -29,13 +29,15 @@ class GroupDetailResponse {
 
 class Data {
   String? sId;
-  List<Members> ?members;
+  List<Members>? members;
   String? admin;
-  String ?title;
-  String ?groupImage;
-  String ?createdAt;
-  String ?updatedAt;
-  bool? favGroup;
+  String? title;
+  String? groupImage;
+  String? createdAt;
+  String? updatedAt;
+  int? unreadCount;
+  String? message;
+
 
   Data(
       {this.sId,
@@ -45,8 +47,8 @@ class Data {
         this.groupImage,
         this.createdAt,
         this.updatedAt,
-        this.favGroup
-      });
+        this.unreadCount,
+        this.message});
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -61,7 +63,8 @@ class Data {
     groupImage = json['groupImage'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    favGroup = json['favGroup'];
+    unreadCount = json['unreadCount'];
+    message = json['message'];
   }
 
   Map<String, dynamic> toJson() {
@@ -75,7 +78,8 @@ class Data {
     data['groupImage'] = this.groupImage;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
-    data['favGroup'] = this.favGroup;
+    data['unreadCount'] = this.unreadCount;
+    data['message'] = this.message;
     return data;
   }
 }
@@ -83,7 +87,7 @@ class Data {
 class Members {
   String ?sId;
   bool? active;
-  bool ?deleted;
+  bool? deleted;
   String? role;
   String ?name;
   String ?email;
@@ -96,7 +100,7 @@ class Members {
   String ?token;
   int ?phonenumber;
   int ?oTPvalue;
-  bool? passwordModified;
+  bool ?passwordModified;
 
   Members(
       {this.sId,

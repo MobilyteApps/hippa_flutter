@@ -19,6 +19,7 @@ import 'package:app/common/navigator_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:provider/provider.dart';
 import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -162,7 +163,20 @@ class _CreateGroupState extends State<CreateGroup> {
       ),
     );
   }
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final signInProvider = Provider.of<SignInProvider>(context);
+    final loader = Provider.of<Loader>(context);
 
+    if (this.signInProvider != signInProvider || this.loader != loader) {
+      this.signInProvider = signInProvider;
+      this.loader = loader;
+
+      Future.microtask(() async {
+        signInProvider.getallusers(loader, '');
+      });
+    }
+  }
   Widget memberlist() {
     return ListView.builder(
         itemCount: userids.length,
@@ -175,13 +189,17 @@ class _CreateGroupState extends State<CreateGroup> {
       controller: addmemberctrl,
       onChanged: (v) {
         _debouncer.run(() {
+          // setState(() {
+
+            signInProvider.getallusers(loader, v.trim());
+          // });
           // signInProvider.getallusers(loader, addmemberctrl.text.trim());
-          signInProvider.getallusers(loader, v.trim());
+          // signInProvider.getallusers(loader, v.trim());
         });
       },
-      inputFormatters: [
-        new WhitelistingTextInputFormatter(RegExp("[a-zA-Z0-9@.+-_ ]")),
-      ],
+      // inputFormatters: [
+      //   // new WhitelistingTextInputFormatter(RegExp("[a-zA-Z0-9@.+-_ ]")),
+      // ],
       decoration: InputDecoration(
           suffixIcon: Icon(Icons.search_sharp, color: AppColor.starGrey),
           focusedBorder: border,
@@ -267,44 +285,45 @@ class _CreateGroupState extends State<CreateGroup> {
     return urlss;
   }
 
-  formValidation() async{
+  formValidation() async {
     String id;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-   id= prefs.getString('sid')!;
-   ids.add(id);
+    id = prefs.getString('sid')!;
+    ids.add(id);
     // FocusScope.of(context).requestFocus(new FocusNode());
     // if (url.isEmpty == true) {
     //   ApiProvider().showToastMsg("Please Select member");
     // }
     // else
-      if (creategroupctrl.text.trim() == '') {
+    if (creategroupctrl.text.trim() == '') {
       ApiProvider().showToastMsg("Please Enter Group Name");
     }
     // else if (url == '') {
     //   ApiProvider().showToastMsg("Please Select Group image");
     // }
     else {
-        var input = {
-          "admin_id": "${id.toString()}",
-          "members_id": ids,
-          "title": "${creategroupctrl.text.trim()}",
-          // "groupImage": ''
-          // "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.pexels.com%2Fphotos%2F2486168%2Fpexels-photo-2486168.jpeg%3Fauto%3Dcompress%26cs%3Dtinysrgb%26dpr%3D1%26w%3D500&imgrefurl=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fiphone%2520wallpaper%2F&tbnid=RJHvAPiXhbzXuM&vet=12ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ..i&docid=M2xUUjytt6PtMM&w=500&h=750&q=wallpaper&ved=2ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ"
-        };
-    // var input = {
-    //     "admin_id":  "${id.toString()}",
-    //     "members_id": json.encode(ids),
-    //     "title": "${creategroupctrl.text.trim()}",
-    //     "groupImage":
-    //     "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.pexels.com%2Fphotos%2F2486168%2Fpexels-photo-2486168.jpeg%3Fauto%3Dcompress%26cs%3Dtinysrgb%26dpr%3D1%26w%3D500&imgrefurl=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fiphone%2520wallpaper%2F&tbnid=RJHvAPiXhbzXuM&vet=12ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ..i&docid=M2xUUjytt6PtMM&w=500&h=750&q=wallpaper&ved=2ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ"
-    // };
-    print(input.toString());
-    print("________-");
-    // print(ids.toList().toString());
-    // print(input..toString());
+      var input = {
+        "admin_id": "${id.toString()}",
+        "members_id": ids,
+        "title": "${creategroupctrl.text.trim()}",
+        // "groupImage": ''
+        // "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.pexels.com%2Fphotos%2F2486168%2Fpexels-photo-2486168.jpeg%3Fauto%3Dcompress%26cs%3Dtinysrgb%26dpr%3D1%26w%3D500&imgrefurl=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fiphone%2520wallpaper%2F&tbnid=RJHvAPiXhbzXuM&vet=12ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ..i&docid=M2xUUjytt6PtMM&w=500&h=750&q=wallpaper&ved=2ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ"
+      };
+      // var input = {
+      //     "admin_id":  "${id.toString()}",
+      //     "members_id": json.encode(ids),
+      //     "title": "${creategroupctrl.text.trim()}",
+      //     "groupImage":
+      //     "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.pexels.com%2Fphotos%2F2486168%2Fpexels-photo-2486168.jpeg%3Fauto%3Dcompress%26cs%3Dtinysrgb%26dpr%3D1%26w%3D500&imgrefurl=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fiphone%2520wallpaper%2F&tbnid=RJHvAPiXhbzXuM&vet=12ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ..i&docid=M2xUUjytt6PtMM&w=500&h=750&q=wallpaper&ved=2ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ"
+      // };
+      print(input.toString());
+      print("________-");
+      // print(ids.toList().toString());
+      // print(input..toString());
       signInProvider.createGroup(loader, input);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

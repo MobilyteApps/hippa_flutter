@@ -35,11 +35,13 @@ class _OtpScreenState extends State<OtpScreen> {
     ),
   );
   int ab = 0;
+
   // SendOtpResponse sendotp = SendOtpResponse();
 
   Loader loader = Loader();
   SignInProvider signInProvider = SignInProvider();
   final codeCtrl = TextEditingController();
+
   @override
   void initState() {
     super.initState();

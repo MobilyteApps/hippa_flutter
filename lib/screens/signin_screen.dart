@@ -38,10 +38,11 @@ class _SigninState extends State<Signin> {
   bool _canCheckBiometrics = false;
   List<BiometricType>? _availableBiometrics;
   String _authorized = 'Not Authorized';
-  bool showpass=false;
+  bool showpass = false;
   final usernameCtrl = TextEditingController();
   final passwordCtrl = TextEditingController();
   SignInProvider signInProvider = SignInProvider();
+
   Widget usernameFieldWidget() {
     return TextFormField(
       // onChanged: formValidatonColor(),
@@ -125,17 +126,22 @@ class _SigninState extends State<Signin> {
             ),
           ),
           suffixIcon: InkWell(
-            onTap: (){
+            onTap: () {
               setState(() {
-                showpass=!showpass;
+                showpass = !showpass;
               });
             },
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child:showpass==true?
-              Icon(Icons.visibility_off,color: AppColor.white,) :
-              Icon(Icons.visibility,color: AppColor.white,)
-            ),
+                padding: const EdgeInsets.all(10.0),
+                child: showpass == true
+                    ? Icon(
+                        Icons.visibility_off,
+                        color: AppColor.white,
+                      )
+                    : Icon(
+                        Icons.visibility,
+                        color: AppColor.white,
+                      )),
           ),
           labelStyle: TextStyle(color: AppColor.white),
           enabledBorder: border,

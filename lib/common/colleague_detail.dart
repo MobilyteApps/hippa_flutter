@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 class ColleagueDetail extends StatelessWidget {
   final GetAllUserResponse getAllUserResponse;
   final int index;
-  const ColleagueDetail(this.getAllUserResponse, this.index,{Key? key}) : super(key: key);
+
+  const ColleagueDetail(this.getAllUserResponse, this.index, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +27,10 @@ class ColleagueDetail extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding:  EdgeInsets.symmetric(horizontal: AppSize().width(context) * 0.04,
-                vertical: AppSize().height(context) * 0.01,),
+              padding: EdgeInsets.symmetric(
+                horizontal: AppSize().width(context) * 0.04,
+                vertical: AppSize().height(context) * 0.01,
+              ),
               child: Center(
                 child: Container(
                   width: AppSize().width(context) * 0.13,
@@ -39,7 +43,7 @@ class ColleagueDetail extends StatelessWidget {
                   ),
                   child: Center(
                       child: Text(
-                        getAllUserResponse.data!.users![index].name![0],
+                    getAllUserResponse.data!.users![index].name![0],
                     style: TextStyle(color: Colors.red),
                   )),
                 ),
@@ -51,12 +55,18 @@ class ColleagueDetail extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  getBoldText(getAllUserResponse.data!.users![index].username??'',
-                      textColor: AppColor.black, fontSize: 16),
-                  SizedBox(height: AppSize().height(context)*0.01,),
+                  getBoldText(
+                      getAllUserResponse.data!.users![index].username ?? '',
+                      textColor: AppColor.black,
+                      fontSize: 16),
+                  SizedBox(
+                    height: AppSize().height(context) * 0.01,
+                  ),
                   getRegularText(getAllUserResponse.data!.users![index].role!,
                       textColor: AppColor.black, fontSize: 14),
-                  SizedBox(height: AppSize().height(context)*0.01,),
+                  SizedBox(
+                    height: AppSize().height(context) * 0.01,
+                  ),
                   getRegularText(getAllUserResponse.data!.users![index].name!,
                       textColor: AppColor.black, fontSize: 14),
                 ],

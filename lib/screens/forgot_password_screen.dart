@@ -29,6 +29,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   final emailCtrl = TextEditingController();
   Loader loader = Loader();
   SignInProvider signInProvider = SignInProvider();
+
   Widget emailFieldWidget() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,

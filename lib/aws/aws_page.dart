@@ -62,7 +62,6 @@
 //   }
 // }
 
-
 import 'dart:convert';
 import 'dart:io';
 
@@ -80,16 +79,11 @@ class AwsPage {
     String imageName = DateTime.now().millisecondsSinceEpoch.toString();
     String imageExt = p.extension(file.path).toString();
 
-
-
-
-        const _awsUserPoolId = 'us-east-2_MitL8C608';
+    const _awsUserPoolId = 'us-east-2_MitL8C608';
     const _awsClientId = '14qao3ktq3gsrbas2mc8hsbpse';
     const _region = 'us-east-2';
-    const s3Endpoint =
-        'https://securetext.s3.us-east-2.amazonaws.com/';
+    const s3Endpoint = 'https://securetext.s3.us-east-2.amazonaws.com/';
     const _identityPoolId = 'us-east-2:c74bec24-9b83-481a-b53b-d4dd4a4544a1';
-
 
     final _userPool = CognitoUserPool(_awsUserPoolId, _awsClientId);
 

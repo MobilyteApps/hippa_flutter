@@ -13,6 +13,7 @@ import 'package:app/common/navigator_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:notification_permissions/notification_permissions.dart';
+
 // import 'package:permission_handler/permission_handler.dart';
 import 'package:notification_permissions/notification_permissions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -69,6 +70,7 @@ class _SelectionState extends State<Selection> with WidgetsBindingObserver {
   }
 
   permhand() async {}
+
   void cameraperms() {
     _cameraController =
         CameraController(apiprovider.cameras![0], ResolutionPreset.high);

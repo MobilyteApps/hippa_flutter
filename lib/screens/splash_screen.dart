@@ -15,6 +15,7 @@ class _SplashPageState extends State<SplashPage> {
   double? width;
 
   String login = '';
+
   void getotp() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {

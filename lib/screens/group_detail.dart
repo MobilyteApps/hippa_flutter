@@ -3,8 +3,10 @@ import 'package:app/common/colleagues_info.dart';
 import 'package:app/common/colors.dart';
 import 'package:app/common/constants.dart';
 import 'package:app/common/get_it.dart';
+import 'package:app/common/navigator_route.dart';
 import 'package:app/common/navigator_service.dart';
 import 'package:app/common/size.dart';
+import 'package:app/common/testing.dart';
 import 'package:app/common/textstyle.dart';
 import 'package:app/common/utils.dart';
 import 'package:app/models/loader.dart';
@@ -17,6 +19,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 class GroupDetail extends StatefulWidget {
   const GroupDetail({Key? key}) : super(key: key);
 
@@ -37,45 +40,23 @@ class _GroupDetailState extends State<GroupDetail> {
         color: AppColor.white,
       ));
   int a = 0;
-  List<String>ids=[];
+  List<String> ids = [];
   List<User> userids = <User>[];
-  List<String>i=[];
+  List<String> i = [];
   late String sids;
   late String gid;
-  bool check=false;
-  bool add =false;
+  bool check = false;
+  bool add = false;
   final addmemberctrl = TextEditingController();
+  bool fav = false;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     sid();
   }
-  void sid() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    sids= prefs.getString('sid')!;
-    gid = prefs.getString('gid')!;
-    formValidations();
-    setState(() {
-      check=true;
-    });
-  }
 
-  formValidations() async{
-    String id;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    id= prefs.getString('gid')!;
-    ids.add(id);
-
-
-      var input = {
-        "group_id" : id
-      };
-      signInProvider.groupdetail(loader, input);
-
-  }
-
-  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     final signInProvider = Provider.of<SignInProvider>(context);
@@ -90,6 +71,27 @@ class _GroupDetailState extends State<GroupDetail> {
       });
     }
   }
+
+  void sid() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    sids = prefs.getString('sid')!;
+    gid = prefs.getString('gid')!;
+    formValidations();
+    setState(() {
+      check = true;
+    });
+  }
+
+  formValidations() async {
+    String id;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    id = prefs.getString('gid')!;
+    ids.add(id);
+
+    var input = {"group_id": id};
+    signInProvider.groupdetail(loader, input);
+  }
+
   Widget groupnameFieldWidget() {
     return TextFormField(
       controller: creategroupctrl,
@@ -141,7 +143,7 @@ class _GroupDetailState extends State<GroupDetail> {
     );
   }
 
-  Widget memberWidget(List<User>u, int index) {
+  Widget memberWidget(List<User> u, int index) {
     return Padding(
       padding: EdgeInsets.only(right: AppSize().width(context) * 0.05),
       child: Stack(
@@ -155,9 +157,9 @@ class _GroupDetailState extends State<GroupDetail> {
             ),
             child: Center(
                 child: Text(
-                  u[index].name![0],
-                  style: TextStyle(color: Colors.red),
-                )),
+              u[index].name![0],
+              style: TextStyle(color: Colors.red),
+            )),
           ),
           Positioned(
               left: AppSize().width(context) * 0.11,
@@ -188,6 +190,7 @@ class _GroupDetailState extends State<GroupDetail> {
       ),
     );
   }
+
   Widget addmemberFieldWidget() {
     return TextFormField(
       controller: addmemberctrl,
@@ -224,6 +227,7 @@ class _GroupDetailState extends State<GroupDetail> {
           hintText: 'Search'),
     );
   }
+
   Widget memberlist() {
     return ListView.builder(
         itemCount: userids.length,
@@ -232,106 +236,46 @@ class _GroupDetailState extends State<GroupDetail> {
         });
   }
 
-  formValidationer() async{
+  formValidationer() async {
     String id;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    id= prefs.getString('gid')!;
+    id = prefs.getString('gid')!;
     ids.add(id);
-    // FocusScope.of(context).requestFocus(new FocusNode());
-    // if (url.isEmpty == true) {
-    //   ApiProvider().showToastMsg("Please Select member");
-    // }
-    // else
-    // if (creategroupctrl.text.trim() == '') {
-    //   ApiProvider().showToastMsg("Please Enter Group Name");
-    // }
-    // else if (url == '') {
-    //   ApiProvider().showToastMsg("Please Select Group image");
-    // }
-    // else {
-      var input = {
-
-        "members_id": i,
-        "group_id": "${id.toString()}"
-        // "title": "${creategroupctrl.text.trim()}",
-        // "groupImage": ''
-        // "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.pexels.com%2Fphotos%2F2486168%2Fpexels-photo-2486168.jpeg%3Fauto%3Dcompress%26cs%3Dtinysrgb%26dpr%3D1%26w%3D500&imgrefurl=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fiphone%2520wallpaper%2F&tbnid=RJHvAPiXhbzXuM&vet=12ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ..i&docid=M2xUUjytt6PtMM&w=500&h=750&q=wallpaper&ved=2ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ"
-      };
-      // var input = {
-      //     "admin_id":  "${id.toString()}",
-      //     "members_id": json.encode(ids),
-      //     "title": "${creategroupctrl.text.trim()}",
-      //     "groupImage":
-      //     "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.pexels.com%2Fphotos%2F2486168%2Fpexels-photo-2486168.jpeg%3Fauto%3Dcompress%26cs%3Dtinysrgb%26dpr%3D1%26w%3D500&imgrefurl=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fiphone%2520wallpaper%2F&tbnid=RJHvAPiXhbzXuM&vet=12ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ..i&docid=M2xUUjytt6PtMM&w=500&h=750&q=wallpaper&ved=2ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ"
-      // };
-      print(input.toString());
-      print("________-");
-      // print(ids.toList().toString());
-      // print(input..toString());
-      signInProvider.addusertogroup(loader, input);
-    // }
-  }
-
-
-  delformValidationer() async{
-    String id;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    id= prefs.getString('gid')!;
-    ids.add(id);
-    // FocusScope.of(context).requestFocus(new FocusNode());
-    // if (url.isEmpty == true) {
-    //   ApiProvider().showToastMsg("Please Select member");
-    // }
-    // else
-    // if (creategroupctrl.text.trim() == '') {
-    //   ApiProvider().showToastMsg("Please Enter Group Name");
-    // }
-    // else if (url == '') {
-    //   ApiProvider().showToastMsg("Please Select Group image");
-    // }
-    // else {
-    var input = {
-
-      // "members_id": i,
-      "group_id": "${id.toString()}"
-      // "title": "${creategroupctrl.text.trim()}",
-      // "groupImage": ''
-      // "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.pexels.com%2Fphotos%2F2486168%2Fpexels-photo-2486168.jpeg%3Fauto%3Dcompress%26cs%3Dtinysrgb%26dpr%3D1%26w%3D500&imgrefurl=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fiphone%2520wallpaper%2F&tbnid=RJHvAPiXhbzXuM&vet=12ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ..i&docid=M2xUUjytt6PtMM&w=500&h=750&q=wallpaper&ved=2ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ"
-    };
-    // var input = {
-    //     "admin_id":  "${id.toString()}",
-    //     "members_id": json.encode(ids),
-    //     "title": "${creategroupctrl.text.trim()}",
-    //     "groupImage":
-    //     "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.pexels.com%2Fphotos%2F2486168%2Fpexels-photo-2486168.jpeg%3Fauto%3Dcompress%26cs%3Dtinysrgb%26dpr%3D1%26w%3D500&imgrefurl=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fiphone%2520wallpaper%2F&tbnid=RJHvAPiXhbzXuM&vet=12ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ..i&docid=M2xUUjytt6PtMM&w=500&h=750&q=wallpaper&ved=2ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ"
-    // };
+    var input = {"members_id": i, "group_id": "${id.toString()}"};
     print(input.toString());
     print("________-");
-    // print(ids.toList().toString());
-    // print(input..toString());
+    signInProvider.addusertogroup(loader, input);
+  }
+
+  delformValidationer() async {
+    String id;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    id = prefs.getString('gid')!;
+    ids.add(id);
+    var input = {"group_id": "${id.toString()}"};
+    print(input.toString());
+    print("________-");
     signInProvider.deletegroup(loader, input);
-    // }
   }
 
- formValidation(String userid,String groupid) async{
+  formValidation(String userid, String groupid) async {
     String id;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    id= prefs.getString('sid')!;
-  var input = {
-        "user_id": userid,
-        "group_id": groupid,
-   };
+    id = prefs.getString('sid')!;
+    var input = {
+      "user_id": userid,
+      "group_id": groupid,
+    };
 
-      print(input.toString());
-      print("________-");
-      // print(ids.toList().toString());
-      // print(input..toString());
-      signInProvider.groupleave(loader, input);
+    print(input.toString());
+    print("________-");
+    signInProvider.groupleave(loader, input);
   }
-  favformValidation() async{
+
+  favformValidation() async {
     String id;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    id= prefs.getString('sid')!;
+    id = prefs.getString('sid')!;
 
     var input = {
       "user_id": sids,
@@ -340,31 +284,29 @@ class _GroupDetailState extends State<GroupDetail> {
 
     print(input.toString());
     print("________-");
-    // print(ids.toList().toString());
-    // print(input..toString());
     signInProvider.addfav(loader, input);
   }
-  remfavformValidation() async{
+
+  remfavformValidation() async {
     String id;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    id= prefs.getString('sid')!;
+    id = prefs.getString('sid')!;
     var input = {
-      "user_id":sids,
+      "user_id": sids,
       "group_id": gid,
     };
 
     print(input.toString());
     print("________-");
-    // print(ids.toList().toString());
-    // print(input..toString());
     signInProvider.remfav(loader, input);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(
-          onTap: (){
+          onTap: () {
             locator<NavigationService>().backPress();
           },
           child: Padding(
@@ -377,177 +319,140 @@ class _GroupDetailState extends State<GroupDetail> {
           ),
         ),
         actions: [
+          apiProvider.groupDetailResponse.data == null
+              ? Container()
+              : apiProvider.groupDetailResponse.data![0].favGroup == false ||
+                      fav == false
+                  ? InkWell(
+                      onTap: () {
+                        setState(() {
+                          fav = true;
+                          apiProvider.groupDetailResponse.data![0].favGroup =
+                              true;
+                        });
+                        favformValidation();
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            right: AppSize().width(context) * 0.03),
+                        child: SvgPicture.asset(
+                          'assets/images/stars.svg',
+                          width: AppSize().width(context) * 0.4,
+                          height: AppSize().height(context) * 0.04,
+                          color: AppColor.starblue,
+                          matchTextDirection: true,
+                        ),
+                      ),
+                    )
+                  : InkWell(
+                      onTap: () {
+                        setState(() {
+                          fav = false;
+                          apiProvider.groupDetailResponse.data![0].favGroup =
+                              false;
+                        });
+                        remfavformValidation();
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            right: AppSize().width(context) * 0.03),
+                        child: SvgPicture.asset(
+                          'assets/images/stars.svg',
+                          width: AppSize().width(context) * 0.4,
+                          height: AppSize().height(context) * 0.04,
+                          color: Colors.red,
+                          matchTextDirection: true,
+                        ),
+                      ),
+                    ),
           InkWell(
-            onTap: (){
-              favformValidation();
-            },
-            child: Padding(
-              padding: EdgeInsets.only(right: AppSize().width(context) * 0.03),
-              child: Icon(Icons.favorite,color: Colors.red,)
-            ),
-          ),
-          InkWell(
-            onTap: (){
-              remfavformValidation();
-            },
-            child: Padding(
-                padding: EdgeInsets.only(right: AppSize().width(context) * 0.03),
-                child: Icon(Icons.favorite_border,color: Colors.red,)
-            ),
-          ),
-          InkWell(
-            onTap: (){
+            onTap: () {
               delformValidationer();
             },
             child: Padding(
-                padding: EdgeInsets.only(right: AppSize().width(context) * 0.03),
-                child: Icon(Icons.delete_forever,color: Colors.red,)
-            ),
+                padding:
+                    EdgeInsets.only(right: AppSize().width(context) * 0.03),
+                child: Icon(
+                  Icons.delete_forever,
+                  color: Colors.red,
+                )),
           )
         ],
         backgroundColor: AppColor.backgroundColor,
-        title: getBoldText('Group',
-            textColor: AppColor.black, fontSize: 18),
+        title: getBoldText('Group', textColor: AppColor.black, fontSize: 18),
         centerTitle: true,
       ),
       backgroundColor: AppColor.backgroundColor,
-      body:
-      apiProvider.groupDetailResponse.data==null?CircularProgressIndicator():
-      SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: AppSize().width(context) * 0.05,
-            right: AppSize().width(context) * 0.05),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: AppSize().height(context) * 0.02),
-              getBoldText('Group Name',
-                  textColor: AppColor.black, fontSize: 16),
-              SizedBox(height: AppSize().height(context) * 0.02),
-              getBoldText(apiProvider.groupDetailResponse.data![0].title!,
-                  textColor: AppColor.black, fontSize: 16),
-              SizedBox(height: AppSize().height(context) * 0.02),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  getBoldText('Colleagues',
-                      textColor: AppColor.black, fontSize: 16),
-                  InkWell(
-                      onTap: (){
-                        setState(() {
-                          add=true;
-                        });
-                      },
-                      child: Icon(Icons.add,color: AppColor.black,size: 16,))
-                ],
-              ),
-              SizedBox(height: AppSize().height(context) * 0.02),
-              Container(
-                  height: AppSize().height(context) * 0.07,
-                  child: addmemberFieldWidget()),
-              apiProvider.getAllUserResponse.data!=null && check==true
-          // &&
-                  // apiProvider.groupDetailResponse.data![0].members!.length==apiProvider.getAllUserResponse.data!.users!.length
-          ?
-              Container(
-                // fit: FlexFit.tight,
-                  width: AppSize().width(context),
-                  // height: AppSize().height(context) * 0.34,
-                  child: ListView.builder(
-                      itemCount: apiProvider.getAllUserResponse.data!.users!.length,
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemBuilder: (BuildContext context, int index) {
-                        return
+      body: apiProvider.groupDetailResponse.data == null
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.only(
+                    left: AppSize().width(context) * 0.05,
+                    right: AppSize().width(context) * 0.05),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: AppSize().height(context) * 0.02),
+                    getBoldText('Group Name',
+                        textColor: AppColor.black, fontSize: 16),
+                    SizedBox(height: AppSize().height(context) * 0.02),
+                    getBoldText(apiProvider.groupDetailResponse.data![0].title!,
+                        textColor: AppColor.black, fontSize: 16),
+                    SizedBox(height: AppSize().height(context) * 0.02),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        getBoldText('Colleagues',
+                            textColor: AppColor.black, fontSize: 16),
+                        InkWell(
+                            onTap: () {
+                              setState(() {
+                                add = true;
+                              });
 
-                          ids.contains(apiProvider.getAllUserResponse.data!.users![index].sId.toString())?Container():
-                          InkWell(
-                              onTap: (){
-                                i.add(apiProvider.getAllUserResponse.data!.users![index].sId.toString());
-                                ids.add(apiProvider.getAllUserResponse.data!.users![index].sId.toString());
-                                sid();
-                                setState(() {
-
-                                });
-                                print(apiProvider.getAllUserResponse.data!.users![index].sId);
-                                userids.add(User(id: apiProvider.getAllUserResponse.data!.users![index].sId, name: apiProvider.getAllUserResponse.data!.users![index].name));
-                                print("length"+userids.length.toString());
-                                print(userids.toList().toString());
-
-
-                              },
-                              child:
-
-
-                              // apiProvider.getAllUserResponse.data!.users![index].username==null ?Container():
-                              apiProvider.getAllUserResponse.data!.users![index].username!=null &&
-                                  apiProvider.getAllUserResponse.data!.users![index].sId! != sids
-                                  ?
-                              ColleagueDetail(apiProvider.getAllUserResponse,index):Container()
-
-                          );
-                      })):Center(child: CircularProgressIndicator()),
-              apiProvider.getAllUserResponse.data!=null && check==true
-          // &&
-                  // apiProvider.groupDetailResponse.data![0].members!.length==apiProvider.getAllUserResponse.data!.users!.length
-                  ?Container(
-                  width: AppSize().width(context),
-                  height: AppSize().height(context) * 0.14,
-                  child: ListView.builder(
-                      itemCount: userids.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (BuildContext context, int index) {
-                        return
-                          // index != userids.length
-                          //   ?
-                          memberWidget(userids, index);
-                            // : addWidget();
-                      })):Container(),
-              Padding(
-                padding: EdgeInsets.only(top: AppSize().height(context) * 0.02),
-                child: SizedBox(
-                  height: AppSize().height(context) * 0.07,
-                  width: AppSize().width(context) ,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                        AppColor.buttonColor,
-                      ),
+                              showModalBottomSheet(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(25.0))),
+                                  backgroundColor: Colors.white,
+                                  context: context,
+                                  isScrollControlled: true,
+                                  builder: (context) => HomeScreenn());
+                            },
+                            child: Icon(
+                              Icons.add,
+                              color: AppColor.black,
+                              size: 16,
+                            ))
+                      ],
                     ),
-                    //  RaisedButton(
-                    //   color: AppColor.buttonColor,
-                    child: getBoldText(AppString().confirm,
-                        textColor: AppColor.white, fontSize: 14),
-                    onPressed: () {
-                      formValidationer();
-                      // print(ids.toList().toString());
-                      // locator<NavigationService>()
-                      //     .navigateToReplace(grouplisting);
-                    },
-                  ),
+                    SizedBox(height: AppSize().height(context) * 0.02),
+                    ListView.builder(
+                        itemCount: apiProvider
+                            .groupDetailResponse.data![0].members!.length,
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          ids.add(apiProvider
+                              .groupDetailResponse.data![0].members![index].sId
+                              .toString());
+                          return ColleagueInfo(
+                              apiProvider.groupDetailResponse, index, sids, () {
+                            ids.remove(apiProvider
+                                .getAllUserResponse.data!.users![index].sId
+                                .toString());
+                            formValidation(
+                                apiProvider.groupDetailResponse.data![0]
+                                    .members![index].sId!,
+                                apiProvider.groupDetailResponse.data![0].sId!);
+                          });
+                        }),
+                  ],
                 ),
               ),
-              SizedBox(height: AppSize().height(context) * 0.02),
-               ListView.builder(
-                      itemCount: apiProvider.groupDetailResponse.data![0].members!.length,
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemBuilder: (BuildContext context, int index) {
-                        ids.add(apiProvider.groupDetailResponse.data![0].members![index].sId.toString());
-                        return
-
-                          // ids.contains(apiProvider.getAllUserResponse.data!.users![index].sId.toString())?Container():
-                           ColleagueInfo(apiProvider.groupDetailResponse,index,sids,
-                               (){
-                             formValidation(apiProvider.groupDetailResponse.data![0].members![index].sId!, apiProvider.groupDetailResponse.data![0].sId!);
-                               });
-                      }),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }

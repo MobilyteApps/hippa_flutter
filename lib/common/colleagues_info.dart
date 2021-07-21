@@ -9,11 +9,11 @@ class ColleagueInfo extends StatelessWidget {
   final GroupDetailResponse groupDetailResponse;
   final int index;
   final String sid;
-  var  callback;
-  ColleagueInfo(
-      this.groupDetailResponse, this.index,this.sid,
-      this.callback,
-      {Key? key}) : super(key: key);
+  var callback;
+
+  ColleagueInfo(this.groupDetailResponse, this.index, this.sid, this.callback,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,6 @@ class ColleagueInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,10 +45,12 @@ class ColleagueInfo extends StatelessWidget {
                         shape: BoxShape.circle,
                       ),
                       child: Center(
-                          child: Text(groupDetailResponse.data![0].members![index].username![0],
-                            // getAllUserResponse.data!.users![index].name![0],
-                            style: TextStyle(color: Colors.red),
-                          )),
+                          child: Text(
+                        groupDetailResponse
+                            .data![0].members![index].username![0],
+                        // getAllUserResponse.data!.users![index].name![0],
+                        style: TextStyle(color: Colors.red),
+                      )),
                     ),
                   ),
                 ),
@@ -59,25 +60,31 @@ class ColleagueInfo extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      getBoldText(groupDetailResponse.data![0].members![index].username!,
-                          textColor: AppColor.black, fontSize: 16),
+                      getBoldText(
+                          groupDetailResponse
+                              .data![0].members![index].username!,
+                          textColor: AppColor.black,
+                          fontSize: 16),
                     ],
                   ),
                 ),
               ],
             ),
-           sid!=groupDetailResponse.data![0].admin?Container():
-            InkWell(
-              onTap: (){
-                callback();
+            sid != groupDetailResponse.data![0].admin
+                ? Container()
+                : InkWell(
+                    onTap: () {
+                      callback();
 
-groupDetailResponse.data![0].members!.removeAt(index);              },
-              child: Padding(
-                  padding: EdgeInsets.only(right: AppSize().width(context) * 0.03),
-
-                      child: Icon(Icons.delete_forever,color: Colors.red,))
-
-            )
+                      groupDetailResponse.data![0].members!.removeAt(index);
+                    },
+                    child: Padding(
+                        padding: EdgeInsets.only(
+                            right: AppSize().width(context) * 0.03),
+                        child: Icon(
+                          Icons.delete_forever,
+                          color: Colors.red,
+                        )))
           ],
         ),
       ),

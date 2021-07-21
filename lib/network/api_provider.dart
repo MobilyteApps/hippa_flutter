@@ -8,6 +8,7 @@ import 'package:app/response/delete_group_response.dart';
 import 'package:app/response/getalluser_response.dart';
 import 'package:app/response/groupdetail_response.dart';
 import 'package:app/response/groupleave_response.dart';
+import 'package:app/response/viewgrouplistingresponse.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -28,13 +29,16 @@ import 'package:app/response/verify_otp_response.dart';
 
 import 'package:app/common/navigator_route.dart';
 import 'package:app/common/navigator_service.dart';
+
 class ApiProvider {
   String baseurl = "http://3.142.72.8:3000/v1/auth/";
-  String userurl="http://3.142.72.8:3000/v1/users/";
+  String userurl = "http://3.142.72.8:3000/v1/users/";
   static final ApiProvider _apiProvider = new ApiProvider._internal();
+
   factory ApiProvider() {
     return _apiProvider;
   }
+  ViewGroupListingResponse viewGroupListingResponse = ViewGroupListingResponse();
   GetAllUserResponse getAllUserResponse = GetAllUserResponse();
   SigninResponse signinresponse = SigninResponse();
   SignoutResponse signoutresponse = SignoutResponse();
@@ -45,11 +49,14 @@ class ApiProvider {
   AddUsertoGroupResponse addUsertoGroupResponse = AddUsertoGroupResponse();
   DeleteGroupResponse deleteGroupResponse = DeleteGroupResponse();
   GroupDetailResponse groupDetailResponse = GroupDetailResponse();
-  SignInProvider signInProvider=SignInProvider();
-  GroupLeaveResponse  groupLeaveResponse =  GroupLeaveResponse();
+  SignInProvider signInProvider = SignInProvider();
+  GroupLeaveResponse groupLeaveResponse = GroupLeaveResponse();
+
   ApiProvider._internal();
+
   String otp = '';
   List<CameraDescription>? cameras;
+
   void showToastMsg(String msg) {
     Fluttertoast.showToast(
         msg: '$msg',
@@ -69,6 +76,7 @@ class ApiProvider {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('islogged', islogged);
   }
+
   void token(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('token', token);
@@ -78,6 +86,7 @@ class ApiProvider {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('sid', token);
   }
+
   void groupid(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('gid', token);
@@ -420,7 +429,8 @@ class ApiProvider {
       var postUri = Uri.parse('$userurl' + 'createGroup');
       // print(input.toString().toString());
       print(postUri);
-      final response = await http.post(postUri, body: json.encode(input), headers: {
+      final response =
+          await http.post(postUri, body: json.encode(input), headers: {
         // 'Content-Type': 'application/x-www-form-urlencoded',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ${token.toString()}',
@@ -447,7 +457,7 @@ class ApiProvider {
         // var input = {
         //   "group_id" : createGroupResponse.data!.sId!
         // };
-        // groupid(createGroupResponse.data!.sId!);
+        groupid(createGroupResponse.data!.sId!);
         // signInProvider.groupdetail(loader, input);
         return createGroupResponse;
       } else {
@@ -461,8 +471,7 @@ class ApiProvider {
     return createGroupResponse;
   }
 
-  Future<GetAllUserResponse> getallusers(
-      Loader loader, String search) async {
+  Future<GetAllUserResponse> getallusers(Loader loader, String search) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, String> header = new Map();
     // print("sign in api $input----${baseurl + AppString().signInUrl}");
@@ -475,7 +484,7 @@ class ApiProvider {
       var postUri = Uri.parse('$userurl' + 'getAllUsers' + '?search=$search');
       // print(ApiProvider().signinresponse.data!.token);
       print(postUri.toString());
-      final response = await http.get(postUri,  headers: {
+      final response = await http.get(postUri, headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': 'application/json',
         'Authorization': 'Bearer ${token.toString()}',
@@ -520,7 +529,8 @@ class ApiProvider {
     loader.setloader(true);
     try {
       var postUri = Uri.parse('$userurl' + 'addUsertoGroup');
-      final response = await http.post(postUri, body: json.encode(input), headers: {
+      final response =
+          await http.post(postUri, body: json.encode(input), headers: {
         // 'Content-Type': 'application/x-www-form-urlencoded',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ${token.toString()}',
@@ -538,7 +548,7 @@ class ApiProvider {
       if (ouptut["status"] == 200) {
         showToastMsg(ouptut["message"]);
 
-        locator<NavigationService>().navigateToReplace(groupdetails);
+        locator<NavigationService>().navigateTo(groupdetails);
         addUsertoGroupResponse =
             AddUsertoGroupResponse.fromJson(json.decode(response.body));
         String user = jsonEncode(createGroupResponse);
@@ -616,7 +626,8 @@ class ApiProvider {
       var postUri = Uri.parse('$userurl' + 'viewGroupDetails');
       // print(input.toString().toString());
       print(postUri);
-      final response = await http.post(postUri, body: json.encode(input), headers: {
+      final response =
+          await http.post(postUri, body: json.encode(input), headers: {
         // 'Content-Type': 'application/x-www-form-urlencoded',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ${token.toString()}',
@@ -651,7 +662,7 @@ class ApiProvider {
     return groupDetailResponse;
   }
 
-  Future< GroupLeaveResponse > groupleave(
+  Future<GroupLeaveResponse> groupleave(
       Loader loader, Map<String, String> input) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, String> header = new Map();
@@ -687,12 +698,11 @@ class ApiProvider {
       if (ouptut["status"] == 200) {
         showToastMsg(ouptut["message"]);
 
-
-        groupLeaveResponse  =
-            GroupLeaveResponse .fromJson(json.decode(response.body));
-        String user = jsonEncode( groupLeaveResponse );
+        groupLeaveResponse =
+            GroupLeaveResponse.fromJson(json.decode(response.body));
+        String user = jsonEncode(groupLeaveResponse);
         prefs.setString('user', user);
-        return  groupLeaveResponse ;
+        return groupLeaveResponse;
       } else {
         showToastMsg("InCorrect old Password");
       }
@@ -701,9 +711,10 @@ class ApiProvider {
       //     showToastMsg("Sign In failed");
       // return null;
     }
-    return  groupLeaveResponse ;
+    return groupLeaveResponse;
   }
-  Future< GroupLeaveResponse > addfav(
+
+  Future<GroupLeaveResponse> addfav(
       Loader loader, Map<String, String> input) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, String> header = new Map();
@@ -737,14 +748,13 @@ class ApiProvider {
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
-        showToastMsg(ouptut["message"]);
+        showToastMsg('Added to Favorite');
 
-
-        groupLeaveResponse  =
-            GroupLeaveResponse .fromJson(json.decode(response.body));
-        String user = jsonEncode( groupLeaveResponse );
+        groupLeaveResponse =
+            GroupLeaveResponse.fromJson(json.decode(response.body));
+        String user = jsonEncode(groupLeaveResponse);
         prefs.setString('user', user);
-        return  groupLeaveResponse ;
+        return groupLeaveResponse;
       } else {
         showToastMsg("InCorrect old Password");
       }
@@ -753,9 +763,10 @@ class ApiProvider {
       //     showToastMsg("Sign In failed");
       // return null;
     }
-    return  groupLeaveResponse ;
+    return groupLeaveResponse;
   }
-  Future< GroupLeaveResponse > rewmfav(
+
+  Future<GroupLeaveResponse> rewmfav(
       Loader loader, Map<String, String> input) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, String> header = new Map();
@@ -789,14 +800,13 @@ class ApiProvider {
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
-        showToastMsg(ouptut["message"]);
+        showToastMsg('Removed from Favorite');
 
-
-        groupLeaveResponse  =
-            GroupLeaveResponse .fromJson(json.decode(response.body));
-        String user = jsonEncode( groupLeaveResponse );
+        groupLeaveResponse =
+            GroupLeaveResponse.fromJson(json.decode(response.body));
+        String user = jsonEncode(groupLeaveResponse);
         prefs.setString('user', user);
-        return  groupLeaveResponse ;
+        return groupLeaveResponse;
       } else {
         showToastMsg("InCorrect old Password");
       }
@@ -805,6 +815,58 @@ class ApiProvider {
       //     showToastMsg("Sign In failed");
       // return null;
     }
-    return  groupLeaveResponse ;
+    return groupLeaveResponse;
+  }
+
+  Future<ViewGroupListingResponse> viewgrouplist(
+      Loader loader, Map<String, String> input) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, String> header = new Map();
+    // print("sign in api $input----${baseurl + AppString().signInUrl}");
+    header["content-type"] = "application/x-www-form-urlencoded";
+    String? token = prefs.getString('token');
+    print(token);
+    // print("__________");
+    print(json.encode(input));
+    print(input);
+    print("#####");
+    // print(prefs.getString('token'));
+    loader.setloader(true);
+    try {
+      var postUri = Uri.parse('$userurl' + 'viewGroupListing');
+      // print(input.toString().toString());
+      print(postUri);
+      final response = await http.post(postUri, body: input, headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        // 'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${token.toString()}',
+      });
+      // final response = await http.post(postUri, body: input, headers: header);
+      print(
+        " response -------------${response.body} api${response.statusCode}",
+      );
+      loader.setloader(false);
+
+      if (response.statusCode == 302) {
+        showToastMsg("Incorrect old password");
+      } else {}
+      Map<String, dynamic> ouptut = json.decode(response.body);
+      if (ouptut["status"] == 200) {
+        showToastMsg(ouptut["message"]);
+
+        viewGroupListingResponse =
+            ViewGroupListingResponse.fromJson(json.decode(response.body));
+        String user = jsonEncode(viewGroupListingResponse);
+        prefs.setString('user', user);
+        return viewGroupListingResponse;
+      } else {
+        showToastMsg("InCorrect old Password");
+      }
+    } catch (e) {
+      loader.setloader(false);
+      //     showToastMsg("Sign In failed");
+      // return null;
+    }
+    return viewGroupListingResponse;
   }
 }

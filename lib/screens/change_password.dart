@@ -43,6 +43,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   final usernameCtrl = TextEditingController();
   final passwordCtrl = TextEditingController();
   SignInProvider signInProvider = SignInProvider();
+
   Widget usernameFieldWidget() {
     return TextFormField(
       // onChanged: formValidatonColor(),
@@ -233,7 +234,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                       ),
                       child: passwordFieldWidget(),
                     ),
-
                     Padding(
                       padding: EdgeInsets.only(
                           top: AppSize().height(context) * 0.03),
@@ -247,7 +247,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                           child: getRegularText(AppString().signin,
                               textColor: AppColor.buttonColor, fontSize: 16),
                           onPressed: () {
-
                             formValidation();
                           },
                         ),

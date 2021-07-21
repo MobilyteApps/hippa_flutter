@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:app/network/api_provider.dart';
 import 'package:app/screens/CameraView.dart';
+
 // import 'package:gallery_saver/gallery_saver.dart';
 // import 'package:image_picker/image_picker.dart';
 import 'package:camera/camera.dart';
@@ -25,6 +26,7 @@ class _CameraScreenState extends State<CameraScreen> {
   bool iscamerafront = true;
   double transform = 0;
   ApiProvider apiprovider = ApiProvider();
+
   @override
   void initState() {
     super.initState();
@@ -171,22 +173,22 @@ class _CameraScreenState extends State<CameraScreen> {
                   path: file.path,
                 )));
   }
-  // void _recordVideo() async {
-  //   ImagePicker().getVideo(source: ImageSource.camera)
-  //       .then((PickedFile? recordedVideo) {
-  //     if (recordedVideo != null && recordedVideo.path != null) {
-  //       setState(() {
-  //         print('saving in progress...');
-  //         // secondButtonText = 'saving in progress...';
-  //       });
-  //       GallerySaver.saveVideo(recordedVideo.path, albumName: 'albumName')
-  //           .then((bool? success) {
-  //         setState(() {
-  //           // secondButtonText = 'video saved!';
-  //           print('video saved!');
-  //         });
-  //       });
-  //     }
-  //   });
-  // }
+// void _recordVideo() async {
+//   ImagePicker().getVideo(source: ImageSource.camera)
+//       .then((PickedFile? recordedVideo) {
+//     if (recordedVideo != null && recordedVideo.path != null) {
+//       setState(() {
+//         print('saving in progress...');
+//         // secondButtonText = 'saving in progress...';
+//       });
+//       GallerySaver.saveVideo(recordedVideo.path, albumName: 'albumName')
+//           .then((bool? success) {
+//         setState(() {
+//           // secondButtonText = 'video saved!';
+//           print('video saved!');
+//         });
+//       });
+//     }
+//   });
+// }
 }

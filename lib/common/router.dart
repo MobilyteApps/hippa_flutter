@@ -1,4 +1,5 @@
 import 'package:app/common/navigator_route.dart';
+import 'package:app/common/testing.dart';
 import 'package:app/screens/CameraScreen.dart';
 import 'package:app/screens/aws_demo.dart';
 import 'package:app/screens/change_password.dart';
@@ -75,7 +76,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => GroupDetail());
       case country:
         return MaterialPageRoute(builder: (_) => CountryTesting());
-
+      case test:
+        return MaterialPageRoute(builder: (_) => HomeScreenn());
 
       default:
         return MaterialPageRoute(builder: (_) {
