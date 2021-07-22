@@ -22,12 +22,20 @@ class _GroupListingState extends State<GroupListing>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
   int a = 0;
+  int _selectedIndex = 0;
 
   @override
   void initState() {
     _tabController = new TabController(length: 2, vsync: this);
     super.initState();
+    _tabController!.addListener(() {
+      setState(() {
+        _selectedIndex = _tabController!.index;
+      });
+      print("Selected Index: " + _tabController!.index.toString());
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +58,7 @@ class _GroupListingState extends State<GroupListing>
             )
           ],
           backgroundColor: AppColor.backgroundColor,
-          title: getBoldText(AppString().grouplisting,
+          title: getBoldText(_tabController!.index==0?  AppString().grouplisting:'Favorite Groups',
               textColor: AppColor.black, fontSize: 18),
           centerTitle: true,
         ),
@@ -66,6 +74,9 @@ class _GroupListingState extends State<GroupListing>
                       left: AppSize().width(context) * 0.05,
                       right: AppSize().width(context) * 0.05),
                   child: TabBar(
+                    onTap: (index) {
+                      // Tab index when user select it, it start from zero
+                    },
                     isScrollable: false,
                     indicator: BoxDecoration(
                       border: Border.all(width: 100),
@@ -85,7 +96,7 @@ class _GroupListingState extends State<GroupListing>
                       Expanded(
                         // flex: 1,
                         child: Tab(
-                          text: 'Groups',
+                          text:  'Groups',
                           // // icon: Icon(Icons.person),
                         ),
                       )

@@ -180,4 +180,14 @@ class SignInProvider with ChangeNotifier {
       }
     });
   }
+
+
+  updategroup(Loader loader, Map<String, String> input) async {
+    ApiProvider().updategroup(loader, input).then((value) {
+      if (value != null) {
+        this.deleteGroupResponse = value;
+        // locator<NavigationService>().navigateToReplace(grouplisting);
+      }
+    });
+  }
 }

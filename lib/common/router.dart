@@ -11,6 +11,7 @@ import 'package:app/screens/fingerprint.dart';
 import 'package:app/screens/forgot_password_screen.dart';
 import 'package:app/screens/group_detail.dart';
 import 'package:app/screens/group_listing.dart';
+import 'package:app/screens/imgpicker.dart';
 import 'package:app/screens/manage_profile.dart';
 import 'package:app/screens/manage_repllies.dart';
 import 'package:app/screens/notification.dart';
@@ -78,6 +79,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => CountryTesting());
       case test:
         return MaterialPageRoute(builder: (_) => HomeScreenn());
+      case img:
+        return MaterialPageRoute(builder: (_) =>CameraExampleHome());
 
       default:
         return MaterialPageRoute(builder: (_) {

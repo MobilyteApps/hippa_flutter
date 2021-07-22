@@ -238,6 +238,18 @@ class _HomeScreennState extends State<HomeScreenn> {
                                     : Container());
                       }))
               : Center(child: CircularProgressIndicator()),
+          apiProvider.getAllUserResponse.data != null &&
+                  check == true &&
+                  apiProvider.getAllUserResponse.data!.totalCount == 0
+              ? Container(
+                  child: Center(
+                    child: Text(
+                      'No User found',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                )
+              : Container(),
           apiProvider.getAllUserResponse.data != null && check == true
               ? Container(
                   width: AppSize().width(context),

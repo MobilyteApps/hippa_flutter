@@ -38,7 +38,7 @@ class _SigninState extends State<Signin> {
   bool _canCheckBiometrics = false;
   List<BiometricType>? _availableBiometrics;
   String _authorized = 'Not Authorized';
-  bool showpass = false;
+  bool showpass = true;
   final usernameCtrl = TextEditingController();
   final passwordCtrl = TextEditingController();
   SignInProvider signInProvider = SignInProvider();

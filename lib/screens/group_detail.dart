@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app/common/colleague_detail.dart';
 import 'package:app/common/colleagues_info.dart';
 import 'package:app/common/colors.dart';
@@ -49,6 +51,7 @@ class _GroupDetailState extends State<GroupDetail> {
   bool add = false;
   final addmemberctrl = TextEditingController();
   bool fav = false;
+  bool changetitle = false;
 
   @override
   void initState() {
@@ -65,9 +68,10 @@ class _GroupDetailState extends State<GroupDetail> {
     if (this.signInProvider != signInProvider || this.loader != loader) {
       this.signInProvider = signInProvider;
       this.loader = loader;
-
-      Future.microtask(() async {
-        signInProvider.getallusers(loader, '');
+      Timer(Duration(seconds: 2), () {
+        Future.microtask(() async {
+          signInProvider.getallusers(loader, '');
+        });
       });
     }
   }
@@ -89,7 +93,11 @@ class _GroupDetailState extends State<GroupDetail> {
     ids.add(id);
 
     var input = {"group_id": id};
-    signInProvider.groupdetail(loader, input);
+    Timer(Duration(seconds: 3), () {
+      Future.microtask(() async {
+        signInProvider.groupdetail(loader, input);
+      });
+    });
   }
 
   Widget groupnameFieldWidget() {
@@ -258,6 +266,25 @@ class _GroupDetailState extends State<GroupDetail> {
     signInProvider.deletegroup(loader, input);
   }
 
+  updategroup() async {
+    String id;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    id = prefs.getString('gid')!;
+    ids.add(id);
+
+    if (creategroupctrl.text.trim() == "") {
+      ApiProvider().showToastMsg('Enter valid group name');
+    }
+    var input = {
+      "group_id": "${id.toString()}",
+      "title": creategroupctrl.text.trim(),
+      "groupImage": "AWS link--2"
+    };
+    print(input.toString());
+    print("________-");
+    signInProvider.updategroup(loader, input);
+  }
+
   formValidation(String userid, String groupid) async {
     String id;
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -398,8 +425,103 @@ class _GroupDetailState extends State<GroupDetail> {
                     getBoldText('Group Name',
                         textColor: AppColor.black, fontSize: 16),
                     SizedBox(height: AppSize().height(context) * 0.02),
-                    getBoldText(apiProvider.groupDetailResponse.data![0].title!,
-                        textColor: AppColor.black, fontSize: 16),
+                    changetitle == false
+                        ? Row(
+                            children: [
+                              getBoldText(
+                                  apiProvider
+                                      .groupDetailResponse.data![0].title!,
+                                  textColor: AppColor.black,
+                                  fontSize: 16),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    // delformValidationer();
+                                    creategroupctrl.text = apiProvider
+                                        .groupDetailResponse.data![0].title!;
+
+                                    changetitle = true;
+                                  });
+                                },
+                                child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: AppSize().width(context) * 0.03,
+                                        right: AppSize().width(context) * 0.03),
+                                    child: Icon(
+                                      Icons.edit,
+                                      color: Colors.grey,
+                                      size: 14,
+                                    )),
+                              )
+                            ],
+                          )
+                        : groupnameFieldWidget(),
+                    SizedBox(height: AppSize().height(context) * 0.02),
+                    changetitle == true
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: AppSize().height(context) * 0.02),
+                                child: SizedBox(
+                                  height: AppSize().height(context) * 0.04,
+                                  width: AppSize().width(context) * 0.3,
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                        AppColor.white,
+                                      ),
+                                    ),
+                                    child: getBoldText(AppString().cancel,
+                                        textColor: AppColor.black,
+                                        fontSize: 14),
+                                    onPressed: () {
+                                      setState(() {
+                                        changetitle = false;
+                                      });
+                                      // locator<NavigationService>().navigateToReplace(otpscreen);
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: AppSize().height(context) * 0.02),
+                                child: SizedBox(
+                                  height: AppSize().height(context) * 0.04,
+                                  width: AppSize().width(context) * 0.3,
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                        AppColor.buttonColor,
+                                      ),
+                                    ),
+                                    //  RaisedButton(
+                                    //   color: AppColor.buttonColor,
+                                    child: getBoldText(AppString().confirm,
+                                        textColor: AppColor.white,
+                                        fontSize: 14),
+                                    onPressed: () {
+                                      updategroup();
+                                      setState(() {
+                                        changetitle = false;
+                                      });
+                                      Timer(Duration(seconds: 2), () {
+                                        sid();
+                                      });
+                                      // print(ids.toList().toString());
+                                      // locator<NavigationService>()
+                                      //     .navigateToReplace(grouplisting);
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        : Container(),
                     SizedBox(height: AppSize().height(context) * 0.02),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -429,26 +551,31 @@ class _GroupDetailState extends State<GroupDetail> {
                       ],
                     ),
                     SizedBox(height: AppSize().height(context) * 0.02),
-                    ListView.builder(
-                        itemCount: apiProvider
-                            .groupDetailResponse.data![0].members!.length,
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemBuilder: (BuildContext context, int index) {
-                          ids.add(apiProvider
-                              .groupDetailResponse.data![0].members![index].sId
-                              .toString());
-                          return ColleagueInfo(
-                              apiProvider.groupDetailResponse, index, sids, () {
-                            ids.remove(apiProvider
-                                .getAllUserResponse.data!.users![index].sId
-                                .toString());
-                            formValidation(
-                                apiProvider.groupDetailResponse.data![0]
-                                    .members![index].sId!,
-                                apiProvider.groupDetailResponse.data![0].sId!);
-                          });
-                        }),
+                    apiProvider.groupDetailResponse.data == null &&
+                            check == false
+                        ? Center(child: CircularProgressIndicator())
+                        : ListView.builder(
+                            itemCount: apiProvider
+                                .groupDetailResponse.data![0].members!.length,
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemBuilder: (BuildContext context, int index) {
+                              ids.add(apiProvider.groupDetailResponse.data![0]
+                                  .members![index].sId
+                                  .toString());
+                              return ColleagueInfo(
+                                  apiProvider.groupDetailResponse, index, sids,
+                                  () {
+                                ids.remove(apiProvider
+                                    .getAllUserResponse.data!.users![index].sId
+                                    .toString());
+                                formValidation(
+                                    apiProvider.groupDetailResponse.data![0]
+                                        .members![index].sId!,
+                                    apiProvider
+                                        .groupDetailResponse.data![0].sId!);
+                              });
+                            }),
                   ],
                 ),
               ),

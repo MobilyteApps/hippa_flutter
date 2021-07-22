@@ -39,12 +39,12 @@ class _FavouriteGroupState extends State<FavouriteGroup> {
   int a = 0;
   ApiProvider apis = ApiProvider();
   User users = User();
-  List<String>ids=[];
+  List<String> ids = [];
   List<User> userids = <User>[];
   String documentPath = "";
-  String url='';
+  String url = '';
   late String sids;
-  bool check=false;
+  bool check = false;
 
   @override
   void initState() {
@@ -52,11 +52,13 @@ class _FavouriteGroupState extends State<FavouriteGroup> {
     super.initState();
     sid();
   }
+
   void sid() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    sids= prefs.getString('sid')!;
+    sids = prefs.getString('sid')!;
+    // prefs.setString('gid', '');
     setState(() {
-      check=true;
+      check = true;
     });
   }
 
@@ -69,59 +71,54 @@ class _FavouriteGroupState extends State<FavouriteGroup> {
       this.signInProvider = signInProvider;
       this.loader = loader;
 
-
-
-
       Timer(Duration(seconds: 2), () {
-        var input = {
-          "user_id" : sids
-        };
+        var input = {"user_id": sids};
         Future.microtask(() async {
           signInProvider.viewgrouplist(loader, input);
         });
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
-    return
-
-      apiProvider.viewGroupListingResponse.data == null?Center(child:CircularProgressIndicator()):
-      Padding(
-      padding: EdgeInsets.only(
-          top: AppSize().width(context) * 0.05,
-          left: AppSize().width(context) * 0.05,
-          right: AppSize().width(context) * 0.05),
-      child: GridView.builder(
-        itemCount: apiProvider.viewGroupListingResponse.data!.length+1,
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 200,
-            // childAspectRatio: 2 / 1,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20),
-          // crossAxisCount: 2,
-          // crossAxisSpacing: 8,
-          // mainAxisSpacing: 8,
-          // childAspectRatio: (2 / 1),
-        // ),
-          itemBuilder: (BuildContext ctx, index) {
-          return GestureDetector(
-              onTap: () async{
-                if(index==0) {
-                  locator<NavigationService>().navigateTo(creategroup);
-                }
-                else{
-                  SharedPreferences prefs = await SharedPreferences.getInstance();
-                  prefs.setString('gid',apiProvider.viewGroupListingResponse.data![index-1].sId!);
-                  locator<NavigationService>().navigateTo(groupdetails);
-                }
+    return apiProvider.viewGroupListingResponse.data == null
+        ? Center(child: CircularProgressIndicator())
+        : Padding(
+            padding: EdgeInsets.only(
+                top: AppSize().width(context) * 0.05,
+                left: AppSize().width(context) * 0.05,
+                right: AppSize().width(context) * 0.05),
+            child: GridView.builder(
+              itemCount: apiProvider.viewGroupListingResponse.data!.length + 1,
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
+                  // childAspectRatio: 2 / 1,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20),
+              // crossAxisCount: 2,
+              // crossAxisSpacing: 8,
+              // mainAxisSpacing: 8,
+              // childAspectRatio: (2 / 1),
+              // ),
+              itemBuilder: (BuildContext ctx, index) {
+                return GestureDetector(
+                    onTap: () async {
+                      if (index == 0) {
+                        locator<NavigationService>().navigateTo(creategroup);
+                      } else {
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        prefs.setString(
+                            'gid',
+                            apiProvider.viewGroupListingResponse
+                                .data![index - 1].sId!);
+                        locator<NavigationService>().navigateTo(groupdetails);
+                      }
+                    },
+                    child: Group(index, apiProvider.viewGroupListingResponse));
               },
-              child:
-
-              Group(index,apiProvider.viewGroupListingResponse)
+            ),
           );
-        },
-      ),
-    );
   }
 }

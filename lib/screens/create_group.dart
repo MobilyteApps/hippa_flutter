@@ -23,8 +23,8 @@ import 'package:provider/provider.dart';
 import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
-class CreateGroup extends StatefulWidget {
 
+class CreateGroup extends StatefulWidget {
   const CreateGroup({Key? key}) : super(key: key);
 
   @override
@@ -45,26 +45,28 @@ class _CreateGroupState extends State<CreateGroup> {
         color: AppColor.white,
       ));
   int a = 0;
-  GetAllUserResponse response=GetAllUserResponse();
+  GetAllUserResponse response = GetAllUserResponse();
   ApiProvider apis = ApiProvider();
   User users = User();
-  List<String>ids=[];
+  List<String> ids = [];
   List<User> userids = <User>[];
   String documentPath = "";
-  String url='';
+  String url = '';
   late String sids;
-  bool check=false;
+  bool check = false;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     sid();
   }
+
   void sid() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    sids= prefs.getString('sid')!;
+    sids = prefs.getString('sid')!;
     setState(() {
-      check=true;
+      check = true;
     });
   }
 
@@ -119,7 +121,7 @@ class _CreateGroupState extends State<CreateGroup> {
     );
   }
 
-  Widget memberWidget(List<User>u, int index) {
+  Widget memberWidget(List<User> u, int index) {
     return Padding(
       padding: EdgeInsets.only(right: AppSize().width(context) * 0.05),
       child: Stack(
@@ -163,6 +165,7 @@ class _CreateGroupState extends State<CreateGroup> {
       ),
     );
   }
+
   void didChangeDependencies() {
     super.didChangeDependencies();
     final signInProvider = Provider.of<SignInProvider>(context);
@@ -177,6 +180,7 @@ class _CreateGroupState extends State<CreateGroup> {
       });
     }
   }
+
   Widget memberlist() {
     return ListView.builder(
         itemCount: userids.length,
@@ -184,6 +188,7 @@ class _CreateGroupState extends State<CreateGroup> {
           return memberWidget(userids, index);
         });
   }
+
   Widget addmemberFieldWidget() {
     return TextFormField(
       controller: addmemberctrl,
@@ -191,7 +196,7 @@ class _CreateGroupState extends State<CreateGroup> {
         _debouncer.run(() {
           // setState(() {
 
-            signInProvider.getallusers(loader, v.trim());
+          signInProvider.getallusers(loader, v.trim());
           // });
           // signInProvider.getallusers(loader, addmemberctrl.text.trim());
           // signInProvider.getallusers(loader, v.trim());
@@ -226,15 +231,16 @@ class _CreateGroupState extends State<CreateGroup> {
   }
 
   Future<String> getDocuments() async {
-    String urlss='';
+    String urlss = '';
     print('doc clicked !!!!!!!!');
     File? imgfile;
 
     try {
       // var file = await FilePicker.platform.getFile(type: FileType.image);
-      FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
+      FilePickerResult? result =
+          await FilePicker.platform.pickFiles(type: FileType.image);
 
-      if(result != null) {
+      if (result != null) {
         PlatformFile file = result.files.first;
         imgfile = File(result.files.single.path!);
       } else {
@@ -255,7 +261,6 @@ class _CreateGroupState extends State<CreateGroup> {
             // _signUpController.imageUrl=file.path;
           });
 
-
           ///upload File
           AwsPage().upload(imgfile).then((onValue) {
             print("file uploaded >>>>> $onValue");
@@ -268,19 +273,10 @@ class _CreateGroupState extends State<CreateGroup> {
               url = onValue;
             });
           });
-
-
-
-        } else {
-
-        }
-      } else {
-
-      }
-
+        } else {}
+      } else {}
     } catch (e) {
       print("Error while picking the file: " + e.toString());
-
     }
     return urlss;
   }
@@ -329,7 +325,7 @@ class _CreateGroupState extends State<CreateGroup> {
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(
-          onTap: (){
+          onTap: () {
             locator<NavigationService>().backPress();
           },
           child: Padding(
@@ -343,8 +339,8 @@ class _CreateGroupState extends State<CreateGroup> {
         ),
         actions: [
           InkWell(
-            onTap: (){
-              locator<NavigationService>().navigateTo(groupdetails);
+            onTap: () {
+              // locator<NavigationService>().navigateTo(groupdetails);
             },
             child: Padding(
               padding: EdgeInsets.only(right: AppSize().width(context) * 0.03),
@@ -373,41 +369,35 @@ class _CreateGroupState extends State<CreateGroup> {
             children: [
               InkWell(
                   onTap: () async {
-                    // locator<NavigationService>().navigateTo(createmessage);
-                    print('filepicker');
-                    FocusScope.of(context).unfocus();
-
-                    url = await getDocuments();
+                    locator<NavigationService>().navigateTo(img);
+                    // print('filepicker');
+                    // FocusScope.of(context).unfocus();
+                    // url = await getDocuments();
                   },
                   child: Align(
                       alignment: Alignment.topLeft,
-                      child:
-                          documentPath == ""
+                      child: documentPath == ""
                           ? Container(
-                          height:AppSize().height(context) * 0.1,
-                          width: AppSize().width(context)* 0.18,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                              BorderRadius.circular(20),
-                              border: Border.all(
-                                  color: Colors.grey)),
-                          child: Icon(
-                            Icons.person,
-                            color: Colors.grey,
-                            size: 46,
-                          ))
-                          :
-                    ClipRRect(
-                        borderRadius:
-                        BorderRadius.circular(20.0),
-                        child: Image.file(
-                          File(documentPath),
-                          fit: BoxFit.fitWidth,
-                          height: AppSize().height(context) * 0.1,
-                          width: AppSize().width(context) * 0.18,
-                        ),
-                      ))),
+                              height: AppSize().height(context) * 0.1,
+                              width: AppSize().width(context) * 0.18,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(color: Colors.grey)),
+                              child: Icon(
+                                Icons.person,
+                                color: Colors.grey,
+                                size: 46,
+                              ))
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(20.0),
+                              child: Image.file(
+                                File(documentPath),
+                                fit: BoxFit.fitWidth,
+                                height: AppSize().height(context) * 0.1,
+                                width: AppSize().width(context) * 0.18,
+                              ),
+                            ))),
               SizedBox(height: AppSize().height(context) * 0.02),
               getBoldText(AppString().groupname,
                   textColor: AppColor.black, fontSize: 16),
@@ -421,56 +411,72 @@ class _CreateGroupState extends State<CreateGroup> {
                   height: AppSize().height(context) * 0.07,
                   child: addmemberFieldWidget()),
               SizedBox(height: AppSize().height(context) * 0.02),
-              apiProvider.getAllUserResponse.data!=null && check==true ?
-              Container(
-                // fit: FlexFit.tight,
-                width: AppSize().width(context),
-                // height: AppSize().height(context) * 0.34,
-                    child: ListView.builder(
-                        itemCount: apiProvider.getAllUserResponse.data!.users!.length,
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemBuilder: (BuildContext context, int index) {
-                          return
-                            ids.contains(apiProvider.getAllUserResponse.data!.users![index].sId.toString())?Container():
-                            InkWell(
-                              onTap: (){
-                                ids.add(apiProvider.getAllUserResponse.data!.users![index].sId.toString());
-                                setState(() {
+              apiProvider.getAllUserResponse.data != null && check == true
+                  ? Container(
+                      // fit: FlexFit.tight,
+                      width: AppSize().width(context),
+                      // height: AppSize().height(context) * 0.34,
+                      child: ListView.builder(
+                          itemCount: apiProvider
+                              .getAllUserResponse.data!.users!.length,
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ids.contains(apiProvider
+                                    .getAllUserResponse.data!.users![index].sId
+                                    .toString())
+                                ? Container()
+                                : InkWell(
+                                    onTap: () {
+                                      ids.add(apiProvider.getAllUserResponse
+                                          .data!.users![index].sId
+                                          .toString());
+                                      setState(() {});
+                                      print(apiProvider.getAllUserResponse.data!
+                                          .users![index].sId);
+                                      userids.add(User(
+                                          id: apiProvider.getAllUserResponse
+                                              .data!.users![index].sId,
+                                          name: apiProvider.getAllUserResponse
+                                              .data!.users![index].name));
+                                      print(
+                                          "length" + userids.length.toString());
+                                      print(userids.toList().toString());
+                                    },
+                                    child:
 
-                                });
-                                print(apiProvider.getAllUserResponse.data!.users![index].sId);
-                                userids.add(User(id: apiProvider.getAllUserResponse.data!.users![index].sId, name: apiProvider.getAllUserResponse.data!.users![index].name));
-print("length"+userids.length.toString());
-print(userids.toList().toString());
-
-
-                              },
-                              child:
-
-
-                              // apiProvider.getAllUserResponse.data!.users![index].username==null ?Container():
-                              apiProvider.getAllUserResponse.data!.users![index].username!=null &&
-                                  apiProvider.getAllUserResponse.data!.users![index].sId! != sids
-                                  ?
-                              ColleagueDetail(apiProvider.getAllUserResponse,index):Container()
-
-                            );
-                        })):Center(child: CircularProgressIndicator()),
-
+                                        // apiProvider.getAllUserResponse.data!.users![index].username==null ?Container():
+                                        apiProvider
+                                                        .getAllUserResponse
+                                                        .data!
+                                                        .users![index]
+                                                        .username !=
+                                                    null &&
+                                                apiProvider
+                                                        .getAllUserResponse
+                                                        .data!
+                                                        .users![index]
+                                                        .sId! !=
+                                                    sids
+                                            ? ColleagueDetail(
+                                                apiProvider.getAllUserResponse,
+                                                index)
+                                            : Container());
+                          }))
+                  : Center(child: CircularProgressIndicator()),
               Container(
                   width: AppSize().width(context),
                   height: AppSize().height(context) * 0.14,
                   child: ListView.builder(
-                    shrinkWrap: true,
+                      shrinkWrap: true,
                       itemCount: userids.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (BuildContext context, int index) {
                         return
-                          // index != userids.length
-                          //   ?
-                        memberWidget(userids, index);
-                            // : addWidget();
+                            // index != userids.length
+                            //   ?
+                            memberWidget(userids, index);
+                        // : addWidget();
                       })),
               Padding(
                 padding: EdgeInsets.only(top: AppSize().height(context) * 0.02),
@@ -486,17 +492,21 @@ print(userids.toList().toString());
                     child: getBoldText(AppString().cancel,
                         textColor: AppColor.black, fontSize: 14),
                     onPressed: () {
-
+                      ids.clear();
+                      userids.clear();
+                      setState(() {});
                       // locator<NavigationService>().navigateToReplace(otpscreen);
                     },
                   ),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: AppSize().height(context) * 0.02),
+                padding: EdgeInsets.only(
+                    top: AppSize().height(context) * 0.02,
+                    bottom: AppSize().height(context) * 0.02),
                 child: SizedBox(
                   height: AppSize().height(context) * 0.07,
-                  width: AppSize().width(context) ,
+                  width: AppSize().width(context),
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
@@ -522,10 +532,7 @@ print(userids.toList().toString());
       ),
     );
   }
-
-
 }
-
 
 class User {
   String? id;
@@ -545,4 +552,3 @@ class User {
     return data;
   }
 }
-

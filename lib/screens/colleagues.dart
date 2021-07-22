@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app/common/colleague_detail.dart';
 import 'package:app/common/colors.dart';
 import 'package:app/common/size.dart';
@@ -43,7 +45,7 @@ class _ColleaguesState extends State<Colleagues> {
     }
       signInProvider.getallusers(loader, creategroupctrl.text.trim());
   }
-  late String sids;
+ String sids='';
   @override
   void initState() {
     // TODO: implement initState
@@ -66,9 +68,14 @@ class _ColleaguesState extends State<Colleagues> {
       this.signInProvider = signInProvider;
       this.loader = loader;
 
-      Future.microtask(() async {
-        signInProvider.getallusers(loader, '');
+      Timer(Duration(seconds: 2), () {
+        Future.microtask(() async {
+          signInProvider.getallusers(loader, '');
+        });
       });
+      // Future.microtask(() async {
+      //   signInProvider.getallusers(loader, '');
+      // });
     }
   }
 
@@ -127,7 +134,8 @@ class _ColleaguesState extends State<Colleagues> {
                 Container(
                     height: AppSize().height(context) * 0.07,
                     child: groupnameFieldWidget()),
-                apiProvider.getAllUserResponse.data==null ?Center(child: CircularProgressIndicator()):
+                apiProvider.getAllUserResponse.data==null|| sids==
+    ''?Center(child: CircularProgressIndicator()):
                 Expanded(
                     child: ListView.builder(
                         itemCount: apiProvider.getAllUserResponse.data!.users!.length,

@@ -38,7 +38,9 @@ class ApiProvider {
   factory ApiProvider() {
     return _apiProvider;
   }
-  ViewGroupListingResponse viewGroupListingResponse = ViewGroupListingResponse();
+
+  ViewGroupListingResponse viewGroupListingResponse =
+      ViewGroupListingResponse();
   GetAllUserResponse getAllUserResponse = GetAllUserResponse();
   SigninResponse signinresponse = SigninResponse();
   SignoutResponse signoutresponse = SignoutResponse();
@@ -204,7 +206,7 @@ class ApiProvider {
       loader.setloader(false);
 
       if (response.statusCode == 302) {
-        showToastMsg("Incorrect username / password");
+        showToastMsg("Try Again");
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
@@ -244,7 +246,7 @@ class ApiProvider {
       loader.setloader(false);
 
       if (response.statusCode == 302) {
-        showToastMsg("");
+        showToastMsg("Try again");
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
@@ -287,7 +289,7 @@ class ApiProvider {
       loader.setloader(false);
 
       if (response.statusCode == 302) {
-        showToastMsg("");
+        showToastMsg("Try Again");
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
@@ -329,7 +331,7 @@ class ApiProvider {
       loader.setloader(false);
 
       if (response.statusCode == 302) {
-        showToastMsg("Incorrect username / password");
+        showToastMsg("Try Again");
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
@@ -390,7 +392,7 @@ class ApiProvider {
       loader.setloader(false);
 
       if (response.statusCode == 302) {
-        showToastMsg("Incorrect old password");
+        showToastMsg("InCorrect old Password");
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
@@ -442,18 +444,18 @@ class ApiProvider {
       loader.setloader(false);
 
       if (response.statusCode == 302) {
-        showToastMsg("Incorrect old password");
+        showToastMsg("Try Again");
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
-        showToastMsg(ouptut["message"]);
+        showToastMsg('Group created successfully');
 
         // locator<NavigationService>().navigateToReplace(grouplisting);
         createGroupResponse =
             CreateGroupResponse.fromJson(json.decode(response.body));
         String user = jsonEncode(createGroupResponse);
         prefs.setString('user', user);
-        locator<NavigationService>().navigateTo(groupdetails);
+        locator<NavigationService>().backPress();
         // var input = {
         //   "group_id" : createGroupResponse.data!.sId!
         // };
@@ -461,7 +463,7 @@ class ApiProvider {
         // signInProvider.groupdetail(loader, input);
         return createGroupResponse;
       } else {
-        showToastMsg("InCorrect old Password");
+        showToastMsg("Try again");
       }
     } catch (e) {
       loader.setloader(false);
@@ -496,7 +498,7 @@ class ApiProvider {
       loader.setloader(false);
 
       if (response.statusCode == 302) {
-        showToastMsg("Incorrect old password");
+        showToastMsg("Try Again");
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
@@ -509,7 +511,7 @@ class ApiProvider {
         prefs.setString('user', user);
         return getAllUserResponse;
       } else {
-        showToastMsg("InCorrect old Password");
+        showToastMsg("Try Again");
       }
     } catch (e) {
       loader.setloader(false);
@@ -542,7 +544,7 @@ class ApiProvider {
       loader.setloader(false);
 
       if (response.statusCode == 302) {
-        showToastMsg("Incorrect old password");
+        showToastMsg("Try Again");
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
@@ -555,7 +557,7 @@ class ApiProvider {
         prefs.setString('user', user);
         return addUsertoGroupResponse;
       } else {
-        showToastMsg("InCorrect old Password");
+        showToastMsg("Try Again");
       }
     } catch (e) {
       loader.setloader(false);
@@ -587,7 +589,7 @@ class ApiProvider {
       loader.setloader(false);
 
       if (response.statusCode == 302) {
-        showToastMsg("Incorrect old password");
+        showToastMsg("Try Again");
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
@@ -600,7 +602,7 @@ class ApiProvider {
         prefs.setString('user', user);
         return deleteGroupResponse;
       } else {
-        showToastMsg("InCorrect old Password");
+        showToastMsg("Try Again");
       }
     } catch (e) {
       loader.setloader(false);
@@ -639,7 +641,7 @@ class ApiProvider {
       loader.setloader(false);
 
       if (response.statusCode == 302) {
-        showToastMsg("Incorrect old password");
+        showToastMsg("Try Again");
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
@@ -652,7 +654,7 @@ class ApiProvider {
         prefs.setString('user', user);
         return groupDetailResponse;
       } else {
-        showToastMsg("InCorrect old Password");
+        showToastMsg("Try Again");
       }
     } catch (e) {
       loader.setloader(false);
@@ -692,7 +694,7 @@ class ApiProvider {
       loader.setloader(false);
 
       if (response.statusCode == 302) {
-        showToastMsg("Incorrect old password");
+        showToastMsg("Try Again");
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
@@ -704,7 +706,7 @@ class ApiProvider {
         prefs.setString('user', user);
         return groupLeaveResponse;
       } else {
-        showToastMsg("InCorrect old Password");
+        showToastMsg("Try Again");
       }
     } catch (e) {
       loader.setloader(false);
@@ -744,7 +746,7 @@ class ApiProvider {
       loader.setloader(false);
 
       if (response.statusCode == 302) {
-        showToastMsg("Incorrect old password");
+        showToastMsg("Try Again");
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
@@ -756,7 +758,7 @@ class ApiProvider {
         prefs.setString('user', user);
         return groupLeaveResponse;
       } else {
-        showToastMsg("InCorrect old Password");
+        showToastMsg("Try Again");
       }
     } catch (e) {
       loader.setloader(false);
@@ -796,7 +798,7 @@ class ApiProvider {
       loader.setloader(false);
 
       if (response.statusCode == 302) {
-        showToastMsg("Incorrect old password");
+        showToastMsg("Try Again");
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
@@ -808,7 +810,7 @@ class ApiProvider {
         prefs.setString('user', user);
         return groupLeaveResponse;
       } else {
-        showToastMsg("InCorrect old Password");
+        showToastMsg("Try Again");
       }
     } catch (e) {
       loader.setloader(false);
@@ -848,11 +850,11 @@ class ApiProvider {
       loader.setloader(false);
 
       if (response.statusCode == 302) {
-        showToastMsg("Incorrect old password");
+        showToastMsg("Try Again");
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
-        showToastMsg(ouptut["message"]);
+        // showToastMsg(ouptut["message"]);
 
         viewGroupListingResponse =
             ViewGroupListingResponse.fromJson(json.decode(response.body));
@@ -860,7 +862,7 @@ class ApiProvider {
         prefs.setString('user', user);
         return viewGroupListingResponse;
       } else {
-        showToastMsg("InCorrect old Password");
+        showToastMsg("Try Again");
       }
     } catch (e) {
       loader.setloader(false);
@@ -868,5 +870,57 @@ class ApiProvider {
       // return null;
     }
     return viewGroupListingResponse;
+  }
+
+  Future<DeleteGroupResponse> updategroup(
+      Loader loader, Map<String, String> input) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, String> header = new Map();
+    // print("sign in api $input----${baseurl + AppString().signInUrl}");
+    header["content-type"] = "application/x-www-form-urlencoded";
+    String? token = prefs.getString('token');
+    print(token);
+    // print("__________");
+    print(json.encode(input));
+    print(input);
+    print("#####");
+    // print(prefs.getString('token'));
+    loader.setloader(true);
+    try {
+      var postUri = Uri.parse('$userurl' + 'updateGroupDetails');
+      // print(input.toString().toString());
+      print(postUri);
+      final response = await http.post(postUri, body: input, headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        // 'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${token.toString()}',
+      });
+      // final response = await http.post(postUri, body: input, headers: header);
+      print(
+        " response -------------${response.body} api${response.statusCode}",
+      );
+      loader.setloader(false);
+
+      if (response.statusCode == 302) {
+        showToastMsg("Try Again");
+      } else {}
+      Map<String, dynamic> ouptut = json.decode(response.body);
+      if (ouptut["status"] == 200) {
+        showToastMsg('Updated Group Detail');
+
+        deleteGroupResponse =
+            DeleteGroupResponse.fromJson(json.decode(response.body));
+        String user = jsonEncode(deleteGroupResponse);
+        prefs.setString('user', user);
+        return deleteGroupResponse;
+      } else {
+        showToastMsg("Try Again");
+      }
+    } catch (e) {
+      loader.setloader(false);
+      //     showToastMsg("Sign In failed");
+      // return null;
+    }
+    return deleteGroupResponse;
   }
 }
