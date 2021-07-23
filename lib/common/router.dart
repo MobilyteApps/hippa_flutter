@@ -23,6 +23,7 @@ import 'package:app/screens/selection.dart';
 import 'package:app/screens/settings.dart';
 import 'package:app/screens/signin_screen.dart';
 import 'package:app/screens/terms_use.dart';
+import 'package:app/screens/testbottomsheet.dart';
 import 'package:app/screens/urgent_messages.dart';
 import 'package:app/screens/your_email.dart';
 import 'package:app/screens/your_phone_screen.dart';
@@ -80,7 +81,9 @@ class Router {
       case test:
         return MaterialPageRoute(builder: (_) => HomeScreenn());
       case img:
-        return MaterialPageRoute(builder: (_) =>CameraExampleHome());
+        return MaterialPageRoute(builder: (_) =>CameraTest());
+      case testbottom:
+        return MaterialPageRoute(builder: (_) =>TestBottomsheet());
 
       default:
         return MaterialPageRoute(builder: (_) {

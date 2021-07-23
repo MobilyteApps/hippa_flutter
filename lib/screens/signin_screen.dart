@@ -320,7 +320,7 @@ class _SigninState extends State<Signin> {
                               locator<NavigationService>().navigateTo(privacy);
                             },
                             child: getRegularText(
-                                'I agree to all Term and conditions',
+                                'I agree to all Terms and conditions',
                                 textColor: AppColor.white,
                                 fontSize: 14),
                           ),

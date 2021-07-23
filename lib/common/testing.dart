@@ -189,54 +189,81 @@ class _HomeScreennState extends State<HomeScreenn> {
         verticalDirection: VerticalDirection.up,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
+          Expanded(
+            flex: 1,
+            // child: Padding(
+            //   padding: MediaQuery.of(context).viewInsets,
+            child: SizedBox(
+              height: AppSize().height(context) * 0.07,
+              width: AppSize().width(context),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                    AppColor.buttonColor,
+                  ),
+                ),
+                child: getBoldText(AppString().confirm,
+                    textColor: AppColor.white, fontSize: 14),
+                onPressed: () {
+                  formValidationer();
+                },
+              ),
+            ),
+            // ),
+          ),
           SizedBox(height: 10),
           SizedBox(height: AppSize().height(context) * 0.02),
           Padding(
               padding: MediaQuery.of(context).viewInsets,
               child: addmemberFieldWidget()),
           apiProvider.getAllUserResponse.data != null && check == true
-              ? Container(
-                  width: AppSize().width(context),
-                  child: ListView.builder(
-                      itemCount:
-                          apiProvider.getAllUserResponse.data!.users!.length,
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ids.contains(apiProvider
-                                .getAllUserResponse.data!.users![index].sId
-                                .toString())
-                            ? Container()
-                            : InkWell(
-                                onTap: () {
-                                  i.add(apiProvider.getAllUserResponse.data!
-                                      .users![index].sId
-                                      .toString());
-                                  ids.add(apiProvider.getAllUserResponse.data!
-                                      .users![index].sId
-                                      .toString());
-                                  sid();
-                                  setState(() {});
-                                  print(apiProvider.getAllUserResponse.data!
-                                      .users![index].sId);
-                                  userids.add(User(
-                                      id: apiProvider.getAllUserResponse.data!
-                                          .users![index].sId,
-                                      name: apiProvider.getAllUserResponse.data!
-                                          .users![index].name));
-                                  print("length" + userids.length.toString());
-                                  print(userids.toList().toString());
-                                },
-                                child: apiProvider.getAllUserResponse.data!
-                                                .users![index].username !=
-                                            null &&
-                                        apiProvider.getAllUserResponse.data!
-                                                .users![index].sId! !=
-                                            sids
-                                    ? ColleagueDetail(
-                                        apiProvider.getAllUserResponse, index)
-                                    : Container());
-                      }))
+              ? Expanded(
+                  flex: 7,
+                  child: Container(
+                      width: AppSize().width(context),
+                      child: ListView.builder(
+                          itemCount: apiProvider
+                              .getAllUserResponse.data!.users!.length,
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ids.contains(apiProvider
+                                    .getAllUserResponse.data!.users![index].sId
+                                    .toString())
+                                ? Container()
+                                : InkWell(
+                                    onTap: () {
+                                      i.add(apiProvider.getAllUserResponse.data!
+                                          .users![index].sId
+                                          .toString());
+                                      ids.add(apiProvider.getAllUserResponse
+                                          .data!.users![index].sId
+                                          .toString());
+                                      sid();
+                                      setState(() {});
+                                      print(apiProvider.getAllUserResponse.data!
+                                          .users![index].sId);
+                                      userids.add(User(
+                                          id: apiProvider.getAllUserResponse
+                                              .data!.users![index].sId,
+                                          name: apiProvider.getAllUserResponse
+                                              .data!.users![index].name));
+                                      print(
+                                          "length" + userids.length.toString());
+                                      print(userids.toList().toString());
+                                    },
+                                    child: apiProvider.getAllUserResponse.data!
+                                                    .users![index].username !=
+                                                null &&
+                                            apiProvider.getAllUserResponse.data!
+                                                    .users![index].sId! !=
+                                                sids
+                                        ? ColleagueDetail(
+                                            apiProvider.getAllUserResponse,
+                                            index)
+                                        : Container());
+                          })),
+                )
               : Center(child: CircularProgressIndicator()),
           apiProvider.getAllUserResponse.data != null &&
                   check == true &&
@@ -261,25 +288,6 @@ class _HomeScreennState extends State<HomeScreenn> {
                         return memberWidget(userids, index);
                       }))
               : Container(),
-          Padding(
-            padding: MediaQuery.of(context).viewInsets,
-            child: SizedBox(
-              height: AppSize().height(context) * 0.07,
-              width: AppSize().width(context),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                    AppColor.buttonColor,
-                  ),
-                ),
-                child: getBoldText(AppString().confirm,
-                    textColor: AppColor.white, fontSize: 14),
-                onPressed: () {
-                  formValidationer();
-                },
-              ),
-            ),
-          ),
         ],
       ),
     );

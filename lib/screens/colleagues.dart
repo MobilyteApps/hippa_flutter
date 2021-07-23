@@ -73,9 +73,6 @@ class _ColleaguesState extends State<Colleagues> {
           signInProvider.getallusers(loader, '');
         });
       });
-      // Future.microtask(() async {
-      //   signInProvider.getallusers(loader, '');
-      // });
     }
   }
 
@@ -149,6 +146,7 @@ class _ColleaguesState extends State<Colleagues> {
                             Container();
 
                         })),
+
               ],
             ),
           ),

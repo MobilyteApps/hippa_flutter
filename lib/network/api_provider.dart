@@ -422,6 +422,7 @@ class ApiProvider {
     // print("sign in api $input----${baseurl + AppString().signInUrl}");
     header["content-type"] = "application/x-www-form-urlencoded";
     String? token = prefs.getString('token');
+    String ?id =prefs.getString('sid') ;
     // print("__________");
     print(json.encode(input));
     print("#####");
@@ -456,6 +457,14 @@ class ApiProvider {
         String user = jsonEncode(createGroupResponse);
         prefs.setString('user', user);
         locator<NavigationService>().backPress();
+
+
+
+          var inputs = {"user_id": id.toString()};
+
+            signInProvider.viewgrouplist(loader, inputs);
+
+
         // var input = {
         //   "group_id" : createGroupResponse.data!.sId!
         // };

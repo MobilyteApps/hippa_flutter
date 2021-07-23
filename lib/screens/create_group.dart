@@ -1,5 +1,10 @@
 import 'dart:convert';
-
+import 'dart:async';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:video_player/video_player.dart';
 import 'package:app/aws/aws_page.dart';
 import 'package:app/common/colleague_detail.dart';
 import 'package:app/common/colors.dart';
@@ -23,6 +28,8 @@ import 'package:provider/provider.dart';
 import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'imgpicker.dart';
 
 class CreateGroup extends StatefulWidget {
   const CreateGroup({Key? key}) : super(key: key);
@@ -54,6 +61,286 @@ class _CreateGroupState extends State<CreateGroup> {
   String url = '';
   late String sids;
   bool check = false;
+  String results = "";
+  List<XFile>? _imageFileList;
+
+  set _imageFile(XFile? value) {
+    _imageFileList = value == null ? null : [value];
+  }
+
+  dynamic _pickImageError;
+  bool isVideo = false;
+
+  VideoPlayerController? _controller;
+  VideoPlayerController? _toBeDisposed;
+  String? _retrieveDataError;
+
+  final ImagePicker _picker = ImagePicker();
+  final TextEditingController maxWidthController = TextEditingController();
+  final TextEditingController maxHeightController = TextEditingController();
+  final TextEditingController qualityController = TextEditingController();
+
+  Future<void> _playVideo(XFile? file) async {
+    if (file != null && mounted) {
+      await _disposeVideoController();
+      late VideoPlayerController controller;
+      if (kIsWeb) {
+        controller = VideoPlayerController.network(file.path);
+      } else {
+        controller = VideoPlayerController.file(File(file.path));
+      }
+      _controller = controller;
+      final double volume = kIsWeb ? 0.0 : 1.0;
+      await controller.setVolume(volume);
+      await controller.initialize();
+      await controller.setLooping(true);
+      await controller.play();
+      setState(() {});
+    }
+  }
+
+  void _onImageButtonPressed(ImageSource source,
+      {BuildContext? context, bool isMultiImage = false}) async {
+    if (_controller != null) {
+      await _controller!.setVolume(0.0);
+    }
+    if (isVideo) {
+      final XFile? file = await _picker.pickVideo(
+          source: source, maxDuration: const Duration(seconds: 10));
+      await _playVideo(file);
+    } else if (isMultiImage) {
+      await _displayPickImageDialog(context!,
+          (double? maxWidth, double? maxHeight, int? quality) async {
+        try {
+          final pickedFileList = await _picker.pickMultiImage(
+            maxWidth: maxWidth,
+            maxHeight: maxHeight,
+            imageQuality: quality,
+          );
+          setState(() {
+            _imageFileList = pickedFileList;
+          });
+        } catch (e) {
+          setState(() {
+            _pickImageError = e;
+          });
+        }
+      });
+    } else {
+      try {
+        final pickedFile = await _picker.pickImage(
+          source: source,
+        );
+        setState(() {
+          _imageFile = pickedFile;
+        });
+      } catch (e) {
+        setState(() {
+          _pickImageError = e;
+        });
+      }
+      // });
+    }
+  }
+
+  @override
+  void deactivate() {
+    if (_controller != null) {
+      _controller!.setVolume(0.0);
+      _controller!.pause();
+    }
+    super.deactivate();
+  }
+
+  @override
+  void dispose() {
+    _disposeVideoController();
+    maxWidthController.dispose();
+    maxHeightController.dispose();
+    qualityController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _disposeVideoController() async {
+    if (_toBeDisposed != null) {
+      await _toBeDisposed!.dispose();
+    }
+    _toBeDisposed = _controller;
+    _controller = null;
+  }
+
+  Widget _previewVideo() {
+    final Text? retrieveError = _getRetrieveErrorWidget();
+    if (retrieveError != null) {
+      return retrieveError;
+    }
+    if (_controller == null) {
+      return const Text(
+        '',
+        textAlign: TextAlign.center,
+      );
+    }
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: AspectRatioVideo(_controller),
+    );
+  }
+
+  Widget _previewImages() {
+    final Text? retrieveError = _getRetrieveErrorWidget();
+    if (retrieveError != null) {
+      return retrieveError;
+    }
+    if (_imageFileList != null) {
+      return Semantics(
+          child: ListView.builder(
+            shrinkWrap: true,
+            key: UniqueKey(),
+            itemBuilder: (context, index) {
+              return Semantics(
+                  label: 'image_picker_example_picked_image',
+                  child: kIsWeb
+                      ? Image.network(_imageFileList![index].path)
+                      : InkWell(
+
+                    onTap: (){
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                ListTile(
+                                  leading: new Icon(Icons.camera_alt_outlined),
+                                  title: new Text('Take Photo'),
+                                  onTap: () {
+                                    // Navigator.pop(context);
+                                    isVideo = false;
+                                    _onImageButtonPressed(ImageSource.camera,
+                                        context: context);
+                                  },
+                                ),
+                                ListTile(
+                                  leading: new Icon(Icons.photo),
+                                  title: new Text('Choose from Gallery'),
+                                  onTap: () {
+                                    // Navigator.pop(context);
+                                    isVideo = false;
+                                    _onImageButtonPressed(ImageSource.gallery,
+                                        context: context);
+                                  },
+                                ),
+                                ListTile(
+                                  title: new Text('Cancel'),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            );
+                          });
+                    },
+                        child: Align(
+                            alignment: Alignment.topLeft,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20.0),
+                              child: Image.file(
+                                File(_imageFileList![index].path),
+                                fit: BoxFit.fill,
+                                height: AppSize().height(context) * 0.1,
+                                width: AppSize().width(context) * 0.18,
+                              ),
+                            )),
+                      ));
+            },
+            itemCount: _imageFileList!.length,
+          ),
+          label: 'image_picker_example_picked_images');
+    } else if (_pickImageError != null) {
+      return Text(
+        'Pick image error: $_pickImageError',
+        textAlign: TextAlign.center,
+      );
+    } else {
+      return const Text(
+        '',
+        textAlign: TextAlign.center,
+      );
+    }
+  }
+
+  // Widget _previewImages() {
+  //   final Text? retrieveError = _getRetrieveErrorWidget();
+  //   if (retrieveError != null) {
+  //     return retrieveError;
+  //   }
+  //   if (_imageFileList != null) {
+  //     return Semantics(
+  //         child: ListView.builder(
+  //           key: UniqueKey(),
+  //           itemBuilder: (context, index) {
+  //             // Why network for web?
+  //             // See https://pub.dev/packages/image_picker#getting-ready-for-the-web-platform
+  //             return Semantics(
+  //               label: '',
+  //               child: kIsWeb
+  //                   ? Image.network(_imageFileList![index].path)
+  //                   :
+  //
+  //               ClipRRect(
+  //                 borderRadius: BorderRadius.circular(20.0),
+  //                 child: Image.file(File(_imageFileList![0].path),
+  //                   fit: BoxFit.fitWidth,
+  //                   height: AppSize().height(context) * 0.1,
+  //                   width: AppSize().width(context) * 0.18,
+  //                 ),
+  //               )
+  //               // Image.file(File(_imageFileList![index].path)),
+  //             );
+  //           },
+  //           itemCount: _imageFileList!.length,
+  //         ),
+  //         label: '');
+  //   } else if (_pickImageError != null) {
+  //     return Text(
+  //       'Pick image error: $_pickImageError',
+  //       textAlign: TextAlign.center,
+  //     );
+  //   } else {
+  //     return const Text(
+  //       'You have not yet picked an image.',
+  //       textAlign: TextAlign.center,
+  //     );
+  //   }
+  // }
+
+  Widget _handlePreview() {
+    if (isVideo) {
+      return _previewVideo();
+    } else {
+      return _previewImages();
+    }
+  }
+
+  Future<void> retrieveLostData() async {
+    final LostDataResponse response = await _picker.retrieveLostData();
+    if (response.isEmpty) {
+      return;
+    }
+    if (response.file != null) {
+      if (response.type == RetrieveType.video) {
+        isVideo = true;
+        await _playVideo(response.file);
+      } else {
+        isVideo = false;
+        setState(() {
+          _imageFile = response.file;
+        });
+      }
+    } else {
+      _retrieveDataError = response.exception!.code;
+    }
+  }
 
   @override
   void initState() {
@@ -320,9 +607,119 @@ class _CreateGroupState extends State<CreateGroup> {
     }
   }
 
+  Text? _getRetrieveErrorWidget() {
+    if (_retrieveDataError != null) {
+      final Text result = Text(_retrieveDataError!);
+      _retrieveDataError = null;
+      return result;
+    }
+    return null;
+  }
+
+  Future<void> _displayPickImageDialog(
+      BuildContext context, OnPickImageCallback onPick) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Add optional parameters'),
+            content: Column(
+              children: <Widget>[
+                TextField(
+                  controller: maxWidthController,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  decoration:
+                      InputDecoration(hintText: "Enter maxWidth if desired"),
+                ),
+                TextField(
+                  controller: maxHeightController,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  decoration:
+                      InputDecoration(hintText: "Enter maxHeight if desired"),
+                ),
+                TextField(
+                  controller: qualityController,
+                  keyboardType: TextInputType.number,
+                  decoration:
+                      InputDecoration(hintText: "Enter quality if desired"),
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('CANCEL'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                  child: const Text('PICK'),
+                  onPressed: () {
+                    double? width = maxWidthController.text.isNotEmpty
+                        ? double.parse(maxWidthController.text)
+                        : null;
+                    double? height = maxHeightController.text.isNotEmpty
+                        ? double.parse(maxHeightController.text)
+                        : null;
+                    int? quality = qualityController.text.isNotEmpty
+                        ? int.parse(qualityController.text)
+                        : null;
+                    onPick(width, height, quality);
+                    Navigator.of(context).pop();
+                  }),
+            ],
+          );
+        });
+  }
+
+  void _navigateAndDisplaySelection(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      // Create the SelectionScreen in the next step.
+      MaterialPageRoute(builder: (context) => CameraTest()),
+    );
+    print(result.toString());
+    if (result != null) {
+      setState(() {
+        results = result.toString();
+      });
+    }
+  }
+
+  bool selection = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // floatingActionButton: Column(
+      //   mainAxisAlignment: MainAxisAlignment.end,
+      //   children: <Widget>[
+      //     Semantics(
+      //       label: 'image_picker_example_from_gallery',
+      //       child: FloatingActionButton(
+      //         onPressed: () {
+      //           isVideo = false;
+      //           _onImageButtonPressed(ImageSource.gallery, context: context);
+      //         },
+      //         heroTag: 'image0',
+      //         tooltip: 'Pick Image from gallery',
+      //         child: const Icon(Icons.photo),
+      //       ),
+      //     ),
+      //     Padding(
+      //       padding: const EdgeInsets.only(top: 16.0),
+      //       child: FloatingActionButton(
+      //         onPressed: () {
+      //           isVideo = false;
+      //           _onImageButtonPressed(ImageSource.camera, context: context);
+      //         },
+      //         heroTag: 'image2',
+      //         tooltip: 'Take a Photo',
+      //         child: const Icon(Icons.camera_alt),
+      //       ),
+      //     ),
+      //   ],
+      // ),
       appBar: AppBar(
         leading: InkWell(
           onTap: () {
@@ -340,7 +737,7 @@ class _CreateGroupState extends State<CreateGroup> {
         actions: [
           InkWell(
             onTap: () {
-              // locator<NavigationService>().navigateTo(groupdetails);
+              locator<NavigationService>().navigateTo(settingsscreen);
             },
             child: Padding(
               padding: EdgeInsets.only(right: AppSize().width(context) * 0.03),
@@ -367,38 +764,180 @@ class _CreateGroupState extends State<CreateGroup> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              InkWell(
-                  onTap: () async {
-                    locator<NavigationService>().navigateTo(img);
-                    // print('filepicker');
-                    // FocusScope.of(context).unfocus();
-                    // url = await getDocuments();
-                  },
-                  child: Align(
-                      alignment: Alignment.topLeft,
-                      child: documentPath == ""
-                          ? Container(
-                              height: AppSize().height(context) * 0.1,
-                              width: AppSize().width(context) * 0.18,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(color: Colors.grey)),
-                              child: Icon(
-                                Icons.person,
-                                color: Colors.grey,
-                                size: 46,
-                              ))
-                          : ClipRRect(
-                              borderRadius: BorderRadius.circular(20.0),
-                              child: Image.file(
-                                File(documentPath),
-                                fit: BoxFit.fitWidth,
-                                height: AppSize().height(context) * 0.1,
-                                width: AppSize().width(context) * 0.18,
-                              ),
-                            ))),
+              _imageFileList == null?
+              // Row(
+              //   children: [
+                  InkWell(
+                      onTap: () async {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  ListTile(
+                                    leading: new Icon(Icons.camera_alt_outlined),
+                                    title: new Text('Take Photo'),
+                                    onTap: () {
+                                      // Navigator.pop(context);
+                                      isVideo = false;
+                                      _onImageButtonPressed(ImageSource.camera,
+                                          context: context);
+                                    },
+                                  ),
+                                  ListTile(
+                                    leading: new Icon(Icons.photo),
+                                    title: new Text('Choose from Gallery'),
+                                    onTap: () {
+                                      // Navigator.pop(context);
+                                      isVideo = false;
+                                      _onImageButtonPressed(ImageSource.gallery,
+                                          context: context);
+                                    },
+                                  ),
+                                  ListTile(
+                                    title: new Text('Cancel'),
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              );
+                            });
+                      },
+                      child: Align(
+                          alignment: Alignment.topLeft,
+                          child: _imageFileList == null
+                              ? Container(
+                                  height: AppSize().height(context) * 0.1,
+                                  width: AppSize().width(context) * 0.18,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(color: Colors.grey)),
+                                  child: Icon(
+                                    Icons.person,
+                                    color: Colors.grey,
+                                    size: 46,
+                                  )):Container()
+                              // : ClipRRect(
+                              //     borderRadius: BorderRadius.circular(20.0),
+                              //     child: Image.file(
+                              //       File(results),
+                              //       fit: BoxFit.fitWidth,
+                              //       height: AppSize().height(context) * 0.1,
+                              //       width: AppSize().width(context) * 0.18,
+                              //     ),
+                              //   )
+                      ))
+              //     SizedBox(
+              //       width: AppSize().width(context)*0.06,
+              //     ),
+              //     selection == true
+              //         ? Column(
+              //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //             children: <Widget>[
+              //               InkWell(
+              //                   onTap: () {
+              //                     isVideo = false;
+              //                     _onImageButtonPressed(ImageSource.camera,
+              //                         context: context);
+              //                   },
+              //                   child: Container(
+              //                     height: AppSize().height(context)*0.03,
+              //                     width: AppSize().width(context)*0.4,
+              //                     decoration: BoxDecoration(
+              //                        //  borderRadius: BorderRadius.all(
+              //                        //     Radius.circular(10),
+              //                        // ),
+              //                         color: Colors.white),
+              //                     child: Center(child: Text('Camera')),
+              //                   )),
+              //               Divider(),
+              //               InkWell(
+              //                   onTap: () {
+              //                     isVideo = false;
+              //                     _onImageButtonPressed(ImageSource.gallery,
+              //                         context: context);
+              //                   },
+              //                   child: Container(
+              //                     height: AppSize().height(context)*0.03,
+              //                     width: AppSize().width(context)*0.4,
+              //                     decoration: BoxDecoration(
+              //                         // borderRadius: BorderRadius.all(
+              //                         //   Radius.circular(10),
+              //                         // ),
+              //                         color: Colors.white),
+              //                     child: Center(
+              //                     child: Text('Gallery')),
+              //                   )),
+              //               // Semantics(
+              //               //   label: 'image_picker_example_from_gallery',
+              //               //   child: FloatingActionButton(
+              //               //     onPressed: () {
+              //               //       isVideo = false;
+              //               //       _onImageButtonPressed(ImageSource.gallery, context: context);
+              //               //     },
+              //               //     heroTag: 'image0',
+              //               //     tooltip: 'Pick Image from gallery',
+              //               //     child: const Icon(Icons.photo),
+              //               //   ),
+              //               // ),
+              //               // Padding(
+              //               //   padding: const EdgeInsets.only(top: 16.0),
+              //               //   child: FloatingActionButton(
+              //               //     onPressed: () {
+              //               //       isVideo = false;
+              //               //       _onImageButtonPressed(ImageSource.camera, context: context);
+              //               //     },
+              //               //     heroTag: 'image2',
+              //               //     tooltip: 'Take a Photo',
+              //               //     child: const Icon(Icons.camera_alt),
+              //               //   ),
+              //               // ),
+              //             ],
+              //           )
+              //         : Container()
+              //   ],
+              :Container(),
               SizedBox(height: AppSize().height(context) * 0.02),
+              Center(
+                child:
+                    !kIsWeb && defaultTargetPlatform == TargetPlatform.android
+                        ? FutureBuilder<void>(
+                            future: retrieveLostData(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<void> snapshot) {
+                              switch (snapshot.connectionState) {
+                                case ConnectionState.none:
+                                  return const Text(
+                                    '',
+                                    textAlign: TextAlign.center,
+                                  );
+                                case ConnectionState.waiting:
+                                  return const Text(
+                                    '',
+                                    textAlign: TextAlign.center,
+                                  );
+                                case ConnectionState.done:
+                                  return _handlePreview();
+                                default:
+                                  if (snapshot.hasError) {
+                                    return Text(
+                                      'Pick image/video error: ${snapshot.error}}',
+                                      textAlign: TextAlign.center,
+                                    );
+                                  } else {
+                                    return const Text(
+                                      '',
+                                      textAlign: TextAlign.center,
+                                    );
+                                  }
+                              }
+                            },
+                          )
+                        : _handlePreview(),
+              ),
               getBoldText(AppString().groupname,
                   textColor: AppColor.black, fontSize: 16),
               SizedBox(height: AppSize().height(context) * 0.02),
@@ -550,5 +1089,58 @@ class User {
     data['id'] = this.id;
     data['name'] = this.name;
     return data;
+  }
+}
+
+typedef void OnPickImageCallback(
+    double? maxWidth, double? maxHeight, int? quality);
+
+class AspectRatioVideo extends StatefulWidget {
+  AspectRatioVideo(this.controller);
+
+  final VideoPlayerController? controller;
+
+  @override
+  AspectRatioVideoState createState() => AspectRatioVideoState();
+}
+
+class AspectRatioVideoState extends State<AspectRatioVideo> {
+  VideoPlayerController? get controller => widget.controller;
+  bool initialized = false;
+
+  void _onVideoControllerUpdate() {
+    if (!mounted) {
+      return;
+    }
+    if (initialized != controller!.value.isInitialized) {
+      initialized = controller!.value.isInitialized;
+      setState(() {});
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    controller!.addListener(_onVideoControllerUpdate);
+  }
+
+  @override
+  void dispose() {
+    controller!.removeListener(_onVideoControllerUpdate);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (initialized) {
+      return Center(
+        child: AspectRatio(
+          aspectRatio: controller!.value.aspectRatio,
+          child: VideoPlayer(controller!),
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 }
