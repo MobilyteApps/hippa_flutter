@@ -556,7 +556,8 @@ class ApiProvider {
       if (ouptut["status"] == 200) {
         showToastMsg(ouptut["message"]);
 
-        locator<NavigationService>().navigateTo(groupdetails);
+        // locator<NavigationService>().navigateTo(groupdetails);
+        locator<NavigationService>().backPress();
         addUsertoGroupResponse =
             AddUsertoGroupResponse.fromJson(json.decode(response.body));
         String user = jsonEncode(createGroupResponse);

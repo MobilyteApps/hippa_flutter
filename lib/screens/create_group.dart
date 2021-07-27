@@ -824,9 +824,9 @@ class _CreateGroupState extends State<CreateGroup> {
     // child: Text('')),
 
 
-      ElevatedButton(onPressed: (){
-        AwsPage().upload(File(_imageFileList![0].path),).then((value) => print(value));
-      }, child: Text('')),
+      // ElevatedButton(onPressed: (){
+      //   AwsPage().upload(File(_imageFileList![0].path),).then((value) => print(value));
+      // }, child: Text('')),
     _imageFileList == null
     ?
     // Row(
