@@ -1,7 +1,7 @@
 class GroupDetailResponse {
   int? status;
   List<Data>? data;
-  String ?message;
+  String? message;
 
   GroupDetailResponse({this.status, this.data, this.message});
 
@@ -29,24 +29,23 @@ class GroupDetailResponse {
 
 class Data {
   String? sId;
-  List<Members> ?members;
+  List<Members>? members;
   String? admin;
-  String ?title;
-  String ?groupImage;
-  String ?createdAt;
-  String ?updatedAt;
+  String? title;
+  String? groupImage;
+  String? createdAt;
+  String? updatedAt;
   bool? favGroup;
 
   Data(
       {this.sId,
-        this.members,
-        this.admin,
-        this.title,
-        this.groupImage,
-        this.createdAt,
-        this.updatedAt,
-        this.favGroup
-      });
+      this.members,
+      this.admin,
+      this.title,
+      this.groupImage,
+      this.createdAt,
+      this.updatedAt,
+      this.favGroup});
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -81,40 +80,40 @@ class Data {
 }
 
 class Members {
-  String ?sId;
+  String? sId;
   bool? active;
-  bool ?deleted;
+  bool? deleted;
   String? role;
-  String ?name;
-  String ?email;
-  String ?password;
-  String ?gender;
-  String ?username;
-  String ?createdAt;
-  String ?updatedAt;
-  String ?profilePicture;
-  String ?token;
-  int ?phonenumber;
-  int ?oTPvalue;
+  String? name;
+  String? email;
+  String? password;
+  String? gender;
+  String? username;
+  String? createdAt;
+  String? updatedAt;
+  String? profilePicture;
+  String? token;
+  int? phonenumber;
+  int? oTPvalue;
   bool? passwordModified;
 
   Members(
       {this.sId,
-        this.active,
-        this.deleted,
-        this.role,
-        this.name,
-        this.email,
-        this.password,
-        this.gender,
-        this.username,
-        this.createdAt,
-        this.updatedAt,
-        this.profilePicture,
-        this.token,
-        this.phonenumber,
-        this.oTPvalue,
-        this.passwordModified});
+      this.active,
+      this.deleted,
+      this.role,
+      this.name,
+      this.email,
+      this.password,
+      this.gender,
+      this.username,
+      this.createdAt,
+      this.updatedAt,
+      this.profilePicture,
+      this.token,
+      this.phonenumber,
+      this.oTPvalue,
+      this.passwordModified});
 
   Members.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];

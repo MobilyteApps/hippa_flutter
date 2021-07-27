@@ -24,21 +24,21 @@ class CreateGroupResponse {
 
 class Data {
   List<String>? members;
-  String ?sId;
-  String ?admin;
-  String ?title;
-  String ?groupImage;
-  String ?createdAt;
-  String ?updatedAt;
+  String? sId;
+  String? admin;
+  String? title;
+  String? groupImage;
+  String? createdAt;
+  String? updatedAt;
 
   Data(
       {this.members,
-        this.sId,
-        this.admin,
-        this.title,
-        this.groupImage,
-        this.createdAt,
-        this.updatedAt});
+      this.sId,
+      this.admin,
+      this.title,
+      this.groupImage,
+      this.createdAt,
+      this.updatedAt});
 
   Data.fromJson(Map<String, dynamic> json) {
     members = json['members'].cast<String>();

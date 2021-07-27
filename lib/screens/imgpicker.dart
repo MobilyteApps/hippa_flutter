@@ -945,7 +945,6 @@
 // // TODO(ianh): Remove this once we roll stable in late 2021.
 // T? _ambiguate<T>(T? value) => value;
 
-
 // Copyright 2013 The Flutter Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -959,7 +958,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
-
 
 class CameraTest extends StatefulWidget {
   @override
@@ -1020,43 +1018,43 @@ class _CameraTestState extends State<CameraTest> {
       await _playVideo(file);
     } else if (isMultiImage) {
       await _displayPickImageDialog(context!,
-              (double? maxWidth, double? maxHeight, int? quality) async {
-            try {
-              final pickedFileList = await _picker.pickMultiImage(
-                maxWidth: maxWidth,
-                maxHeight: maxHeight,
-                imageQuality: quality,
-              );
-              setState(() {
-                _imageFileList = pickedFileList;
-              });
-            } catch (e) {
-              setState(() {
-                _pickImageError = e;
-              });
-            }
+          (double? maxWidth, double? maxHeight, int? quality) async {
+        try {
+          final pickedFileList = await _picker.pickMultiImage(
+            maxWidth: maxWidth,
+            maxHeight: maxHeight,
+            imageQuality: quality,
+          );
+          setState(() {
+            _imageFileList = pickedFileList;
           });
+        } catch (e) {
+          setState(() {
+            _pickImageError = e;
+          });
+        }
+      });
     } else {
       // await
 
       // _displayPickImageDialog(context!,
       //         (double? maxWidth, double? maxHeight, int? quality) async {
-            try {
-              final pickedFile = await _picker.pickImage(
-                source: source,
-                // maxWidth: maxWidth,
-                // maxHeight: maxHeight,
-                // imageQuality: quality,
-              );
-              setState(() {
-                _imageFile = pickedFile;
-              });
-            } catch (e) {
-              setState(() {
-                _pickImageError = e;
-              });
-            }
-          // });
+      try {
+        final pickedFile = await _picker.pickImage(
+          source: source,
+          // maxWidth: maxWidth,
+          // maxHeight: maxHeight,
+          // imageQuality: quality,
+        );
+        setState(() {
+          _imageFile = pickedFile;
+        });
+      } catch (e) {
+        setState(() {
+          _pickImageError = e;
+        });
+      }
+      // });
     }
   }
 
@@ -1119,9 +1117,7 @@ class _CameraTestState extends State<CameraTest> {
                 label: 'image_picker_example_picked_image',
                 child: kIsWeb
                     ? Image.network(_imageFileList![index].path)
-                    :
-
-                Image.file(File(_imageFileList![index].path)),
+                    : Image.file(File(_imageFileList![index].path)),
               );
             },
             itemCount: _imageFileList!.length,
@@ -1168,58 +1164,59 @@ class _CameraTestState extends State<CameraTest> {
     }
   }
 
-  String img ='';
+  String img = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      actions: [
-        InkWell(
-          onTap: (){
-            setState(() {
-              _imageFileList!.clear();
-            });
-            // Navigator.pop(context, _imageFileList![0].path);
-          },
-          child: Text('Cancel'),
-        ),
-        InkWell(
-          onTap: (){
-            Navigator.pop(context, _imageFileList![0].path);
-          },
-          child: Text('Done'),
-        )
-      ],
+        actions: [
+          InkWell(
+            onTap: () {
+              setState(() {
+                _imageFileList!.clear();
+              });
+              // Navigator.pop(context, _imageFileList![0].path);
+            },
+            child: Text('Cancel'),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.pop(context, _imageFileList![0].path);
+            },
+            child: Text('Done'),
+          )
+        ],
       ),
       body: Center(
         child: !kIsWeb && defaultTargetPlatform == TargetPlatform.android
             ? FutureBuilder<void>(
-          future: retrieveLostData(),
-          builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.none:
-              case ConnectionState.waiting:
-                return const Text(
-                  'You have not yet picked an image.',
-                  textAlign: TextAlign.center,
-                );
-              case ConnectionState.done:
-                return _handlePreview();
-              default:
-                if (snapshot.hasError) {
-                  return Text(
-                    'Pick image/video error: ${snapshot.error}}',
-                    textAlign: TextAlign.center,
-                  );
-                } else {
-                  return const Text(
-                    'You have not yet picked an image.',
-                    textAlign: TextAlign.center,
-                  );
-                }
-            }
-          },
-        )
+                future: retrieveLostData(),
+                builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.none:
+                    case ConnectionState.waiting:
+                      return const Text(
+                        'You have not yet picked an image.',
+                        textAlign: TextAlign.center,
+                      );
+                    case ConnectionState.done:
+                      return _handlePreview();
+                    default:
+                      if (snapshot.hasError) {
+                        return Text(
+                          'Pick image/video error: ${snapshot.error}}',
+                          textAlign: TextAlign.center,
+                        );
+                      } else {
+                        return const Text(
+                          'You have not yet picked an image.',
+                          textAlign: TextAlign.center,
+                        );
+                      }
+                  }
+                },
+              )
             : _handlePreview(),
       ),
       floatingActionButton: Column(
@@ -1318,19 +1315,19 @@ class _CameraTestState extends State<CameraTest> {
                   controller: maxWidthController,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                   decoration:
-                  InputDecoration(hintText: "Enter maxWidth if desired"),
+                      InputDecoration(hintText: "Enter maxWidth if desired"),
                 ),
                 TextField(
                   controller: maxHeightController,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                   decoration:
-                  InputDecoration(hintText: "Enter maxHeight if desired"),
+                      InputDecoration(hintText: "Enter maxHeight if desired"),
                 ),
                 TextField(
                   controller: qualityController,
                   keyboardType: TextInputType.number,
                   decoration:
-                  InputDecoration(hintText: "Enter quality if desired"),
+                      InputDecoration(hintText: "Enter quality if desired"),
                 ),
               ],
             ),

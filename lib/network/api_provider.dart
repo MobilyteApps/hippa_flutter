@@ -422,7 +422,7 @@ class ApiProvider {
     // print("sign in api $input----${baseurl + AppString().signInUrl}");
     header["content-type"] = "application/x-www-form-urlencoded";
     String? token = prefs.getString('token');
-    String ?id =prefs.getString('sid') ;
+    String? id = prefs.getString('sid');
     // print("__________");
     print(json.encode(input));
     print("#####");
@@ -458,12 +458,9 @@ class ApiProvider {
         prefs.setString('user', user);
         locator<NavigationService>().backPress();
 
+        var inputs = {"user_id": id.toString()};
 
-
-          var inputs = {"user_id": id.toString()};
-
-            signInProvider.viewgrouplist(loader, inputs);
-
+        signInProvider.viewgrouplist(loader, inputs);
 
         // var input = {
         //   "group_id" : createGroupResponse.data!.sId!
@@ -511,7 +508,7 @@ class ApiProvider {
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
-        showToastMsg(ouptut["message"]);
+        // showToastMsg(ouptut["message"]);
 
         // locator<NavigationService>().navigateToReplace(grouplisting);
         getAllUserResponse =
@@ -709,6 +706,58 @@ class ApiProvider {
       if (ouptut["status"] == 200) {
         showToastMsg(ouptut["message"]);
 
+        groupLeaveResponse =
+            GroupLeaveResponse.fromJson(json.decode(response.body));
+        String user = jsonEncode(groupLeaveResponse);
+        prefs.setString('user', user);
+        return groupLeaveResponse;
+      } else {
+        showToastMsg("Try Again");
+      }
+    } catch (e) {
+      loader.setloader(false);
+      //     showToastMsg("Sign In failed");
+      // return null;
+    }
+    return groupLeaveResponse;
+  }
+
+  Future<GroupLeaveResponse> removegroupleave(
+      Loader loader, Map<String, String> input) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, String> header = new Map();
+    // print("sign in api $input----${baseurl + AppString().signInUrl}");
+    header["content-type"] = "application/x-www-form-urlencoded";
+    String? token = prefs.getString('token');
+    print(token);
+    // print("__________");
+    print(json.encode(input));
+    print(input);
+    print("#####");
+    // print(prefs.getString('token'));
+    loader.setloader(true);
+    try {
+      var postUri = Uri.parse('$userurl' + 'leaveGroup');
+      // print(input.toString().toString());
+      print(postUri);
+      final response = await http.post(postUri, body: input, headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        // 'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${token.toString()}',
+      });
+      // final response = await http.post(postUri, body: input, headers: header);
+      print(
+        " response -------------${response.body} api${response.statusCode}",
+      );
+      loader.setloader(false);
+
+      if (response.statusCode == 302) {
+        showToastMsg("Try Again");
+      } else {}
+      Map<String, dynamic> ouptut = json.decode(response.body);
+      if (ouptut["status"] == 200) {
+        showToastMsg(ouptut["message"]);
+        locator<NavigationService>().navigateToReplace(grouplisting);
         groupLeaveResponse =
             GroupLeaveResponse.fromJson(json.decode(response.body));
         String user = jsonEncode(groupLeaveResponse);

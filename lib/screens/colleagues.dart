@@ -36,27 +36,30 @@ class _ColleaguesState extends State<Colleagues> {
         color: AppColor.white,
       ));
   int a = 0;
-  GetAllUserResponse response=GetAllUserResponse();
+  GetAllUserResponse response = GetAllUserResponse();
   late Future<GetAllUserResponse> responses;
+
   formValidation() {
     FocusScope.of(context).requestFocus(new FocusNode());
     if (creategroupctrl.text.trim().isEmpty == true) {
       ApiProvider().showToastMsg("Please Enter email address");
     }
-      signInProvider.getallusers(loader, creategroupctrl.text.trim());
+    signInProvider.getallusers(loader, creategroupctrl.text.trim());
   }
- String sids='';
+
+  String sids = '';
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     sid();
   }
+
   void sid() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-   sids= prefs.getString('sid')!;
+    sids = prefs.getString('sid')!;
   }
-
 
   @override
   void didChangeDependencies() {
@@ -131,22 +134,30 @@ class _ColleaguesState extends State<Colleagues> {
                 Container(
                     height: AppSize().height(context) * 0.07,
                     child: groupnameFieldWidget()),
-                apiProvider.getAllUserResponse.data==null|| sids==
-    ''?Center(child: CircularProgressIndicator()):
+                apiProvider.getAllUserResponse.data == null || sids == ''
+                    ? Center(child: CircularProgressIndicator())
+                    :
+                apiProvider
+                    .getAllUserResponse.data!.users!.length==0?Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Center(child: Text('No Colleague Found')),
+                    ):
                 Expanded(
-                    child: ListView.builder(
-                        itemCount: apiProvider.getAllUserResponse.data!.users!.length,
-                        scrollDirection: Axis.vertical,
-                        itemBuilder: (BuildContext context, int index) {
-                          return
-                            apiProvider.getAllUserResponse.data!.users![index].username!=null &&
-                          apiProvider.getAllUserResponse.data!.users![index].sId != sids
-                                ?
-                            ColleagueDetail(apiProvider.getAllUserResponse,index):
-                            Container();
-
-                        })),
-
+                        child: ListView.builder(
+                            itemCount: apiProvider
+                                .getAllUserResponse.data!.users!.length,
+                            scrollDirection: Axis.vertical,
+                            itemBuilder: (BuildContext context, int index) {
+                              return apiProvider.getAllUserResponse.data!
+                                              .users![index].username !=
+                                          null &&
+                                      apiProvider.getAllUserResponse.data!
+                                              .users![index].sId !=
+                                          sids
+                                  ? ColleagueDetail(
+                                      apiProvider.getAllUserResponse, index)
+                                  : Container();
+                            })),
               ],
             ),
           ),

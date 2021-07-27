@@ -1,7 +1,7 @@
-
 import 'dart:async';
 
 import 'dart:ui';
+
 bool validatePassword(String value) {
   String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$';
   RegExp regExp = new RegExp(pattern);
@@ -16,11 +16,10 @@ bool validateEmail(String value) {
   return emailValid;
 }
 
-
 class Debouncer {
   final int milliseconds;
   VoidCallback? action;
-  Timer ?_timer;
+  Timer? _timer;
 
   Debouncer({required this.milliseconds});
 

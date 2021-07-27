@@ -35,7 +35,8 @@ class SignInProvider with ChangeNotifier {
   DeleteGroupResponse deleteGroupResponse = DeleteGroupResponse();
   GroupDetailResponse groupDetailResponse = GroupDetailResponse();
   GroupLeaveResponse groupLeaveResponse = GroupLeaveResponse();
-  ViewGroupListingResponse viewGroupListingResponse = ViewGroupListingResponse();
+  ViewGroupListingResponse viewGroupListingResponse =
+      ViewGroupListingResponse();
 
   loginWithEmail(Loader loader, Map<String, String> input) async {
     ApiProvider().sigInApi(loader, input).then((value) {
@@ -154,6 +155,16 @@ class SignInProvider with ChangeNotifier {
     });
   }
 
+
+  removegroupleave(Loader loader, Map<String, String> input) async {
+    ApiProvider().removegroupleave(loader, input).then((value) {
+      if (value != null) {
+        this.groupLeaveResponse = value;
+        // locator<NavigationService>().navigateToReplace(grouplisting);
+      }
+    });
+  }
+
   addfav(Loader loader, Map<String, String> input) async {
     ApiProvider().addfav(loader, input).then((value) {
       if (value != null) {
@@ -180,7 +191,6 @@ class SignInProvider with ChangeNotifier {
       }
     });
   }
-
 
   updategroup(Loader loader, Map<String, String> input) async {
     ApiProvider().updategroup(loader, input).then((value) {

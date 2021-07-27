@@ -1,7 +1,7 @@
 class GroupLeaveResponse {
-  int ?status;
-  Data ?data;
-  String ?message;
+  int? status;
+  Data? data;
+  String? message;
 
   GroupLeaveResponse({this.status, this.data, this.message});
 
@@ -23,15 +23,12 @@ class GroupLeaveResponse {
 }
 
 class Data {
-
-
   Data();
 
-Data.fromJson(Map<String, dynamic> json) {
-}
+  Data.fromJson(Map<String, dynamic> json) {}
 
-Map<String, dynamic> toJson() {
-  final Map<String, dynamic> data = new Map<String, dynamic>();
-  return data;
-}
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    return data;
+  }
 }

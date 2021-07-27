@@ -17,6 +17,7 @@ import 'common/get_it.dart';
 import 'language/app_translation_delegate.dart';
 
 List<CameraDescription> cameras = [];
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -40,6 +41,7 @@ class MyApp extends StatefulWidget {
   final List<CameraDescription> cameras;
 
   MyApp({Key? key, required this.cameras}) : super(key: key);
+
   // List<CameraDescription> cameras = [];
   // MyApp({required this.cameras});
   // This widget is the root of your application.
@@ -51,6 +53,7 @@ class _MyAppState extends State<MyApp> {
   AppTranslationsDelegate? _newLocaleDelegate;
   DarkThemeProvider themeChangeProvider = new DarkThemeProvider();
   ApiProvider apiprovider = ApiProvider();
+
   void onLocaleChange(Locale locale) {
     setState(() {
       _newLocaleDelegate = AppTranslationsDelegate(newLocale: locale);

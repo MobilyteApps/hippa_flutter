@@ -23,7 +23,16 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GroupDetail extends StatefulWidget {
-  const GroupDetail({Key? key}) : super(key: key);
+  final String? index;
+
+
+  GroupDetail({required this.index,});
+
+  // final int index;
+  //
+  //
+  // const GroupDetail(this.index);
+
 
   @override
   _GroupDetailState createState() => _GroupDetailState();
@@ -42,6 +51,7 @@ class _GroupDetailState extends State<GroupDetail> {
         color: AppColor.white,
       ));
   int a = 0;
+  bool checker=false;
   List<String> ids = [];
   List<User> userids = <User>[];
   List<String> i = [];
@@ -68,18 +78,18 @@ class _GroupDetailState extends State<GroupDetail> {
     if (this.signInProvider != signInProvider || this.loader != loader) {
       this.signInProvider = signInProvider;
       this.loader = loader;
-      Timer(Duration(seconds: 2), () {
-        Future.microtask(() async {
+      // Timer(Duration(seconds: 2), () {
+      //   Future.microtask(() async {
           signInProvider.getallusers(loader, '');
-        });
-      });
+      //   });
+      // });
     }
   }
 
   void sid() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     sids = prefs.getString('sid')!;
-    gid = prefs.getString('gid')!;
+    gid = widget.index!;
     formValidations();
     setState(() {
       check = true;
@@ -89,14 +99,22 @@ class _GroupDetailState extends State<GroupDetail> {
   formValidations() async {
     String id;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    id = prefs.getString('gid')!;
+    id = widget.index!;
     ids.add(id);
 
     var input = {"group_id": id};
-    Timer(Duration(seconds: 3), () {
-      Future.microtask(() async {
+    // Timer(Duration(seconds: 2), () {
+      // Future.microtask(() async {
         signInProvider.groupdetail(loader, input);
-      });
+      // });
+    // });
+
+    Timer(Duration(seconds: 2), () {
+    Future.microtask(() async {
+    setState(() {
+      checker=true;
+    });
+    });
     });
   }
 
@@ -247,7 +265,7 @@ class _GroupDetailState extends State<GroupDetail> {
   formValidationer() async {
     String id;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    id = prefs.getString('gid')!;
+    id = widget.index!;
     ids.add(id);
     var input = {"members_id": i, "group_id": "${id.toString()}"};
     print(input.toString());
@@ -258,7 +276,7 @@ class _GroupDetailState extends State<GroupDetail> {
   delformValidationer() async {
     String id;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    id = prefs.getString('gid')!;
+    id =widget.index!;
     ids.add(id);
     var input = {"group_id": "${id.toString()}"};
     print(input.toString());
@@ -269,7 +287,7 @@ class _GroupDetailState extends State<GroupDetail> {
   updategroup() async {
     String id;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    id = prefs.getString('gid')!;
+    id = widget.index!;
     ids.add(id);
 
     if (creategroupctrl.text.trim() == "") {
@@ -297,6 +315,19 @@ class _GroupDetailState extends State<GroupDetail> {
     print(input.toString());
     print("________-");
     signInProvider.groupleave(loader, input);
+  }
+  removeformValidation(String userid, String groupid) async {
+    String id;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    id = prefs.getString('sid')!;
+    var input = {
+      "user_id": userid,
+      "group_id": groupid,
+    };
+
+    print(input.toString());
+    print("________-");
+    signInProvider.removegroupleave(loader, input);
   }
 
   favformValidation() async {
@@ -330,7 +361,9 @@ class _GroupDetailState extends State<GroupDetail> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return
+      checker==false?Scaffold(body: Center(child: CircularProgressIndicator())):
+      Scaffold(
       appBar: AppBar(
         leading: InkWell(
           onTap: () {
@@ -392,6 +425,12 @@ class _GroupDetailState extends State<GroupDetail> {
                         ),
                       ),
                     ),
+          apiProvider.groupDetailResponse.data == null ||
+              check == false
+              ? Center(child: Container())
+              :
+          sids != apiProvider.groupDetailResponse.data![0].admin
+              ? Container():
           InkWell(
             onTap: () {
               delformValidationer();
@@ -410,7 +449,7 @@ class _GroupDetailState extends State<GroupDetail> {
         centerTitle: true,
       ),
       backgroundColor: AppColor.backgroundColor,
-      body: apiProvider.groupDetailResponse.data == null
+      body: apiProvider.groupDetailResponse.data == null  || check==false
           ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               child: Padding(
@@ -528,6 +567,12 @@ class _GroupDetailState extends State<GroupDetail> {
                       children: [
                         getBoldText('Colleagues',
                             textColor: AppColor.black, fontSize: 16),
+                        apiProvider.groupDetailResponse.data == null &&
+                            check == false
+                            ? Center(child: Container())
+                            :
+                        sids != apiProvider.groupDetailResponse.data![0].admin
+                            ? Container():
                         InkWell(
                             onTap: () {
                               setState(() {
@@ -576,6 +621,43 @@ class _GroupDetailState extends State<GroupDetail> {
                                         .groupDetailResponse.data![0].sId!);
                               });
                             }),
+
+                    apiProvider.groupDetailResponse.data == null &&
+                        check == false
+                        ? Center(child: Container())
+                        :
+                    sids != apiProvider.groupDetailResponse.data![0].admin
+                        ?
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: AppSize().height(context) * 0.02),
+                      child: SizedBox(
+                        height: AppSize().height(context) * 0.06,
+                        width: AppSize().width(context),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                            MaterialStateProperty.all<Color>(
+                              AppColor.buttonColor,
+                            ),
+                          ),
+                          //  RaisedButton(
+                          //   color: AppColor.buttonColor,
+                          child: getBoldText('Exit Group',
+                              textColor: AppColor.white,
+                              fontSize: 14),
+                          onPressed: () {
+
+                            Timer(Duration(seconds: 2), () {
+                              removeformValidation(sids, gid);
+                            });
+                            // print(ids.toList().toString());
+                            // locator<NavigationService>()
+                            //     .navigateToReplace(grouplisting);
+                          },
+                        ),
+                      ),
+                    ):Container(),
                   ],
                 ),
               ),

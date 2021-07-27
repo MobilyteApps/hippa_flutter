@@ -1,3 +1,4 @@
+//
 // import 'dart:convert';
 //
 // import 'package:amazon_cognito_identity_dart_2/sig_v4.dart';
@@ -14,13 +15,13 @@
 //
 //   Policy(this.key, this.bucket, this.datetime, this.expiration, this.credential,
 //       this.maxFileSize, this.sessionToken,
-//       {this.region = 'us-south-1'});
+//       {this.region = 'us-east-2'});
 //
 //   factory Policy.fromS3PreSignedPost(
 //     String key,
 //     String bucket,
 //     int expiryMinutes,
-//     String accessKeyId,
+//     String? accessKeyId,
 //     int maxFileSize,
 //     String sessionToken, {
 //     required String region,
@@ -64,6 +65,7 @@
 //   }
 // }
 
+
 import 'dart:convert';
 
 import 'package:amazon_cognito_identity_dart_2/sig_v4.dart';
@@ -80,17 +82,17 @@ class Policy {
 
   Policy(this.key, this.bucket, this.datetime, this.expiration, this.credential,
       this.maxFileSize, this.sessionToken,
-      {this.region = 'us-east-2'});
+      {this.region = 'us-west-2'});
 
   factory Policy.fromS3PreSignedPost(
-    String key,
-    String bucket,
-    int expiryMinutes,
-    String? accessKeyId,
-    int maxFileSize,
-    String sessionToken, {
-    required String region,
-  }) {
+      String key,
+      String bucket,
+      int expiryMinutes,
+      String accessKeyId,
+      int maxFileSize,
+      String sessionToken, {
+        String? region,
+      }) {
     final datetime = SigV4.generateDatetime();
     final expiration = (DateTime.now())
         .add(Duration(minutes: expiryMinutes))
@@ -99,7 +101,7 @@ class Policy {
         .split(' ')
         .join('T');
     final cred =
-        '$accessKeyId/${SigV4.buildCredentialScope(datetime, region, 's3')}';
+        '$accessKeyId/${SigV4.buildCredentialScope(datetime, region!, 's3')}';
     final p = Policy(
         key, bucket, datetime, expiration, cred, maxFileSize, sessionToken,
         region: region);
@@ -115,16 +117,16 @@ class Policy {
   String toString() {
     return '''
 { "expiration": "${this.expiration}",
- "conditions": [
- {"bucket": "${this.bucket}"},
- ["starts-with", "\$key", "${this.key}"],
- {"acl": "public-read"},
- ["content-length-range", 1, ${this.maxFileSize}],
- {"x-amz-credential": "${this.credential}"},
- {"x-amz-algorithm": "AWS4-HMAC-SHA256"},
- {"x-amz-date": "${this.datetime}" },
- {"x-amz-security-token": "${this.sessionToken}" }
- ]
+  "conditions": [
+    {"bucket": "${this.bucket}"},
+    ["starts-with", "\$key", "${this.key}"],
+    {"acl": "public-read"},
+    ["content-length-range", 1, ${this.maxFileSize}],
+    {"x-amz-credential": "${this.credential}"},
+    {"x-amz-algorithm": "AWS4-HMAC-SHA256"},
+    {"x-amz-date": "${this.datetime}" },
+    {"x-amz-security-token": "${this.sessionToken}" }
+  ]
 }
 ''';
   }

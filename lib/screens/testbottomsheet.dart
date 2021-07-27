@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class TestBottomsheet extends StatefulWidget {
   const TestBottomsheet({Key? key}) : super(key: key);
 
@@ -7,8 +8,8 @@ class TestBottomsheet extends StatefulWidget {
 }
 
 class _TestBottomsheetState extends State<TestBottomsheet> {
-
   late List<String> _tempListOfCities;
+
   //1
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController textController = new TextEditingController();
@@ -34,8 +35,8 @@ class _TestBottomsheetState extends State<TestBottomsheet> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        // title: Text(widget.title),
-      ),
+          // title: Text(widget.title),
+          ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +53,6 @@ class _TestBottomsheetState extends State<TestBottomsheet> {
     );
   }
 
-
   void _showModal(context) {
     showModalBottomSheet(
         isScrollControlled: true,
@@ -64,89 +64,90 @@ class _TestBottomsheetState extends State<TestBottomsheet> {
           //3
           return StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
-                return DraggableScrollableSheet(
-                    expand: false,
-                    builder:
-                        (BuildContext context, ScrollController scrollController) {
-                      return Column(children: <Widget>[
-                        Padding(
-                            padding: EdgeInsets.all(8),
-                            child: Row(children: <Widget>[
-                              Expanded(
-                                  child: TextField(
-                                      controller: textController,
-                                      decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.all(8),
-                                        border: new OutlineInputBorder(
-                                          borderRadius:
+            return DraggableScrollableSheet(
+                expand: false,
+                builder:
+                    (BuildContext context, ScrollController scrollController) {
+                  return Column(children: <Widget>[
+                    Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Row(children: <Widget>[
+                          Expanded(
+                              child: TextField(
+                                  controller: textController,
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.all(8),
+                                    border: new OutlineInputBorder(
+                                      borderRadius:
                                           new BorderRadius.circular(15.0),
-                                          borderSide: new BorderSide(),
-                                        ),
-                                        prefixIcon: Icon(Icons.search),
-                                      ),
-                                      onChanged: (value) {
-                                        //4
-                                        setState(() {
-                                          _tempListOfCities =
-                                              _buildSearchList(value);
-                                        });
-                                      })),
-                              IconButton(
-                                  icon: Icon(Icons.close),
-                                  color: Color(0xFF1F91E7),
-                                  onPressed: () {
+                                      borderSide: new BorderSide(),
+                                    ),
+                                    prefixIcon: Icon(Icons.search),
+                                  ),
+                                  onChanged: (value) {
+                                    //4
                                     setState(() {
-                                      textController.clear();
-                                      _tempListOfCities.clear();
+                                      _tempListOfCities =
+                                          _buildSearchList(value);
                                     });
-                                  }),
-                            ])),
-                        Expanded(
-                          child: ListView.separated(
-                              controller: scrollController,
-                              //5
-                              itemCount: (_tempListOfCities != null &&
-                                  _tempListOfCities.length > 0)
-                                  ? _tempListOfCities.length
-                                  : _listOfCities.length,
-                              separatorBuilder: (context, int) {
-                                return Divider();
-                              },
-                              itemBuilder: (context, index) {
-                                return InkWell(
-
-                                  //6
-                                    child: (_tempListOfCities != null &&
-                                        _tempListOfCities.length > 0)
-                                        ? _showBottomSheetWithSearch(
-                                        index, _tempListOfCities)
-                                        : _showBottomSheetWithSearch(
-                                        index, _listOfCities),
-                                    onTap: () {
-                                      //7
-                                      _scaffoldKey.currentState!.showSnackBar(
-                                          SnackBar(
-                                              behavior: SnackBarBehavior.floating,
-                                              content: Text((_tempListOfCities !=
-                                                  null &&
-                                                  _tempListOfCities.length > 0)
-                                                  ? _tempListOfCities[index]
-                                                  : _listOfCities[index])));
-
-                                      Navigator.of(context).pop();
-                                    });
+                                  })),
+                          IconButton(
+                              icon: Icon(Icons.close),
+                              color: Color(0xFF1F91E7),
+                              onPressed: () {
+                                setState(() {
+                                  textController.clear();
+                                  _tempListOfCities.clear();
+                                });
                               }),
-                        )
-                      ]);
-                    });
-              });
+                        ])),
+                    Expanded(
+                      child: ListView.separated(
+                          controller: scrollController,
+                          //5
+                          itemCount: (_tempListOfCities != null &&
+                                  _tempListOfCities.length > 0)
+                              ? _tempListOfCities.length
+                              : _listOfCities.length,
+                          separatorBuilder: (context, int) {
+                            return Divider();
+                          },
+                          itemBuilder: (context, index) {
+                            return InkWell(
+
+                                //6
+                                child: (_tempListOfCities != null &&
+                                        _tempListOfCities.length > 0)
+                                    ? _showBottomSheetWithSearch(
+                                        index, _tempListOfCities)
+                                    : _showBottomSheetWithSearch(
+                                        index, _listOfCities),
+                                onTap: () {
+                                  //7
+                                  _scaffoldKey.currentState!.showSnackBar(
+                                      SnackBar(
+                                          behavior: SnackBarBehavior.floating,
+                                          content: Text((_tempListOfCities !=
+                                                      null &&
+                                                  _tempListOfCities.length > 0)
+                                              ? _tempListOfCities[index]
+                                              : _listOfCities[index])));
+
+                                  Navigator.of(context).pop();
+                                });
+                          }),
+                    )
+                  ]);
+                });
+          });
         });
   }
 
   //8
   Widget _showBottomSheetWithSearch(int index, List<String> listOfCities) {
     return Text(listOfCities[index],
-        style: TextStyle(color: Colors.black, fontSize: 16),textAlign: TextAlign.center);
+        style: TextStyle(color: Colors.black, fontSize: 16),
+        textAlign: TextAlign.center);
   }
 
   //9

@@ -1,7 +1,7 @@
 class GetAllUserResponse {
-  int ?status;
-  Data ?data;
-  String ?message;
+  int? status;
+  Data? data;
+  String? message;
 
   GetAllUserResponse({this.status, this.data, this.message});
 
@@ -50,37 +50,37 @@ class Data {
 
 class Users {
   bool? active;
-  bool ?deleted;
+  bool? deleted;
   String? role;
   bool? passwordModified;
-  bool ?alllowNotifications;
+  bool? alllowNotifications;
   String? sId;
-  String ?name;
-  String ?email;
-  String ?password;
-  String ?gender;
-  String ?username;
-  String ?createdAt;
-  String ?updatedAt;
-  String ?profilePicture;
-  String ?token;
+  String? name;
+  String? email;
+  String? password;
+  String? gender;
+  String? username;
+  String? createdAt;
+  String? updatedAt;
+  String? profilePicture;
+  String? token;
 
   Users(
       {this.active,
-        this.deleted,
-        this.role,
-        this.passwordModified,
-        this.alllowNotifications,
-        this.sId,
-        this.name,
-        this.email,
-        this.password,
-        this.gender,
-        this.username,
-        this.createdAt,
-        this.updatedAt,
-        this.profilePicture,
-        this.token});
+      this.deleted,
+      this.role,
+      this.passwordModified,
+      this.alllowNotifications,
+      this.sId,
+      this.name,
+      this.email,
+      this.password,
+      this.gender,
+      this.username,
+      this.createdAt,
+      this.updatedAt,
+      this.profilePicture,
+      this.token});
 
   Users.fromJson(Map<String, dynamic> json) {
     active = json['active'];

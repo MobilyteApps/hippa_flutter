@@ -109,11 +109,14 @@ class _FavouriteGroupState extends State<FavouriteGroup> {
                       } else {
                         SharedPreferences prefs =
                             await SharedPreferences.getInstance();
-                        prefs.setString(
-                            'gid',
-                            apiProvider.viewGroupListingResponse
+                        // prefs.setString(
+                        //     'gid',
+                        //     apiProvider.viewGroupListingResponse
+                        //         .data![index - 1].sId!);
+                            locator<NavigationService>().argsnavigateToReplace(groupdetails,apiProvider.viewGroupListingResponse
                                 .data![index - 1].sId!);
-                        locator<NavigationService>().navigateTo(groupdetails);
+                        // locator<NavigationService>().argsnavigateToReplace(groupdetails, apiProvider.viewGroupListingResponse
+                        //     .data![index - 1].sId!);
                       }
                     },
                     child: Group(index, apiProvider.viewGroupListingResponse));

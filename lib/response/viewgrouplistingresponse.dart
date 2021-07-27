@@ -38,17 +38,16 @@ class Data {
   int? unreadCount;
   String? message;
 
-
   Data(
       {this.sId,
-        this.members,
-        this.admin,
-        this.title,
-        this.groupImage,
-        this.createdAt,
-        this.updatedAt,
-        this.unreadCount,
-        this.message});
+      this.members,
+      this.admin,
+      this.title,
+      this.groupImage,
+      this.createdAt,
+      this.updatedAt,
+      this.unreadCount,
+      this.message});
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -85,40 +84,40 @@ class Data {
 }
 
 class Members {
-  String ?sId;
+  String? sId;
   bool? active;
   bool? deleted;
   String? role;
-  String ?name;
-  String ?email;
-  String ?password;
-  String ?gender;
-  String ?username;
-  String ?createdAt;
-  String ?updatedAt;
-  String ?profilePicture;
-  String ?token;
-  int ?phonenumber;
-  int ?oTPvalue;
-  bool ?passwordModified;
+  String? name;
+  String? email;
+  String? password;
+  String? gender;
+  String? username;
+  String? createdAt;
+  String? updatedAt;
+  String? profilePicture;
+  String? token;
+  int? phonenumber;
+  int? oTPvalue;
+  bool? passwordModified;
 
   Members(
       {this.sId,
-        this.active,
-        this.deleted,
-        this.role,
-        this.name,
-        this.email,
-        this.password,
-        this.gender,
-        this.username,
-        this.createdAt,
-        this.updatedAt,
-        this.profilePicture,
-        this.token,
-        this.phonenumber,
-        this.oTPvalue,
-        this.passwordModified});
+      this.active,
+      this.deleted,
+      this.role,
+      this.name,
+      this.email,
+      this.password,
+      this.gender,
+      this.username,
+      this.createdAt,
+      this.updatedAt,
+      this.profilePicture,
+      this.token,
+      this.phonenumber,
+      this.oTPvalue,
+      this.passwordModified});
 
   Members.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];

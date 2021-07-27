@@ -36,7 +36,6 @@ class _GroupListingState extends State<GroupListing>
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,8 +57,12 @@ class _GroupListingState extends State<GroupListing>
             )
           ],
           backgroundColor: AppColor.backgroundColor,
-          title: getBoldText(_tabController!.index==0?  AppString().grouplisting:'Favorite Groups',
-              textColor: AppColor.black, fontSize: 18),
+          title: getBoldText(
+              _tabController!.index == 0
+                  ? AppString().grouplisting
+                  : 'Favorite Groups',
+              textColor: AppColor.black,
+              fontSize: 18),
           centerTitle: true,
         ),
         backgroundColor: AppColor.backgroundColor,
@@ -96,7 +99,7 @@ class _GroupListingState extends State<GroupListing>
                       Expanded(
                         // flex: 1,
                         child: Tab(
-                          text:  'Groups',
+                          text: 'Groups',
                           // // icon: Icon(Icons.person),
                         ),
                       )
