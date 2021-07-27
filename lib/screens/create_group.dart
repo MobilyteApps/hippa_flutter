@@ -784,6 +784,8 @@ class _CreateGroupState extends State<CreateGroup> {
         actions: [
           InkWell(
             onTap: () {
+              FocusScope.of(context).requestFocus(FocusNode());
+
               locator<NavigationService>().navigateTo(settingsscreen);
             },
             child: Padding(

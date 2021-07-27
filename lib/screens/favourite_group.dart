@@ -51,6 +51,8 @@ class _FavouriteGroupState extends State<FavouriteGroup> {
     // TODO: implement initState
     super.initState();
     sid();
+    // FocusScope.of(context).requestFocus(FocusNode());
+
   }
 
   void sid() async {

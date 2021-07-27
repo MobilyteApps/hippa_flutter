@@ -45,6 +45,7 @@ class _GroupListingState extends State<GroupListing>
               padding: EdgeInsets.only(right: AppSize().width(context) * 0.1),
               child: InkWell(
                 onTap: () {
+                  FocusScope.of(context).requestFocus(FocusNode());
                   locator<NavigationService>().navigateTo(settingsscreen);
                   //
                 },
