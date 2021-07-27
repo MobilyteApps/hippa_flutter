@@ -185,7 +185,7 @@ class _SigninState extends State<Signin> {
     } else if (!validatePassword(passwordCtrl.text.trim())) {
       ApiProvider().showToastMsg("Incorrect username / password");
     } else if (value == false) {
-      ApiProvider().showToastMsg("requires agree term and conditions");
+      ApiProvider().showToastMsg("Please accept Terms and Conditions");
     } else {
       var input = {
         "email": usernameCtrl.text.trim(),
@@ -320,7 +320,7 @@ class _SigninState extends State<Signin> {
                               locator<NavigationService>().navigateTo(privacy);
                             },
                             child: getRegularText(
-                                'I agree to all Terms and conditions',
+                                'I agree to all Terms and Conditions',
                                 textColor: AppColor.white,
                                 fontSize: 14),
                           ),
