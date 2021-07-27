@@ -628,6 +628,7 @@ class ApiProvider {
     String? token = prefs.getString('token');
     // print("__________");
     print(json.encode(input));
+    String? id = prefs.getString('sid');
     print("#####");
     // print(prefs.getString('token'));
     loader.setloader(true);
@@ -653,6 +654,11 @@ class ApiProvider {
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
         showToastMsg(ouptut["message"]);
+
+          var input = {"user_id": id!};
+
+            signInProvider.viewgrouplist(loader, input);
+
 
         // locator<NavigationService>().navigateTo(groupdetails);
         groupDetailResponse =

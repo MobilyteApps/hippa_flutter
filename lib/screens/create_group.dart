@@ -110,22 +110,22 @@ class _CreateGroupState extends State<CreateGroup> {
       await _playVideo(file);
     } else if (isMultiImage) {
       await _displayPickImageDialog(context!,
-              (double? maxWidth, double? maxHeight, int? quality) async {
-            try {
-              final pickedFileList = await _picker.pickMultiImage(
-                maxWidth: maxWidth,
-                maxHeight: maxHeight,
-                imageQuality: quality,
-              );
-              setState(() {
-                _imageFileList = pickedFileList;
-              });
-            } catch (e) {
-              setState(() {
-                _pickImageError = e;
-              });
-            }
+          (double? maxWidth, double? maxHeight, int? quality) async {
+        try {
+          final pickedFileList = await _picker.pickMultiImage(
+            maxWidth: maxWidth,
+            maxHeight: maxHeight,
+            imageQuality: quality,
+          );
+          setState(() {
+            _imageFileList = pickedFileList;
           });
+        } catch (e) {
+          setState(() {
+            _pickImageError = e;
+          });
+        }
+      });
     } else {
       try {
         final pickedFile = await _picker.pickImage(
@@ -200,102 +200,103 @@ class _CreateGroupState extends State<CreateGroup> {
               return Semantics(
                 label: 'image_picker_example_picked_image',
                 child: kIsWeb
-                    ? Image.network(_imageFileList![index].path) :
-                // : InkWell(
-                // onTap: () {
-                //   showModalBottomSheet(
-                //       context: context,
-                //       builder: (context) {
-                //         return Column(
-                //           mainAxisSize: MainAxisSize.min,
-                //           children: <Widget>[
-                //             ListTile(
-                //               leading:
-                //                   new Icon(Icons.camera_alt_outlined),
-                //               title: new Text('Take Photo'),
-                //               onTap: () {
-                //                 // Navigator.pop(context);
-                //                 isVideo = false;
-                //                 _onImageButtonPressed(
-                //                     ImageSource.camera,
-                //                     context: context);
-                //               },
-                //             ),
-                //             ListTile(
-                //               leading: new Icon(Icons.photo),
-                //               title: new Text('Choose from Gallery'),
-                //               onTap: () {
-                //                 // Navigator.pop(context);
-                //                 isVideo = false;
-                //                 _onImageButtonPressed(
-                //                     ImageSource.gallery,
-                //                     context: context);
-                //               },
-                //             ),
-                //             ListTile(
-                //               title: new Text('Cancel'),
-                //               onTap: () {
-                //                 Navigator.pop(context);
-                //               },
-                //             ),
-                //           ],
-                //         );
-                //       });
-                // },
-                // child:
-                Align(
-                    alignment: Alignment.topLeft,
-                    child: InkWell(
-                      onTap: () {
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (context) {
-                              return Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  ListTile(
-                                    leading:
-                                    new Icon(Icons.camera_alt_outlined),
-                                    title: new Text('Take Photo'),
-                                    onTap: () {
-                                      // Navigator.pop(context);
-                                      isVideo = false;
-                                      _onImageButtonPressed(
-                                          ImageSource.camera,
-                                          context: context);
-                                    },
-                                  ),
-                                  ListTile(
-                                    leading: new Icon(Icons.photo),
-                                    title: new Text('Choose from Gallery'),
-                                    onTap: () {
-                                      // Navigator.pop(context);
-                                      isVideo = false;
-                                      _onImageButtonPressed(
-                                          ImageSource.gallery,
-                                          context: context);
-                                    },
-                                  ),
-                                  ListTile(
-                                    title: new Text('Cancel'),
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ],
-                              );
-                            });
-                      },
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20.0),
-                        child: Image.file(
-                          File(_imageFileList![index].path),
-                          fit: BoxFit.fill,
-                          height: AppSize().height(context) * 0.1,
-                          width: AppSize().width(context) * 0.18,
-                        ),
-                      ),
-                    )),
+                    ? Image.network(_imageFileList![index].path)
+                    :
+                    // : InkWell(
+                    // onTap: () {
+                    //   showModalBottomSheet(
+                    //       context: context,
+                    //       builder: (context) {
+                    //         return Column(
+                    //           mainAxisSize: MainAxisSize.min,
+                    //           children: <Widget>[
+                    //             ListTile(
+                    //               leading:
+                    //                   new Icon(Icons.camera_alt_outlined),
+                    //               title: new Text('Take Photo'),
+                    //               onTap: () {
+                    //                 // Navigator.pop(context);
+                    //                 isVideo = false;
+                    //                 _onImageButtonPressed(
+                    //                     ImageSource.camera,
+                    //                     context: context);
+                    //               },
+                    //             ),
+                    //             ListTile(
+                    //               leading: new Icon(Icons.photo),
+                    //               title: new Text('Choose from Gallery'),
+                    //               onTap: () {
+                    //                 // Navigator.pop(context);
+                    //                 isVideo = false;
+                    //                 _onImageButtonPressed(
+                    //                     ImageSource.gallery,
+                    //                     context: context);
+                    //               },
+                    //             ),
+                    //             ListTile(
+                    //               title: new Text('Cancel'),
+                    //               onTap: () {
+                    //                 Navigator.pop(context);
+                    //               },
+                    //             ),
+                    //           ],
+                    //         );
+                    //       });
+                    // },
+                    // child:
+                    Align(
+                        alignment: Alignment.topLeft,
+                        child: InkWell(
+                          onTap: () {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      ListTile(
+                                        leading:
+                                            new Icon(Icons.camera_alt_outlined),
+                                        title: new Text('Take Photo'),
+                                        onTap: () {
+                                          // Navigator.pop(context);
+                                          isVideo = false;
+                                          _onImageButtonPressed(
+                                              ImageSource.camera,
+                                              context: context);
+                                        },
+                                      ),
+                                      ListTile(
+                                        leading: new Icon(Icons.photo),
+                                        title: new Text('Choose from Gallery'),
+                                        onTap: () {
+                                          // Navigator.pop(context);
+                                          isVideo = false;
+                                          _onImageButtonPressed(
+                                              ImageSource.gallery,
+                                              context: context);
+                                        },
+                                      ),
+                                      ListTile(
+                                        title: new Text('Cancel'),
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                });
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20.0),
+                            child: Image.file(
+                              File(_imageFileList![index].path),
+                              fit: BoxFit.fill,
+                              height: AppSize().height(context) * 0.1,
+                              width: AppSize().width(context) * 0.18,
+                            ),
+                          ),
+                        )),
                 // )
               );
             },
@@ -468,9 +469,9 @@ class _CreateGroupState extends State<CreateGroup> {
             ),
             child: Center(
                 child: Text(
-                  u[index].name![0],
-                  style: TextStyle(color: Colors.red),
-                )),
+              u[index].name![0],
+              style: TextStyle(color: Colors.red),
+            )),
           ),
           Positioned(
               left: AppSize().width(context) * 0.11,
@@ -571,7 +572,7 @@ class _CreateGroupState extends State<CreateGroup> {
     try {
       // var file = await FilePicker.platform.getFile(type: FileType.image);
       FilePickerResult? result =
-      await FilePicker.platform.pickFiles(type: FileType.image);
+          await FilePicker.platform.pickFiles(type: FileType.image);
 
       if (result != null) {
         PlatformFile file = result.files.first;
@@ -662,8 +663,8 @@ class _CreateGroupState extends State<CreateGroup> {
     return null;
   }
 
-  Future<void> _displayPickImageDialog(BuildContext context,
-      OnPickImageCallback onPick) async {
+  Future<void> _displayPickImageDialog(
+      BuildContext context, OnPickImageCallback onPick) async {
     return showDialog(
         context: context,
         builder: (context) {
@@ -675,19 +676,19 @@ class _CreateGroupState extends State<CreateGroup> {
                   controller: maxWidthController,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                   decoration:
-                  InputDecoration(hintText: "Enter maxWidth if desired"),
+                      InputDecoration(hintText: "Enter maxWidth if desired"),
                 ),
                 TextField(
                   controller: maxHeightController,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                   decoration:
-                  InputDecoration(hintText: "Enter maxHeight if desired"),
+                      InputDecoration(hintText: "Enter maxHeight if desired"),
                 ),
                 TextField(
                   controller: qualityController,
                   keyboardType: TextInputType.number,
                   decoration:
-                  InputDecoration(hintText: "Enter quality if desired"),
+                      InputDecoration(hintText: "Enter quality if desired"),
                 ),
               ],
             ),
@@ -766,495 +767,501 @@ class _CreateGroupState extends State<CreateGroup> {
       //     ),
       //   ],
       // ),
-        appBar: AppBar(
-          leading: InkWell(
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            locator<NavigationService>().backPress();
+          },
+          child: Padding(
+            padding: EdgeInsets.all(AppSize().width(context) * 0.04),
+            child: SvgPicture.asset(
+              'assets/images/arrow_back.svg',
+              color: AppColor.black,
+              matchTextDirection: true,
+            ),
+          ),
+        ),
+        actions: [
+          InkWell(
             onTap: () {
-              locator<NavigationService>().backPress();
+              locator<NavigationService>().navigateTo(settingsscreen);
             },
             child: Padding(
-              padding: EdgeInsets.all(AppSize().width(context) * 0.04),
+              padding: EdgeInsets.only(right: AppSize().width(context) * 0.03),
               child: SvgPicture.asset(
-                'assets/images/arrow_back.svg',
+                'assets/images/settings.svg',
                 color: AppColor.black,
                 matchTextDirection: true,
               ),
             ),
-          ),
-          actions: [
-            InkWell(
-              onTap: () {
-                locator<NavigationService>().navigateTo(settingsscreen);
-              },
-              child: Padding(
-                padding: EdgeInsets.only(
-                    right: AppSize().width(context) * 0.03),
-                child: SvgPicture.asset(
-                  'assets/images/settings.svg',
-                  color: AppColor.black,
-                  matchTextDirection: true,
+          )
+        ],
+        backgroundColor: AppColor.backgroundColor,
+        title: getBoldText(AppString().creategroup,
+            textColor: AppColor.black, fontSize: 18),
+        centerTitle: true,
+      ),
+      backgroundColor: AppColor.backgroundColor,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(
+              left: AppSize().width(context) * 0.05,
+              right: AppSize().width(context) * 0.05),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // ElevatedButton(onPressed: (){
+              // AwsPage().upload().then((onValue) {
+              // print("file uploaded >>>>> $onValue");
+              // // _fileData.fileUrl=onValue;
+              // setState(() {
+              // imgs = onValue;
+              // print("<<<" + imgs);
+              // });
+              // };};
+              // child: Text('')),
+
+              // ElevatedButton(onPressed: (){
+              //   AwsPage().upload(File(_imageFileList![0].path),).then((value) => print(value));
+              // }, child: Text('')),
+              _imageFileList == null
+                  ?
+                  // Row(
+                  //   children: [
+                  // InkWell(
+                  //     onTap: () async {
+                  //       showModalBottomSheet(
+                  //           context: context,
+                  //           builder: (context) {
+                  //             return Column(
+                  //               mainAxisSize: MainAxisSize.min,
+                  //               children: <Widget>[
+                  //                 ListTile(
+                  //                   leading:
+                  //                       new Icon(Icons.camera_alt_outlined),
+                  //                   title: new Text('Take Photo'),
+                  //                   onTap: () {
+                  //                     // Navigator.pop(context);
+                  //                     isVideo = false;
+                  //                     _onImageButtonPressed(ImageSource.camera,
+                  //                         context: context);
+                  //                   },
+                  //                 ),
+                  //                 ListTile(
+                  //                   leading: new Icon(Icons.photo),
+                  //                   title: new Text('Choose from Gallery'),
+                  //                   onTap: () {
+                  //                     // Navigator.pop(context);
+                  //                     isVideo = false;
+                  //                     _onImageButtonPressed(ImageSource.gallery,
+                  //                         context: context);
+                  //                   },
+                  //                 ),
+                  //                 ListTile(
+                  //                   title: new Text('Cancel'),
+                  //                   onTap: () {
+                  //                     Navigator.pop(context);
+                  //                   },
+                  //                 ),
+                  //               ],
+                  //             );
+                  //           });
+                  //     },
+                  //     child:
+                  Align(
+                      alignment: Alignment.topLeft,
+                      child: _imageFileList == null
+                          ? InkWell(
+                              onTap: () async {
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      return Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          ListTile(
+                                            leading: new Icon(
+                                                Icons.camera_alt_outlined),
+                                            title: new Text('Take Photo'),
+                                            onTap: () {
+                                              // Navigator.pop(context);
+                                              isVideo = false;
+                                              _onImageButtonPressed(
+                                                  ImageSource.camera,
+                                                  context: context);
+                                            },
+                                          ),
+                                          ListTile(
+                                            leading: new Icon(Icons.photo),
+                                            title:
+                                                new Text('Choose from Gallery'),
+                                            onTap: () {
+                                              // Navigator.pop(context);
+                                              isVideo = false;
+                                              _onImageButtonPressed(
+                                                  ImageSource.gallery,
+                                                  context: context);
+                                            },
+                                          ),
+                                          ListTile(
+                                            title: new Text('Cancel'),
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    });
+                              },
+                              child: Container(
+                                  height: AppSize().height(context) * 0.1,
+                                  width: AppSize().width(context) * 0.18,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(color: Colors.grey)),
+                                  child: Icon(
+                                    Icons.person,
+                                    color: Colors.grey,
+                                    size: 46,
+                                  )),
+                            )
+                          : Container()
+                      // : ClipRRect(
+                      //     borderRadius: BorderRadius.circular(20.0),
+                      //     child: Image.file(
+                      //       File(results),
+                      //       fit: BoxFit.fitWidth,
+                      //       height: AppSize().height(context) * 0.1,
+                      //       width: AppSize().width(context) * 0.18,
+                      //     ),
+                      //   )
+                      )
+                  // )
+                  //     SizedBox(
+                  //       width: AppSize().width(context)*0.06,
+                  //     ),
+                  //     selection == true
+                  //         ? Column(
+                  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //             children: <Widget>[
+                  //               InkWell(
+                  //                   onTap: () {
+                  //                     isVideo = false;
+                  //                     _onImageButtonPressed(ImageSource.camera,
+                  //                         context: context);
+                  //                   },
+                  //                   child: Container(
+                  //                     height: AppSize().height(context)*0.03,
+                  //                     width: AppSize().width(context)*0.4,
+                  //                     decoration: BoxDecoration(
+                  //                        //  borderRadius: BorderRadius.all(
+                  //                        //     Radius.circular(10),
+                  //                        // ),
+                  //                         color: Colors.white),
+                  //                     child: Center(child: Text('Camera')),
+                  //                   )),
+                  //               Divider(),
+                  //               InkWell(
+                  //                   onTap: () {
+                  //                     isVideo = false;
+                  //                     _onImageButtonPressed(ImageSource.gallery,
+                  //                         context: context);
+                  //                   },
+                  //                   child: Container(
+                  //                     height: AppSize().height(context)*0.03,
+                  //                     width: AppSize().width(context)*0.4,
+                  //                     decoration: BoxDecoration(
+                  //                         // borderRadius: BorderRadius.all(
+                  //                         //   Radius.circular(10),
+                  //                         // ),
+                  //                         color: Colors.white),
+                  //                     child: Center(
+                  //                     child: Text('Gallery')),
+                  //                   )),
+                  //               // Semantics(
+                  //               //   label: 'image_picker_example_from_gallery',
+                  //               //   child: FloatingActionButton(
+                  //               //     onPressed: () {
+                  //               //       isVideo = false;
+                  //               //       _onImageButtonPressed(ImageSource.gallery, context: context);
+                  //               //     },
+                  //               //     heroTag: 'image0',
+                  //               //     tooltip: 'Pick Image from gallery',
+                  //               //     child: const Icon(Icons.photo),
+                  //               //   ),
+                  //               // ),
+                  //               // Padding(
+                  //               //   padding: const EdgeInsets.only(top: 16.0),
+                  //               //   child: FloatingActionButton(
+                  //               //     onPressed: () {
+                  //               //       isVideo = false;
+                  //               //       _onImageButtonPressed(ImageSource.camera, context: context);
+                  //               //     },
+                  //               //     heroTag: 'image2',
+                  //               //     tooltip: 'Take a Photo',
+                  //               //     child: const Icon(Icons.camera_alt),
+                  //               //   ),
+                  //               // ),
+                  //             ],
+                  //           )
+                  //         : Container()
+                  //   ],
+                  : Container(),
+              SizedBox(height: AppSize().height(context) * 0.02),
+              Center(
+                child:
+                    !kIsWeb && defaultTargetPlatform == TargetPlatform.android
+                        ? FutureBuilder<void>(
+                            future: retrieveLostData(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<void> snapshot) {
+                              switch (snapshot.connectionState) {
+                                case ConnectionState.none:
+                                  return const Text(
+                                    '',
+                                    textAlign: TextAlign.center,
+                                  );
+                                case ConnectionState.waiting:
+                                  return const Text(
+                                    '',
+                                    textAlign: TextAlign.center,
+                                  );
+                                case ConnectionState.done:
+                                  return _handlePreview();
+                                default:
+                                  if (snapshot.hasError) {
+                                    return Text(
+                                      'Pick image/video error: ${snapshot.error}}',
+                                      textAlign: TextAlign.center,
+                                    );
+                                  } else {
+                                    return const Text(
+                                      '',
+                                      textAlign: TextAlign.center,
+                                    );
+                                  }
+                              }
+                            },
+                          )
+                        : _handlePreview(),
+              ),
+              getBoldText(AppString().groupname,
+                  textColor: AppColor.black, fontSize: 16),
+              SizedBox(height: AppSize().height(context) * 0.02),
+              groupnameFieldWidget(),
+              SizedBox(height: AppSize().height(context) * 0.02),
+              getBoldText(AppString().addteammember,
+                  textColor: AppColor.black, fontSize: 16),
+              SizedBox(height: AppSize().height(context) * 0.02),
+              Container(
+                  height: AppSize().height(context) * 0.07,
+                  child: addmemberFieldWidget()),
+              SizedBox(height: AppSize().height(context) * 0.02),
+              apiProvider.getAllUserResponse.data != null && check == true
+                  ? apiProvider.getAllUserResponse.data!.users!.length == 0
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: Center(child: Text('No Colleague Found')),
+                        )
+                      : Container(
+                          // fit: FlexFit.tight,
+                          width: AppSize().width(context),
+                          // height: AppSize().height(context) * 0.34,
+                          child: ListView.builder(
+                              itemCount: apiProvider
+                                  .getAllUserResponse.data!.users!.length,
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemBuilder: (BuildContext context, int index) {
+                                return ids.contains(apiProvider
+                                        .getAllUserResponse
+                                        .data!
+                                        .users![index]
+                                        .sId
+                                        .toString())
+                                    ? Container()
+                                    : InkWell(
+                                        onTap: () {
+                                          ids.add(apiProvider.getAllUserResponse
+                                              .data!.users![index].sId
+                                              .toString());
+                                          setState(() {});
+                                          print(apiProvider.getAllUserResponse
+                                              .data!.users![index].sId);
+                                          userids.add(User(
+                                              id: apiProvider.getAllUserResponse
+                                                  .data!.users![index].sId,
+                                              name: apiProvider
+                                                  .getAllUserResponse
+                                                  .data!
+                                                  .users![index]
+                                                  .name));
+                                          print("length" +
+                                              userids.length.toString());
+                                          print(userids.toList().toString());
+                                        },
+                                        child:
+
+                                            // apiProvider.getAllUserResponse.data!.users![index].username==null ?Container():
+                                            apiProvider
+                                                            .getAllUserResponse
+                                                            .data!
+                                                            .users![index]
+                                                            .username !=
+                                                        null &&
+                                                    apiProvider
+                                                            .getAllUserResponse
+                                                            .data!
+                                                            .users![index]
+                                                            .sId! !=
+                                                        sids
+                                                ? ColleagueDetail(
+                                                    apiProvider
+                                                        .getAllUserResponse,
+                                                    index)
+                                                : Container());
+                              }))
+                  : Center(child: CircularProgressIndicator()),
+              Container(
+                  width: AppSize().width(context),
+                  height: AppSize().height(context) * 0.14,
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: userids.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (BuildContext context, int index) {
+                        return
+                            // index != userids.length
+                            //   ?
+                            memberWidget(userids, index);
+                        // : addWidget();
+                      })),
+              Padding(
+                padding: EdgeInsets.only(top: AppSize().height(context) * 0.02),
+                child: SizedBox(
+                  height: AppSize().height(context) * 0.07,
+                  width: AppSize().width(context),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        AppColor.white,
+                      ),
+                    ),
+                    child: getBoldText(AppString().cancel,
+                        textColor: AppColor.black, fontSize: 14),
+                    onPressed: () {
+                      ids.clear();
+                      userids.clear();
+                      setState(() {});
+                      // locator<NavigationService>().navigateToReplace(otpscreen);
+                    },
+                  ),
                 ),
               ),
-            )
-          ],
-          backgroundColor: AppColor.backgroundColor,
-          title: getBoldText(AppString().creategroup,
-              textColor: AppColor.black, fontSize: 18),
-          centerTitle: true,
+              Padding(
+                padding: EdgeInsets.only(
+                    top: AppSize().height(context) * 0.02,
+                    bottom: AppSize().height(context) * 0.02),
+                child: SizedBox(
+                  height: AppSize().height(context) * 0.07,
+                  width: AppSize().width(context),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        AppColor.buttonColor,
+                      ),
+                    ),
+                    //  RaisedButton(
+                    //   color: AppColor.buttonColor,
+                    child: getBoldText(AppString().confirm,
+                        textColor: AppColor.white, fontSize: 14),
+                    onPressed: () {
+                      formValidation();
+                      // print(ids.toList().toString());
+                      // locator<NavigationService>()
+                      //     .navigateToReplace(grouplisting);
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-        backgroundColor: AppColor.backgroundColor,
-        body: SingleChildScrollView(
-            child: Padding(
-            padding: EdgeInsets.only(
-            left: AppSize().width(context) * 0.05,
-        right: AppSize().width(context) * 0.05),
-    child: Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-
-    // ElevatedButton(onPressed: (){
-    // AwsPage().upload().then((onValue) {
-    // print("file uploaded >>>>> $onValue");
-    // // _fileData.fileUrl=onValue;
-    // setState(() {
-    // imgs = onValue;
-    // print("<<<" + imgs);
-    // });
-    // };};
-    // child: Text('')),
-
-
-      // ElevatedButton(onPressed: (){
-      //   AwsPage().upload(File(_imageFileList![0].path),).then((value) => print(value));
-      // }, child: Text('')),
-    _imageFileList == null
-    ?
-    // Row(
-    //   children: [
-    // InkWell(
-    //     onTap: () async {
-    //       showModalBottomSheet(
-    //           context: context,
-    //           builder: (context) {
-    //             return Column(
-    //               mainAxisSize: MainAxisSize.min,
-    //               children: <Widget>[
-    //                 ListTile(
-    //                   leading:
-    //                       new Icon(Icons.camera_alt_outlined),
-    //                   title: new Text('Take Photo'),
-    //                   onTap: () {
-    //                     // Navigator.pop(context);
-    //                     isVideo = false;
-    //                     _onImageButtonPressed(ImageSource.camera,
-    //                         context: context);
-    //                   },
-    //                 ),
-    //                 ListTile(
-    //                   leading: new Icon(Icons.photo),
-    //                   title: new Text('Choose from Gallery'),
-    //                   onTap: () {
-    //                     // Navigator.pop(context);
-    //                     isVideo = false;
-    //                     _onImageButtonPressed(ImageSource.gallery,
-    //                         context: context);
-    //                   },
-    //                 ),
-    //                 ListTile(
-    //                   title: new Text('Cancel'),
-    //                   onTap: () {
-    //                     Navigator.pop(context);
-    //                   },
-    //                 ),
-    //               ],
-    //             );
-    //           });
-    //     },
-    //     child:
-    Align(
-    alignment: Alignment.topLeft,
-    child: _imageFileList == null
-    ? InkWell(
-    onTap: () async {
-    showModalBottomSheet(
-    context: context,
-    builder: (context) {
-    return Column(
-    mainAxisSize: MainAxisSize.min,
-    children: <Widget>[
-    ListTile(
-    leading:
-    new Icon(Icons.camera_alt_outlined),
-    title: new Text('Take Photo'),
-    onTap: () {
-    // Navigator.pop(context);
-    isVideo = false;
-    _onImageButtonPressed(ImageSource.camera,
-    context: context);
-    },
-    ),
-    ListTile(
-    leading: new Icon(Icons.photo),
-    title: new Text('Choose from Gallery'),
-    onTap: () {
-    // Navigator.pop(context);
-    isVideo = false;
-    _onImageButtonPressed(ImageSource.gallery,
-    context: context);
-    },
-    ),
-    ListTile(
-    title: new Text('Cancel'),
-    onTap: () {
-    Navigator.pop(context);
-    },
-    ),
-    ],
+      ),
     );
-    });
-    },
-    child: Container(
-    height: AppSize().height(context) * 0.1,
-    width: AppSize().width(context) * 0.18,
-    decoration: BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.circular(20),
-    border: Border.all(color: Colors.grey)),
-    child: Icon(
-    Icons.person,
-    color: Colors.grey,
-    size: 46,
-    )),
-    )
-        : Container()
-    // : ClipRRect(
-    //     borderRadius: BorderRadius.circular(20.0),
-    //     child: Image.file(
-    //       File(results),
-    //       fit: BoxFit.fitWidth,
-    //       height: AppSize().height(context) * 0.1,
-    //       width: AppSize().width(context) * 0.18,
-    //     ),
-    //   )
-    )
-    // )
-    //     SizedBox(
-    //       width: AppSize().width(context)*0.06,
-    //     ),
-    //     selection == true
-    //         ? Column(
-    //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //             children: <Widget>[
-    //               InkWell(
-    //                   onTap: () {
-    //                     isVideo = false;
-    //                     _onImageButtonPressed(ImageSource.camera,
-    //                         context: context);
-    //                   },
-    //                   child: Container(
-    //                     height: AppSize().height(context)*0.03,
-    //                     width: AppSize().width(context)*0.4,
-    //                     decoration: BoxDecoration(
-    //                        //  borderRadius: BorderRadius.all(
-    //                        //     Radius.circular(10),
-    //                        // ),
-    //                         color: Colors.white),
-    //                     child: Center(child: Text('Camera')),
-    //                   )),
-    //               Divider(),
-    //               InkWell(
-    //                   onTap: () {
-    //                     isVideo = false;
-    //                     _onImageButtonPressed(ImageSource.gallery,
-    //                         context: context);
-    //                   },
-    //                   child: Container(
-    //                     height: AppSize().height(context)*0.03,
-    //                     width: AppSize().width(context)*0.4,
-    //                     decoration: BoxDecoration(
-    //                         // borderRadius: BorderRadius.all(
-    //                         //   Radius.circular(10),
-    //                         // ),
-    //                         color: Colors.white),
-    //                     child: Center(
-    //                     child: Text('Gallery')),
-    //                   )),
-    //               // Semantics(
-    //               //   label: 'image_picker_example_from_gallery',
-    //               //   child: FloatingActionButton(
-    //               //     onPressed: () {
-    //               //       isVideo = false;
-    //               //       _onImageButtonPressed(ImageSource.gallery, context: context);
-    //               //     },
-    //               //     heroTag: 'image0',
-    //               //     tooltip: 'Pick Image from gallery',
-    //               //     child: const Icon(Icons.photo),
-    //               //   ),
-    //               // ),
-    //               // Padding(
-    //               //   padding: const EdgeInsets.only(top: 16.0),
-    //               //   child: FloatingActionButton(
-    //               //     onPressed: () {
-    //               //       isVideo = false;
-    //               //       _onImageButtonPressed(ImageSource.camera, context: context);
-    //               //     },
-    //               //     heroTag: 'image2',
-    //               //     tooltip: 'Take a Photo',
-    //               //     child: const Icon(Icons.camera_alt),
-    //               //   ),
-    //               // ),
-    //             ],
-    //           )
-    //         : Container()
-    //   ],
-        : Container(),
-    SizedBox(height: AppSize().height(context) * 0.02),
-    Center(
-    child:
-    !kIsWeb && defaultTargetPlatform == TargetPlatform.android
-    ? FutureBuilder<void>(
-    future: retrieveLostData(),
-    builder: (BuildContext context,
-    AsyncSnapshot<void> snapshot) {
-    switch (snapshot.connectionState) {
-    case ConnectionState.none:
-    return const Text(
-    '',
-    textAlign: TextAlign.center,
-    );
-    case ConnectionState.waiting:
-    return const Text(
-    '',
-    textAlign: TextAlign.center,
-    );
-    case ConnectionState.done:
-    return _handlePreview();
-    default:
-    if (snapshot.hasError) {
-    return Text(
-    'Pick image/video error: ${snapshot.error}}',
-    textAlign: TextAlign.center,
-    );
-    } else {
-    return const Text(
-    '',
-    textAlign: TextAlign.center,
-    );
-    }
-    }
-    },
-    )
-        : _handlePreview(),
-    ),
-    getBoldText(AppString().groupname,
-    textColor: AppColor.black, fontSize: 16),
-    SizedBox(height: AppSize().height(context) * 0.02),
-    groupnameFieldWidget(),
-    SizedBox(height: AppSize().height(context) * 0.02),
-    getBoldText(AppString().addteammember,
-    textColor: AppColor.black, fontSize: 16),
-    SizedBox(height: AppSize().height(context) * 0.02),
-    Container(
-    height: AppSize().height(context) * 0.07,
-    child: addmemberFieldWidget()),
-    SizedBox(height: AppSize().height(context) * 0.02),
-    apiProvider.getAllUserResponse.data != null && check == true
-    ?
-    apiProvider
-        .getAllUserResponse.data!.users!.length==0?Padding(
-    padding: const EdgeInsets.only(top: 20),
-    child: Center(child: Text('No Colleague Found')),
-    ):
-    Container(
-    // fit: FlexFit.tight,
-    width: AppSize().width(context),
-    // height: AppSize().height(context) * 0.34,
-    child: ListView.builder(
-    itemCount: apiProvider
-        .getAllUserResponse.data!.users!.length,
-    scrollDirection: Axis.vertical,
-    shrinkWrap: true,
-    itemBuilder: (BuildContext context, int index) {
-    return ids.contains(apiProvider
-        .getAllUserResponse.data!.users![index].sId
-        .toString())
-    ? Container()
-        : InkWell(
-    onTap: () {
-    ids.add(apiProvider.getAllUserResponse
-        .data!.users![index].sId
-        .toString());
-    setState(() {});
-    print(apiProvider.getAllUserResponse.data!
-        .users![index].sId);
-    userids.add(User(
-    id: apiProvider.getAllUserResponse
-        .data!.users![index].sId,
-    name: apiProvider.getAllUserResponse
-        .data!.users![index].name));
-    print(
-    "length" + userids.length.toString());
-    print(userids.toList().toString());
-    },
-    child:
-
-    // apiProvider.getAllUserResponse.data!.users![index].username==null ?Container():
-    apiProvider
-        .getAllUserResponse
-        .data!
-        .users![index]
-        .username !=
-    null &&
-    apiProvider
-        .getAllUserResponse
-        .data!
-        .users![index]
-        .sId! !=
-    sids
-    ? ColleagueDetail(
-    apiProvider.getAllUserResponse,
-    index)
-        : Container());
-    }))
-        : Center(child: CircularProgressIndicator()),
-    Container(
-    width: AppSize().width(context),
-    height: AppSize().height(context) * 0.14,
-    child: ListView.builder(
-    shrinkWrap: true,
-    itemCount: userids.length,
-    scrollDirection: Axis.horizontal,
-    itemBuilder: (BuildContext context, int index) {
-    return
-    // index != userids.length
-    //   ?
-    memberWidget(userids, index);
-    // : addWidget();
-    })),
-    Padding(
-    padding: EdgeInsets.only(top: AppSize().height(context) * 0.02),
-    child: SizedBox(
-    height: AppSize().height(context) * 0.07,
-    width: AppSize().width(context),
-    child: ElevatedButton(
-    style: ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(
-    AppColor.white,
-    ),
-    ),
-    child: getBoldText(AppString().cancel,
-    textColor: AppColor.black, fontSize: 14),
-    onPressed: () {
-    ids.clear();
-    userids.clear();
-    setState(() {});
-    // locator<NavigationService>().navigateToReplace(otpscreen);
-    },
-    ),
-    ),
-    ),
-    Padding(
-    padding: EdgeInsets.only(
-    top: AppSize().height(context) * 0.02,
-    bottom: AppSize().height(context) * 0.02),
-    child: SizedBox(
-    height: AppSize().height(context) * 0.07,
-    width: AppSize().width(context),
-    child: ElevatedButton(
-    style: ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(
-    AppColor.buttonColor,
-    ),
-    ),
-    //  RaisedButton(
-    //   color: AppColor.buttonColor,
-    child: getBoldText(AppString().confirm,
-    textColor: AppColor.white, fontSize: 14),
-    onPressed: () {
-    formValidation();
-    // print(ids.toList().toString());
-    // locator<NavigationService>()
-    //     .navigateToReplace(grouplisting);
-    },
-    ),
-    ),
-    ),
-    ],
-    ),
-    ),
-    ),
-    );
-    }
   }
+}
 
-  class User {
+class User {
   String? id;
   String? name;
 
   User({this.id, this.name});
 
   User.fromJson(Map<String, dynamic> json) {
-  id = json['id'];
-  name = json['name'];
+    id = json['id'];
+    name = json['name'];
   }
 
   Map<String, dynamic> toJson() {
-  final Map<String, dynamic> data = new Map<String, dynamic>();
-  data['id'] = this.id;
-  data['name'] = this.name;
-  return data;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    return data;
   }
-  }
+}
 
-  typedef void OnPickImageCallback(
-  double? maxWidth, double? maxHeight, int? quality);
+typedef void OnPickImageCallback(
+    double? maxWidth, double? maxHeight, int? quality);
 
-  class AspectRatioVideo extends StatefulWidget {
+class AspectRatioVideo extends StatefulWidget {
   AspectRatioVideo(this.controller);
 
   final VideoPlayerController? controller;
 
   @override
   AspectRatioVideoState createState() => AspectRatioVideoState();
-  }
+}
 
-  class AspectRatioVideoState extends State<AspectRatioVideo> {
+class AspectRatioVideoState extends State<AspectRatioVideo> {
   VideoPlayerController? get controller => widget.controller;
   bool initialized = false;
 
   void _onVideoControllerUpdate() {
-  if (!mounted) {
-  return;
-  }
-  if (initialized != controller!.value.isInitialized) {
-  initialized = controller!.value.isInitialized;
-  setState(() {});
-  }
+    if (!mounted) {
+      return;
+    }
+    if (initialized != controller!.value.isInitialized) {
+      initialized = controller!.value.isInitialized;
+      setState(() {});
+    }
   }
 
   @override
   void initState() {
-  super.initState();
-  controller!.addListener(_onVideoControllerUpdate);
+    super.initState();
+    controller!.addListener(_onVideoControllerUpdate);
   }
 
   @override
   void dispose() {
-  controller!.removeListener(_onVideoControllerUpdate);
-  super.dispose();
+    controller!.removeListener(_onVideoControllerUpdate);
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-  if (initialized) {
-  return Center(
-  child: AspectRatio(
-  aspectRatio: controller!.value.aspectRatio,
-  child: VideoPlayer(controller!),
-  ),
-  );
-  } else {
-  return Container();
+    if (initialized) {
+      return Center(
+        child: AspectRatio(
+          aspectRatio: controller!.value.aspectRatio,
+          child: VideoPlayer(controller!),
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
-  }
-  }
+}
