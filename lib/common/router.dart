@@ -81,8 +81,8 @@ class Router {
       //   return MaterialPageRoute(builder: (_) => GroupDetail(settings.arguments));
       case country:
         return MaterialPageRoute(builder: (_) => CountryTesting());
-      case test:
-        return MaterialPageRoute(builder: (_) => HomeScreenn());
+      // case test:
+      //   return MaterialPageRoute(builder: (_) => HomeScreenn());
       case img:
         return MaterialPageRoute(builder: (_) => CameraTest());
       case testbottom:

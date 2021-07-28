@@ -53,7 +53,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
   void getotp() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    codeCtrl.text = prefs.getString('code')!;
+    // codeCtrl.text = prefs.getString('code')!;
   }
 
   Widget codeFieldWidget() {
@@ -62,23 +62,24 @@ class _OtpScreenState extends State<OtpScreen> {
       validator: (value) {
         if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Code';
-        } else if (value!.length < 4) {
+        } else if (value!.length < 6) {
           return 'Please Enter Valid Code';
         }
         return null;
       },
       keyboardType: TextInputType.phone,
       controller: codeCtrl,
-      enabled: false,
+      // enabled: false,
       style: TextStyle(
         color: AppColor.textColor,
         fontSize: 16,
         fontFamily: 'PoppinsSemiBold',
         fontWeight: FontWeight.w600,
       ),
-      maxLength: 10,
+      maxLength: 6,
       inputFormatters: <TextInputFormatter>[
-        LengthLimitingTextInputFormatter(4)
+        LengthLimitingTextInputFormatter(6),
+        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
       ],
       decoration: InputDecoration(
           enabledBorder: border,
@@ -129,7 +130,10 @@ class _OtpScreenState extends State<OtpScreen> {
   verifyValidation() async {
     FocusScope.of(context).requestFocus(new FocusNode());
     if (codeCtrl.text.trim().isEmpty == true) {
-      ApiProvider().showToastMsg("Please Enter Otp");
+      ApiProvider().showToastMsg("Please Enter 6 digit Otp");
+    }
+    else if (codeCtrl.text.trim().length<6) {
+      ApiProvider().showToastMsg("Please Enter 6 digit Otp");
     }
     //  else if (!validateEmail(usernameCtrl?.text?.trim())) {
     //   ApiProvider().showToastMsg("Please Enter a valid email address");

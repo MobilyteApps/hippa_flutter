@@ -18,7 +18,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_auth_invisible/flutter_local_auth_invisible.dart';
 
-class Signin extends StatefulWidget {
+class
+Signin extends StatefulWidget {
   const Signin({Key? key}) : super(key: key);
 
   @override

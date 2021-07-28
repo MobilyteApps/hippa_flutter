@@ -13,6 +13,7 @@ import 'colors.dart';
 import 'constants.dart';
 
 class HomeScreenn extends StatefulWidget {
+
   const HomeScreenn({Key? key}) : super(key: key);
 
   @override
@@ -65,7 +66,7 @@ class _HomeScreennState extends State<HomeScreenn> {
     var input = {"members_id": i, "group_id": "${id.toString()}"};
     print(input.toString());
     print("________-");
-    signInProvider.addusertogroup(loader, input);
+    signInProvider.addusertogroup(loader, input,id);
   }
 
   Widget addmemberFieldWidget() {
@@ -181,9 +182,13 @@ class _HomeScreennState extends State<HomeScreenn> {
     }
   }
 
+
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return
+
+      Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
       child: Column(
         verticalDirection: VerticalDirection.up,
@@ -228,15 +233,15 @@ class _HomeScreennState extends State<HomeScreenn> {
                           shrinkWrap: true,
                           itemBuilder: (BuildContext context, int index) {
                             return ids.contains(apiProvider
-                                    .getAllUserResponse.data!.users![index].sId
-                                    .toString())
+                                    .getAllUserResponse.data!.users![index].sId!
+                                    )
                                 ? Container()
                                 : InkWell(
                                     onTap: () {
                                       i.add(apiProvider.getAllUserResponse.data!
                                           .users![index].sId
                                           .toString());
-                                      ids.add(apiProvider.getAllUserResponse
+                                     ids.add(apiProvider.getAllUserResponse
                                           .data!.users![index].sId
                                           .toString());
                                       sid();
@@ -275,6 +280,13 @@ class _HomeScreennState extends State<HomeScreenn> {
                       itemBuilder: (BuildContext context, int index) {
                         return memberWidget(userids, index);
                       }))
+              : Container(),
+          apiProvider.getAllUserResponse.data != null && check == true && apiProvider.getAllUserResponse.data!.totalCount==0
+              ? Container(
+              child: Center(child: Padding(
+                padding:EdgeInsets.only(top: AppSize().height(context)*0.2),
+                child: Text('No Colleague found'),
+              )),)
               : Container(),
         ],
       ),

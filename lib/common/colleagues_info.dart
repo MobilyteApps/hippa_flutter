@@ -5,16 +5,22 @@ import 'package:app/response/getalluser_response.dart';
 import 'package:app/response/groupdetail_response.dart';
 import 'package:flutter/material.dart';
 
-class ColleagueInfo extends StatelessWidget {
+class ColleagueInfo extends StatefulWidget {
   final GroupDetailResponse groupDetailResponse;
   final int index;
   final String sid;
   var callback;
+  var callbacks;
 
-  ColleagueInfo(this.groupDetailResponse, this.index, this.sid, this.callback,
+  ColleagueInfo(this.groupDetailResponse, this.index, this.sid, this.callback,this.callbacks,
       {Key? key})
       : super(key: key);
 
+  @override
+  _ColleagueInfoState createState() => _ColleagueInfoState();
+}
+
+class _ColleagueInfoState extends State<ColleagueInfo> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -46,8 +52,8 @@ class ColleagueInfo extends StatelessWidget {
                       ),
                       child: Center(
                           child: Text(
-                        groupDetailResponse
-                            .data![0].members![index].username![0],
+                        widget.groupDetailResponse
+                            .data![0].members![widget.index].username![0],
                         // getAllUserResponse.data!.users![index].name![0],
                         style: TextStyle(color: Colors.red),
                       )),
@@ -61,8 +67,8 @@ class ColleagueInfo extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       getBoldText(
-                          groupDetailResponse
-                              .data![0].members![index].username!,
+                          widget.groupDetailResponse
+                              .data![0].members![widget.index].username!,
                           textColor: AppColor.black,
                           fontSize: 16),
                     ],
@@ -70,13 +76,34 @@ class ColleagueInfo extends StatelessWidget {
                 ),
               ],
             ),
-            sid != groupDetailResponse.data![0].admin
-                ? Container()
-                : InkWell(
-                    onTap: () {
-                      callback();
 
-                      groupDetailResponse.data![0].members!.removeAt(index);
+
+            widget.sid != widget.groupDetailResponse.data![0].admin
+                ? Container()
+                :
+            widget.sid != widget.groupDetailResponse.data![0].members![widget.index].sId
+
+                ? InkWell(
+                onTap: () {
+                  widget.callback();
+
+                  widget.groupDetailResponse.data![0].members!.removeAt(widget.index);
+                },
+                child: Padding(
+                    padding: EdgeInsets.only(
+                        right: AppSize().width(context) * 0.03),
+                    child: Icon(
+                      Icons.delete_forever,
+                      color: Colors.red,
+                    ))):
+            InkWell(
+                    onTap: () {
+                      setState(() {
+
+                      });
+                      widget.callbacks();
+
+                      widget.groupDetailResponse.data![0].members!.removeAt(widget.index);
                     },
                     child: Padding(
                         padding: EdgeInsets.only(
