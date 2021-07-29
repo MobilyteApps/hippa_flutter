@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app/common/get_it.dart';
 import 'package:app/common/navigator_route.dart';
 import 'package:app/common/navigator_service.dart';
@@ -530,7 +532,7 @@ class ApiProvider {
   }
 
   Future<AddUsertoGroupResponse> adduserstogroup(
-      Loader loader, Map<String, dynamic> input,String id) async {
+      Loader loader, Map<String, dynamic> input, String id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, String> header = new Map();
     print("sign in api $input----${baseurl + AppString().signInUrl}");
@@ -549,7 +551,7 @@ class ApiProvider {
       print(
         " response -------------${response.body} api${response.statusCode}",
       );
-      loader.setloader(false);
+      // loader.setloader(false);
 
       if (response.statusCode == 302) {
         showToastMsg("Try Again");
@@ -559,11 +561,17 @@ class ApiProvider {
         // showToastMsg(ouptut["message"]);
         var input = {"group_id": id};
 
-        signInProvider.groupdetail(loader, input,);
+        signInProvider.groupdetail(
+          loader,
+          input,
+        );
 
-        locator<NavigationService>().backPress();
-        locator<NavigationService>().backPress();
-        locator<NavigationService>().argsnavigateToReplace(groupdetails,id);
+        Timer(Duration(seconds: 3), () {
+          loader.setloader(false);
+          locator<NavigationService>().backPress();
+        });
+        // locator<NavigationService>().backPress();
+        // locator<NavigationService>().argsnavigateToReplace(groupdetails, id);
         addUsertoGroupResponse =
             AddUsertoGroupResponse.fromJson(json.decode(response.body));
         String user = jsonEncode(createGroupResponse);
@@ -666,10 +674,9 @@ class ApiProvider {
       if (ouptut["status"] == 200) {
         // showToastMsg(ouptut["message"]);
 
-          var input = {"user_id": id!};
+        var input = {"user_id": id!};
 
-            signInProvider.viewgrouplist(loader, input);
-
+        signInProvider.viewgrouplist(loader, input);
 
         // locator<NavigationService>().navigateTo(groupdetails);
         groupDetailResponse =
@@ -689,7 +696,7 @@ class ApiProvider {
   }
 
   Future<GroupLeaveResponse> groupleave(
-      Loader loader, Map<String, String> input,String idss) async {
+      Loader loader, Map<String, String> input, String idss) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, String> header = new Map();
     // print("sign in api $input----${baseurl + AppString().signInUrl}");
@@ -727,12 +734,15 @@ class ApiProvider {
         var inputs = {"group_id": idss};
         // Timer(Duration(seconds: 2), () {
         // Future.microtask(() async {
-        signInProvider.groupdetail(loader, inputs,);
+        signInProvider.groupdetail(
+          loader,
+          inputs,
+        );
         var input = {"user_id": sids!};
 
         signInProvider.viewgrouplist(loader, input);
-        locator<NavigationService>().backPress();
-        locator<NavigationService>().argsnavigateToReplace(groupdetails,idss);
+        // locator<NavigationService>().backPress();
+        // locator<NavigationService>().argsnavigateToReplace(groupdetails, idss);
 
         groupLeaveResponse =
             GroupLeaveResponse.fromJson(json.decode(response.body));
@@ -751,7 +761,7 @@ class ApiProvider {
   }
 
   Future<GroupLeaveResponse> groupleaves(
-      Loader loader, Map<String, String> input,String idss) async {
+      Loader loader, Map<String, String> input, String idss) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, String> header = new Map();
     // print("sign in api $input----${baseurl + AppString().signInUrl}");
@@ -813,7 +823,7 @@ class ApiProvider {
     // print("sign in api $input----${baseurl + AppString().signInUrl}");
     header["content-type"] = "application/x-www-form-urlencoded";
     String? token = prefs.getString('token');
-    String ? sids = prefs.getString('sid')!;
+    String? sids = prefs.getString('sid')!;
     print(token);
     // print("__________");
     print(json.encode(input));
@@ -841,11 +851,9 @@ class ApiProvider {
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
+        var input = {"user_id": sids};
 
-          var input = {"user_id": sids};
-
-            signInProvider.viewgrouplist(loader, input);
-
+        signInProvider.viewgrouplist(loader, input);
 
         showToastMsg(ouptut["message"]);
         locator<NavigationService>().navigateToReplace(grouplisting);

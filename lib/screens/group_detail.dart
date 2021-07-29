@@ -321,13 +321,13 @@ class _GroupDetailState extends State<GroupDetail> {
     print("________-");
     signInProvider.groupleave(loader, input, groupid);
    setState(() {
-     checking=true;
+     // checking=true;
    });
 
     Timer(Duration(seconds: 5), () {
       Future.microtask(() async {
         setState(() {
-          checking=false;
+          // checking=false;
         });
     // signInProvider.getallusers(loader, '');
       });
@@ -625,8 +625,21 @@ class _GroupDetailState extends State<GroupDetail> {
                                             onTap: () {
                                               setState(() {
                                                 add = true;
+                                                checker=false;
                                               });
+                                              var input = {"group_id": widget.index!};
+                                              // Timer(Duration(seconds: 2), () {
+                                              // Future.microtask(() async {
+                                              signInProvider.groupdetail(
+                                                loader,
+                                                input,
+                                              );
+                                               ApiProvider().showToastMsg('Please wait...');
 
+    Timer(Duration(seconds: 4), () {
+      setState(() {
+        checker=true;
+      });
                                               showModalBottomSheet(
                                                   shape: RoundedRectangleBorder(
                                                       borderRadius:
@@ -638,7 +651,7 @@ class _GroupDetailState extends State<GroupDetail> {
                                                   context: context,
                                                   isScrollControlled: true,
                                                   builder: (context) =>
-                                                      HomeScreenn());
+                                                      HomeScreenn());});
                                             },
                                             child: Icon(
                                               Icons.add,
@@ -665,7 +678,14 @@ class _GroupDetailState extends State<GroupDetail> {
                                           apiProvider.groupDetailResponse,
                                           index,
                                           sids, () {
-                                        ids.remove(apiProvider
+                                        setState(() {
+                                          checker = false;
+                                        });
+    Timer(Duration(seconds: 2), () {
+      setState(() {
+        checker = true;
+      });
+    });                    ids.remove(apiProvider
                                             .getAllUserResponse
                                             .data!
                                             .users![index]
