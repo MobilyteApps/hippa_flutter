@@ -105,7 +105,7 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
       inputFormatters: <TextInputFormatter>[
         // FilteringTextInputFormatter.allow(0!!-9)
         //   WhitelistingTextInputFormatter.digitsOnly,
-    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
         LengthLimitingTextInputFormatter(10)
       ],
       decoration: InputDecoration(

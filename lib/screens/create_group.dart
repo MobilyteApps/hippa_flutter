@@ -26,7 +26,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
-
+import 'dart:io' as IO;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'imgpicker.dart';
@@ -248,6 +248,10 @@ class _CreateGroupState extends State<CreateGroup> {
                         alignment: Alignment.topLeft,
                         child: InkWell(
                           onTap: () {
+
+                            // if (IO.Platform.isAndroid) {
+                              // Android-specific code/UI Component
+
                             showModalBottomSheet(
                                 context: context,
                                 builder: (context) {
@@ -286,6 +290,7 @@ class _CreateGroupState extends State<CreateGroup> {
                                     ],
                                   );
                                 });
+                          // }
                           },
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20.0),
@@ -876,6 +881,8 @@ class _CreateGroupState extends State<CreateGroup> {
                       child: _imageFileList == null
                           ? InkWell(
                               onTap: () async {
+
+                                // if (IO.Platform.isAndroid){
                                 showModalBottomSheet(
                                     context: context,
                                     builder: (context) {
@@ -915,6 +922,7 @@ class _CreateGroupState extends State<CreateGroup> {
                                         ],
                                       );
                                     });
+                              // }
                               },
                               child: Container(
                                   height: AppSize().height(context) * 0.1,

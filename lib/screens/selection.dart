@@ -17,7 +17,8 @@ import 'package:notification_permissions/notification_permissions.dart';
 // import 'package:permission_handler/permission_handler.dart';
 import 'package:notification_permissions/notification_permissions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'dart:io' as IO;
+// import 'dart:html';
 class Selection extends StatefulWidget {
   const Selection({Key? key}) : super(key: key);
 
@@ -63,7 +64,14 @@ class _SelectionState extends State<Selection> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    cameraperms();
+
+    // if (IO.Platform.isAndroid) {
+      // Android-specific code/UI Component
+      cameraperms();
+    // } else if (IO.Platform.isIOS) {
+      // iOS-specific code/UI Component
+    // }
+    // cameraperms();
     // locator<NavigationService>().navigateTo(n);
     // permissionStatusFuture = getCheckNotificationPermStatus();
     // WidgetsBinding.instance!.addObserver(this);

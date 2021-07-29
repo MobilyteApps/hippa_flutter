@@ -30,7 +30,9 @@ import 'package:app/screens/your_phone_screen.dart';
 import 'package:flutter/material.dart';
 
 class Router {
-  static Route<dynamic> generateRoute(RouteSettings settings,) {
+  static Route<dynamic> generateRoute(
+    RouteSettings settings,
+  ) {
     switch (settings.name) {
       case yourphone:
         return MaterialPageRoute(builder: (_) => YourPhoneScreen());
@@ -76,7 +78,9 @@ class Router {
         return MaterialPageRoute(builder: (_) => Colleagues());
       case groupdetails:
         return MaterialPageRoute(
-            builder: (_) => GroupDetail(index: settings.arguments.toString(), ));
+            builder: (_) => GroupDetail(
+                  index: settings.arguments.toString(),
+                ));
       // case groupdetails:
       //   return MaterialPageRoute(builder: (_) => GroupDetail(settings.arguments));
       case country:

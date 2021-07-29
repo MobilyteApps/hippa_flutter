@@ -131,8 +131,7 @@ class _OtpScreenState extends State<OtpScreen> {
     FocusScope.of(context).requestFocus(new FocusNode());
     if (codeCtrl.text.trim().isEmpty == true) {
       ApiProvider().showToastMsg("Please Enter 6 digit Otp");
-    }
-    else if (codeCtrl.text.trim().length<6) {
+    } else if (codeCtrl.text.trim().length < 6) {
       ApiProvider().showToastMsg("Please Enter 6 digit Otp");
     }
     //  else if (!validateEmail(usernameCtrl?.text?.trim())) {

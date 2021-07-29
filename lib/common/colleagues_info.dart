@@ -12,7 +12,8 @@ class ColleagueInfo extends StatefulWidget {
   var callback;
   var callbacks;
 
-  ColleagueInfo(this.groupDetailResponse, this.index, this.sid, this.callback,this.callbacks,
+  ColleagueInfo(this.groupDetailResponse, this.index, this.sid, this.callback,
+      this.callbacks,
       {Key? key})
       : super(key: key);
 
@@ -52,8 +53,8 @@ class _ColleagueInfoState extends State<ColleagueInfo> {
                       ),
                       child: Center(
                           child: Text(
-                        widget.groupDetailResponse
-                            .data![0].members![widget.index].username![0],
+                        widget.groupDetailResponse.data![0]
+                            .members![widget.index].username![0],
                         // getAllUserResponse.data!.users![index].name![0],
                         style: TextStyle(color: Colors.red),
                       )),
@@ -67,8 +68,8 @@ class _ColleagueInfoState extends State<ColleagueInfo> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       getBoldText(
-                          widget.groupDetailResponse
-                              .data![0].members![widget.index].username!,
+                          widget.groupDetailResponse.data![0]
+                              .members![widget.index].username!,
                           textColor: AppColor.black,
                           fontSize: 16),
                     ],
@@ -76,42 +77,40 @@ class _ColleagueInfoState extends State<ColleagueInfo> {
                 ),
               ],
             ),
-
-
             widget.sid != widget.groupDetailResponse.data![0].admin
                 ? Container()
-                :
-            widget.sid != widget.groupDetailResponse.data![0].members![widget.index].sId
+                : widget.sid !=
+                        widget.groupDetailResponse.data![0]
+                            .members![widget.index].sId
+                    ? InkWell(
+                        onTap: () {
+                          widget.callback();
 
-                ? InkWell(
-                onTap: () {
-                  widget.callback();
+                          widget.groupDetailResponse.data![0].members!
+                              .removeAt(widget.index);
+                        },
+                        child: Padding(
+                            padding: EdgeInsets.only(
+                                right: AppSize().width(context) * 0.03),
+                            child: Icon(
+                              Icons.delete_forever,
+                              color: Colors.red,
+                            )))
+                    : InkWell(
+                        onTap: () {
+                          setState(() {});
+                          widget.callbacks();
 
-                  widget.groupDetailResponse.data![0].members!.removeAt(widget.index);
-                },
-                child: Padding(
-                    padding: EdgeInsets.only(
-                        right: AppSize().width(context) * 0.03),
-                    child: Icon(
-                      Icons.delete_forever,
-                      color: Colors.red,
-                    ))):
-            InkWell(
-                    onTap: () {
-                      setState(() {
-
-                      });
-                      widget.callbacks();
-
-                      widget.groupDetailResponse.data![0].members!.removeAt(widget.index);
-                    },
-                    child: Padding(
-                        padding: EdgeInsets.only(
-                            right: AppSize().width(context) * 0.03),
-                        child: Icon(
-                          Icons.delete_forever,
-                          color: Colors.red,
-                        )))
+                          widget.groupDetailResponse.data![0].members!
+                              .removeAt(widget.index);
+                        },
+                        child: Padding(
+                            padding: EdgeInsets.only(
+                                right: AppSize().width(context) * 0.03),
+                            child: Icon(
+                              Icons.delete_forever,
+                              color: Colors.red,
+                            )))
           ],
         ),
       ),

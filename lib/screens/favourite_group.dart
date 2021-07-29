@@ -52,7 +52,6 @@ class _FavouriteGroupState extends State<FavouriteGroup> {
     super.initState();
     sid();
     // FocusScope.of(context).requestFocus(FocusNode());
-
   }
 
   void sid() async {
@@ -115,7 +114,9 @@ class _FavouriteGroupState extends State<FavouriteGroup> {
                         //     'gid',
                         //     apiProvider.viewGroupListingResponse
                         //         .data![index - 1].sId!);
-                            locator<NavigationService>().argsnavigateToReplace(groupdetails,apiProvider.viewGroupListingResponse
+                        locator<NavigationService>().argsnavigateToReplace(
+                            groupdetails,
+                            apiProvider.viewGroupListingResponse
                                 .data![index - 1].sId!);
                         // locator<NavigationService>().argsnavigateToReplace(groupdetails, apiProvider.viewGroupListingResponse
                         //     .data![index - 1].sId!);

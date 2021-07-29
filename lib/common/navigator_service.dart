@@ -15,13 +15,9 @@ class NavigationService {
         .pushNamedAndRemoveUntil(routeName, (Route<dynamic> route) => false);
   }
 
-
-  Future<dynamic> argsnavigateToReplace(String routeName,String id) {
-    return navigatorKey.currentState!
-        .pushNamed(routeName,   arguments: id);
+  Future<dynamic> argsnavigateToReplace(String routeName, String id) {
+    return navigatorKey.currentState!.pushNamed(routeName, arguments: id);
   }
-
-
 
   backPress() {
     navigatorKey.currentState!.pop();

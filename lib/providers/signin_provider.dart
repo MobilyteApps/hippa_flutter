@@ -119,8 +119,8 @@ class SignInProvider with ChangeNotifier {
     });
   }
 
-  addusertogroup(Loader loader, Map<String, dynamic> input,String id) async {
-    ApiProvider().adduserstogroup(loader, input,id).then((value) {
+  addusertogroup(Loader loader, Map<String, dynamic> input, String id) async {
+    ApiProvider().adduserstogroup(loader, input, id).then((value) {
       if (value != null) {
         this.addUsertoGroupResponse = value;
         // locator<NavigationService>().navigateToReplace(grouplisting);
@@ -146,8 +146,8 @@ class SignInProvider with ChangeNotifier {
     });
   }
 
-  groupleave(Loader loader, Map<String, String> input,String id) async {
-    ApiProvider().groupleave(loader, input,id).then((value) {
+  groupleave(Loader loader, Map<String, String> input, String id) async {
+    ApiProvider().groupleave(loader, input, id).then((value) {
       if (value != null) {
         this.groupLeaveResponse = value;
         // locator<NavigationService>().navigateToReplace(grouplisting);
@@ -155,8 +155,8 @@ class SignInProvider with ChangeNotifier {
     });
   }
 
-  groupleaves(Loader loader, Map<String, String> input,String id) async {
-    ApiProvider().groupleaves(loader, input,id).then((value) {
+  groupleaves(Loader loader, Map<String, String> input, String id) async {
+    ApiProvider().groupleaves(loader, input, id).then((value) {
       if (value != null) {
         this.groupLeaveResponse = value;
         // locator<NavigationService>().navigateToReplace(grouplisting);

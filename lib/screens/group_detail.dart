@@ -62,7 +62,7 @@ class _GroupDetailState extends State<GroupDetail> {
   final addmemberctrl = TextEditingController();
   bool fav = false;
   bool changetitle = false;
-  bool checking=false;
+  bool checking = false;
 
   @override
   void initState() {
@@ -320,16 +320,16 @@ class _GroupDetailState extends State<GroupDetail> {
     print(input.toString());
     print("________-");
     signInProvider.groupleave(loader, input, groupid);
-   setState(() {
-     // checking=true;
-   });
+    setState(() {
+      // checking=true;
+    });
 
     Timer(Duration(seconds: 5), () {
       Future.microtask(() async {
         setState(() {
           // checking=false;
         });
-    // signInProvider.getallusers(loader, '');
+        // signInProvider.getallusers(loader, '');
       });
     });
   }
@@ -625,33 +625,38 @@ class _GroupDetailState extends State<GroupDetail> {
                                             onTap: () {
                                               setState(() {
                                                 add = true;
-                                                checker=false;
+                                                checker = false;
                                               });
-                                              var input = {"group_id": widget.index!};
+                                              var input = {
+                                                "group_id": widget.index!
+                                              };
                                               // Timer(Duration(seconds: 2), () {
                                               // Future.microtask(() async {
                                               signInProvider.groupdetail(
                                                 loader,
                                                 input,
                                               );
-                                               ApiProvider().showToastMsg('Please wait...');
+                                              ApiProvider().showToastMsg(
+                                                  'Please wait...');
 
-    Timer(Duration(seconds: 4), () {
-      setState(() {
-        checker=true;
-      });
-                                              showModalBottomSheet(
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.vertical(
-                                                              top: Radius
-                                                                  .circular(
-                                                                      25.0))),
-                                                  backgroundColor: Colors.white,
-                                                  context: context,
-                                                  isScrollControlled: true,
-                                                  builder: (context) =>
-                                                      HomeScreenn());});
+                                              Timer(Duration(seconds: 4), () {
+                                                setState(() {
+                                                  checker = true;
+                                                });
+                                                showModalBottomSheet(
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.vertical(
+                                                                top: Radius
+                                                                    .circular(
+                                                                        25.0))),
+                                                    backgroundColor:
+                                                        Colors.white,
+                                                    context: context,
+                                                    isScrollControlled: true,
+                                                    builder: (context) =>
+                                                        HomeScreenn());
+                                              });
                                             },
                                             child: Icon(
                                               Icons.add,
@@ -681,11 +686,12 @@ class _GroupDetailState extends State<GroupDetail> {
                                         setState(() {
                                           checker = false;
                                         });
-    Timer(Duration(seconds: 2), () {
-      setState(() {
-        checker = true;
-      });
-    });                    ids.remove(apiProvider
+                                        Timer(Duration(seconds: 2), () {
+                                          setState(() {
+                                            checker = true;
+                                          });
+                                        });
+                                        ids.remove(apiProvider
                                             .getAllUserResponse
                                             .data!
                                             .users![index]

@@ -65,7 +65,6 @@
 //   }
 // }
 
-
 import 'dart:convert';
 
 import 'package:amazon_cognito_identity_dart_2/sig_v4.dart';
@@ -85,14 +84,14 @@ class Policy {
       {this.region = 'us-west-2'});
 
   factory Policy.fromS3PreSignedPost(
-      String key,
-      String bucket,
-      int expiryMinutes,
-      String accessKeyId,
-      int maxFileSize,
-      String sessionToken, {
-        String? region,
-      }) {
+    String key,
+    String bucket,
+    int expiryMinutes,
+    String accessKeyId,
+    int maxFileSize,
+    String sessionToken, {
+    String? region,
+  }) {
     final datetime = SigV4.generateDatetime();
     final expiration = (DateTime.now())
         .add(Duration(minutes: expiryMinutes))
