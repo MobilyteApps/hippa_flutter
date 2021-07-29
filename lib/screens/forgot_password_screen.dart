@@ -40,7 +40,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         fontSize: 18,
       ),
       controller: emailCtrl,
-      // maxLength: 10,
       inputFormatters: <TextInputFormatter>[
         new FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9@.+-_ ]")),
       ],
@@ -93,17 +92,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // SizedBox(height: AppSize().height(context) * 0.1),
                 getBoldText(AppString().forgotpass,
                     textColor: AppColor.black, fontSize: 24),
                 SizedBox(height: AppSize().height(context) * 0.02),
                 getRegularText(AppString().forgotpassdesc,
                     textColor: AppColor.black, fontSize: 18),
-
                 Padding(
                   padding: EdgeInsets.only(
                     top: AppSize().height(context) * 0.01,
-                    // right: AppSize().width(context) * 0.1
                   ),
                   child: emailFieldWidget(),
                 ),
@@ -118,8 +114,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           AppColor.buttonColor,
                         ),
                       ),
-                      // RaisedButton(
-                      //   color: AppColor.buttonColor,
                       child: Text(AppString().send,
                           style: TextStyle(color: AppColor.white)),
                       onPressed: () {
@@ -130,26 +124,16 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         } else if (!validateEmail(emailCtrl.text.trim())) {
                           ApiProvider().showToastMsg(
                               "Please Enter a valid email address");
-                        }
-                        // else if (passwordCtrl?.text?.trim()?.isEmpty ?? true) {
-                        //   passwordCtrl.clear();
-                        //   ApiProvider().showToastMsg("Please Enter password");
-                        // } else if (!validatePassword(passwordCtrl?.text?.trim())) {
-                        //   ApiProvider().showToastMsg("Incorrect username / password");
-                        // }
-                        else {
+                        } else {
                           var input = {"email": "${emailCtrl.text.trim()}"};
                           signInProvider.forgotpasswordApi(loader, input);
-                        } // locator<NavigationService>().navigateToReplace(privacy);
+                        }
                       },
                     ),
                   ),
                 ),
               ],
             ),
-            // loader.isLoading == false
-            //     ? Container()
-            //     : Center(child: CircularProgressIndicator())
           ],
         ),
       ),

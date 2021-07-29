@@ -84,7 +84,6 @@ class _ColleaguesState extends State<Colleagues> {
       controller: creategroupctrl,
       onChanged: (v) {
         _debouncer.run(() {
-          // signInProvider.getallusers(loader, creategroupctrl.text.trim());
           signInProvider.getallusers(loader, v.trim());
         });
       },
@@ -108,7 +107,6 @@ class _ColleaguesState extends State<Colleagues> {
             fontFamily: 'JosenfinSansRegular',
             fontWeight: FontWeight.w400,
           ),
-          // hintStyle: TextStyle(color: greyColor, fontSize: 16),
           filled: true,
           contentPadding: new EdgeInsets.only(left: 10, top: 10),
           fillColor: AppColor.white,

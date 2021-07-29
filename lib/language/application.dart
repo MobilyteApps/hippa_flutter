@@ -19,11 +19,11 @@ class Application {
     "es",
   ];
 
-  //returns the list of supported Locales
+
   Iterable<Locale> supportedLocales() =>
       supportedLanguagesCodes.map<Locale>((language) => Locale(language, ""));
 
-  //function to be invoked when changing the language
+
   late LocaleChangeCallback onLocaleChanged;
 }
 

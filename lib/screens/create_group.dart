@@ -139,7 +139,6 @@ class _CreateGroupState extends State<CreateGroup> {
           _pickImageError = e;
         });
       }
-      // });
     }
   }
 
@@ -201,57 +200,10 @@ class _CreateGroupState extends State<CreateGroup> {
                 label: 'image_picker_example_picked_image',
                 child: kIsWeb
                     ? Image.network(_imageFileList![index].path)
-                    :
-                    // : InkWell(
-                    // onTap: () {
-                    //   showModalBottomSheet(
-                    //       context: context,
-                    //       builder: (context) {
-                    //         return Column(
-                    //           mainAxisSize: MainAxisSize.min,
-                    //           children: <Widget>[
-                    //             ListTile(
-                    //               leading:
-                    //                   new Icon(Icons.camera_alt_outlined),
-                    //               title: new Text('Take Photo'),
-                    //               onTap: () {
-                    //                 // Navigator.pop(context);
-                    //                 isVideo = false;
-                    //                 _onImageButtonPressed(
-                    //                     ImageSource.camera,
-                    //                     context: context);
-                    //               },
-                    //             ),
-                    //             ListTile(
-                    //               leading: new Icon(Icons.photo),
-                    //               title: new Text('Choose from Gallery'),
-                    //               onTap: () {
-                    //                 // Navigator.pop(context);
-                    //                 isVideo = false;
-                    //                 _onImageButtonPressed(
-                    //                     ImageSource.gallery,
-                    //                     context: context);
-                    //               },
-                    //             ),
-                    //             ListTile(
-                    //               title: new Text('Cancel'),
-                    //               onTap: () {
-                    //                 Navigator.pop(context);
-                    //               },
-                    //             ),
-                    //           ],
-                    //         );
-                    //       });
-                    // },
-                    // child:
-                    Align(
+                    : Align(
                         alignment: Alignment.topLeft,
                         child: InkWell(
                           onTap: () {
-
-                            // if (IO.Platform.isAndroid) {
-                              // Android-specific code/UI Component
-
                             showModalBottomSheet(
                                 context: context,
                                 builder: (context) {
@@ -263,7 +215,6 @@ class _CreateGroupState extends State<CreateGroup> {
                                             new Icon(Icons.camera_alt_outlined),
                                         title: new Text('Take Photo'),
                                         onTap: () {
-                                          // Navigator.pop(context);
                                           isVideo = false;
                                           _onImageButtonPressed(
                                               ImageSource.camera,
@@ -274,7 +225,6 @@ class _CreateGroupState extends State<CreateGroup> {
                                         leading: new Icon(Icons.photo),
                                         title: new Text('Choose from Gallery'),
                                         onTap: () {
-                                          // Navigator.pop(context);
                                           isVideo = false;
                                           _onImageButtonPressed(
                                               ImageSource.gallery,
@@ -290,7 +240,6 @@ class _CreateGroupState extends State<CreateGroup> {
                                     ],
                                   );
                                 });
-                          // }
                           },
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20.0),
@@ -302,7 +251,6 @@ class _CreateGroupState extends State<CreateGroup> {
                             ),
                           ),
                         )),
-                // )
               );
             },
             itemCount: _imageFileList!.length,
@@ -320,51 +268,6 @@ class _CreateGroupState extends State<CreateGroup> {
       );
     }
   }
-
-  // Widget _previewImages() {
-  //   final Text? retrieveError = _getRetrieveErrorWidget();
-  //   if (retrieveError != null) {
-  //     return retrieveError;
-  //   }
-  //   if (_imageFileList != null) {
-  //     return Semantics(
-  //         child: ListView.builder(
-  //           key: UniqueKey(),
-  //           itemBuilder: (context, index) {
-  //             // Why network for web?
-  //             // See https://pub.dev/packages/image_picker#getting-ready-for-the-web-platform
-  //             return Semantics(
-  //               label: '',
-  //               child: kIsWeb
-  //                   ? Image.network(_imageFileList![index].path)
-  //                   :
-  //
-  //               ClipRRect(
-  //                 borderRadius: BorderRadius.circular(20.0),
-  //                 child: Image.file(File(_imageFileList![0].path),
-  //                   fit: BoxFit.fitWidth,
-  //                   height: AppSize().height(context) * 0.1,
-  //                   width: AppSize().width(context) * 0.18,
-  //                 ),
-  //               )
-  //               // Image.file(File(_imageFileList![index].path)),
-  //             );
-  //           },
-  //           itemCount: _imageFileList!.length,
-  //         ),
-  //         label: '');
-  //   } else if (_pickImageError != null) {
-  //     return Text(
-  //       'Pick image error: $_pickImageError',
-  //       textAlign: TextAlign.center,
-  //     );
-  //   } else {
-  //     return const Text(
-  //       'You have not yet picked an image.',
-  //       textAlign: TextAlign.center,
-  //     );
-  //   }
-  // }
 
   Widget _handlePreview() {
     if (isVideo) {
@@ -431,7 +334,6 @@ class _CreateGroupState extends State<CreateGroup> {
             fontFamily: 'PoppinsSemiBold',
             fontWeight: FontWeight.w600,
           ),
-          // hintStyle: TextStyle(color: greyColor, fontSize: 16),
           filled: true,
           fillColor: AppColor.white,
           hintText: 'Group ABC'),
@@ -533,17 +435,9 @@ class _CreateGroupState extends State<CreateGroup> {
       controller: addmemberctrl,
       onChanged: (v) {
         _debouncer.run(() {
-          // setState(() {
-
           signInProvider.getallusers(loader, v.trim());
-          // });
-          // signInProvider.getallusers(loader, addmemberctrl.text.trim());
-          // signInProvider.getallusers(loader, v.trim());
         });
       },
-      // inputFormatters: [
-      //   // new WhitelistingTextInputFormatter(RegExp("[a-zA-Z0-9@.+-_ ]")),
-      // ],
       decoration: InputDecoration(
           suffixIcon: Icon(Icons.search_sharp, color: AppColor.starGrey),
           focusedBorder: border,
@@ -561,7 +455,6 @@ class _CreateGroupState extends State<CreateGroup> {
             fontFamily: 'JosenfinSansRegular',
             fontWeight: FontWeight.w400,
           ),
-          // hintStyle: TextStyle(color: greyColor, fontSize: 16),
           filled: true,
           contentPadding: new EdgeInsets.only(left: 10, top: 10),
           fillColor: AppColor.white,
@@ -575,16 +468,13 @@ class _CreateGroupState extends State<CreateGroup> {
     File? imgfile;
 
     try {
-      // var file = await FilePicker.platform.getFile(type: FileType.image);
       FilePickerResult? result =
           await FilePicker.platform.pickFiles(type: FileType.image);
 
       if (result != null) {
         PlatformFile file = result.files.first;
         imgfile = File(result.files.single.path!);
-      } else {
-        // User canceled the picker
-      }
+      } else {}
       if (imgfile != null) {
         documentPath = imgfile.path;
         print('hello' + documentPath);
@@ -597,17 +487,13 @@ class _CreateGroupState extends State<CreateGroup> {
           /// ContentType
           setState(() {
             documentPath = imgfile!.path;
-            // _signUpController.imageUrl=file.path;
           });
 
           ///upload File
           AwsPage().upload(imgfile).then((onValue) {
             print("file uploaded >>>>> $onValue");
-            // imgs=onValue;
             urlss = onValue;
             print(urlss);
-
-            // _fileData.fileUrl=onValue;
             setState(() {
               url = onValue;
             });
@@ -625,36 +511,16 @@ class _CreateGroupState extends State<CreateGroup> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     id = prefs.getString('sid')!;
     ids.add(id);
-    // FocusScope.of(context).requestFocus(new FocusNode());
-    // if (url.isEmpty == true) {
-    //   ApiProvider().showToastMsg("Please Select member");
-    // }
-    // else
     if (creategroupctrl.text.trim() == '') {
       ApiProvider().showToastMsg("Please Enter Group Name");
-    }
-    // else if (url == '') {
-    //   ApiProvider().showToastMsg("Please Select Group image");
-    // }
-    else {
+    } else {
       var input = {
         "admin_id": "${id.toString()}",
         "members_id": ids,
         "title": "${creategroupctrl.text.trim()}",
-        // "groupImage": ''
-        // "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.pexels.com%2Fphotos%2F2486168%2Fpexels-photo-2486168.jpeg%3Fauto%3Dcompress%26cs%3Dtinysrgb%26dpr%3D1%26w%3D500&imgrefurl=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fiphone%2520wallpaper%2F&tbnid=RJHvAPiXhbzXuM&vet=12ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ..i&docid=M2xUUjytt6PtMM&w=500&h=750&q=wallpaper&ved=2ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ"
       };
-      // var input = {
-      //     "admin_id":  "${id.toString()}",
-      //     "members_id": json.encode(ids),
-      //     "title": "${creategroupctrl.text.trim()}",
-      //     "groupImage":
-      //     "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.pexels.com%2Fphotos%2F2486168%2Fpexels-photo-2486168.jpeg%3Fauto%3Dcompress%26cs%3Dtinysrgb%26dpr%3D1%26w%3D500&imgrefurl=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fiphone%2520wallpaper%2F&tbnid=RJHvAPiXhbzXuM&vet=12ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ..i&docid=M2xUUjytt6PtMM&w=500&h=750&q=wallpaper&ved=2ahUKEwjm0L-g3-_xAhVogUsFHecHAS0QMygAegUIARDEAQ"
-      // };
       print(input.toString());
       print("________-");
-      // print(ids.toList().toString());
-      // print(input..toString());
       signInProvider.createGroup(loader, input);
     }
   }
@@ -727,7 +593,6 @@ class _CreateGroupState extends State<CreateGroup> {
   void _navigateAndDisplaySelection(BuildContext context) async {
     final result = await Navigator.push(
       context,
-      // Create the SelectionScreen in the next step.
       MaterialPageRoute(builder: (context) => CameraTest()),
     );
     print(result.toString());
@@ -743,35 +608,6 @@ class _CreateGroupState extends State<CreateGroup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // floatingActionButton: Column(
-      //   mainAxisAlignment: MainAxisAlignment.end,
-      //   children: <Widget>[
-      //     Semantics(
-      //       label: 'image_picker_example_from_gallery',
-      //       child: FloatingActionButton(
-      //         onPressed: () {
-      //           isVideo = false;
-      //           _onImageButtonPressed(ImageSource.gallery, context: context);
-      //         },
-      //         heroTag: 'image0',
-      //         tooltip: 'Pick Image from gallery',
-      //         child: const Icon(Icons.photo),
-      //       ),
-      //     ),
-      //     Padding(
-      //       padding: const EdgeInsets.only(top: 16.0),
-      //       child: FloatingActionButton(
-      //         onPressed: () {
-      //           isVideo = false;
-      //           _onImageButtonPressed(ImageSource.camera, context: context);
-      //         },
-      //         heroTag: 'image2',
-      //         tooltip: 'Take a Photo',
-      //         child: const Icon(Icons.camera_alt),
-      //       ),
-      //     ),
-      //   ],
-      // ),
       appBar: AppBar(
         leading: InkWell(
           onTap: () {
@@ -818,71 +654,12 @@ class _CreateGroupState extends State<CreateGroup> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ElevatedButton(onPressed: (){
-              // AwsPage().upload().then((onValue) {
-              // print("file uploaded >>>>> $onValue");
-              // // _fileData.fileUrl=onValue;
-              // setState(() {
-              // imgs = onValue;
-              // print("<<<" + imgs);
-              // });
-              // };};
-              // child: Text('')),
-
-              // ElevatedButton(onPressed: (){
-              //   AwsPage().upload(File(_imageFileList![0].path),).then((value) => print(value));
-              // }, child: Text('')),
               _imageFileList == null
-                  ?
-                  // Row(
-                  //   children: [
-                  // InkWell(
-                  //     onTap: () async {
-                  //       showModalBottomSheet(
-                  //           context: context,
-                  //           builder: (context) {
-                  //             return Column(
-                  //               mainAxisSize: MainAxisSize.min,
-                  //               children: <Widget>[
-                  //                 ListTile(
-                  //                   leading:
-                  //                       new Icon(Icons.camera_alt_outlined),
-                  //                   title: new Text('Take Photo'),
-                  //                   onTap: () {
-                  //                     // Navigator.pop(context);
-                  //                     isVideo = false;
-                  //                     _onImageButtonPressed(ImageSource.camera,
-                  //                         context: context);
-                  //                   },
-                  //                 ),
-                  //                 ListTile(
-                  //                   leading: new Icon(Icons.photo),
-                  //                   title: new Text('Choose from Gallery'),
-                  //                   onTap: () {
-                  //                     // Navigator.pop(context);
-                  //                     isVideo = false;
-                  //                     _onImageButtonPressed(ImageSource.gallery,
-                  //                         context: context);
-                  //                   },
-                  //                 ),
-                  //                 ListTile(
-                  //                   title: new Text('Cancel'),
-                  //                   onTap: () {
-                  //                     Navigator.pop(context);
-                  //                   },
-                  //                 ),
-                  //               ],
-                  //             );
-                  //           });
-                  //     },
-                  //     child:
-                  Align(
+                  ? Align(
                       alignment: Alignment.topLeft,
                       child: _imageFileList == null
                           ? InkWell(
                               onTap: () async {
-
-                                // if (IO.Platform.isAndroid){
                                 showModalBottomSheet(
                                     context: context,
                                     builder: (context) {
@@ -894,7 +671,6 @@ class _CreateGroupState extends State<CreateGroup> {
                                                 Icons.camera_alt_outlined),
                                             title: new Text('Take Photo'),
                                             onTap: () {
-                                              // Navigator.pop(context);
                                               isVideo = false;
                                               _onImageButtonPressed(
                                                   ImageSource.camera,
@@ -906,7 +682,6 @@ class _CreateGroupState extends State<CreateGroup> {
                                             title:
                                                 new Text('Choose from Gallery'),
                                             onTap: () {
-                                              // Navigator.pop(context);
                                               isVideo = false;
                                               _onImageButtonPressed(
                                                   ImageSource.gallery,
@@ -922,7 +697,6 @@ class _CreateGroupState extends State<CreateGroup> {
                                         ],
                                       );
                                     });
-                              // }
                               },
                               child: Container(
                                   height: AppSize().height(context) * 0.1,
@@ -937,87 +711,7 @@ class _CreateGroupState extends State<CreateGroup> {
                                     size: 46,
                                   )),
                             )
-                          : Container()
-                      // : ClipRRect(
-                      //     borderRadius: BorderRadius.circular(20.0),
-                      //     child: Image.file(
-                      //       File(results),
-                      //       fit: BoxFit.fitWidth,
-                      //       height: AppSize().height(context) * 0.1,
-                      //       width: AppSize().width(context) * 0.18,
-                      //     ),
-                      //   )
-                      )
-                  // )
-                  //     SizedBox(
-                  //       width: AppSize().width(context)*0.06,
-                  //     ),
-                  //     selection == true
-                  //         ? Column(
-                  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //             children: <Widget>[
-                  //               InkWell(
-                  //                   onTap: () {
-                  //                     isVideo = false;
-                  //                     _onImageButtonPressed(ImageSource.camera,
-                  //                         context: context);
-                  //                   },
-                  //                   child: Container(
-                  //                     height: AppSize().height(context)*0.03,
-                  //                     width: AppSize().width(context)*0.4,
-                  //                     decoration: BoxDecoration(
-                  //                        //  borderRadius: BorderRadius.all(
-                  //                        //     Radius.circular(10),
-                  //                        // ),
-                  //                         color: Colors.white),
-                  //                     child: Center(child: Text('Camera')),
-                  //                   )),
-                  //               Divider(),
-                  //               InkWell(
-                  //                   onTap: () {
-                  //                     isVideo = false;
-                  //                     _onImageButtonPressed(ImageSource.gallery,
-                  //                         context: context);
-                  //                   },
-                  //                   child: Container(
-                  //                     height: AppSize().height(context)*0.03,
-                  //                     width: AppSize().width(context)*0.4,
-                  //                     decoration: BoxDecoration(
-                  //                         // borderRadius: BorderRadius.all(
-                  //                         //   Radius.circular(10),
-                  //                         // ),
-                  //                         color: Colors.white),
-                  //                     child: Center(
-                  //                     child: Text('Gallery')),
-                  //                   )),
-                  //               // Semantics(
-                  //               //   label: 'image_picker_example_from_gallery',
-                  //               //   child: FloatingActionButton(
-                  //               //     onPressed: () {
-                  //               //       isVideo = false;
-                  //               //       _onImageButtonPressed(ImageSource.gallery, context: context);
-                  //               //     },
-                  //               //     heroTag: 'image0',
-                  //               //     tooltip: 'Pick Image from gallery',
-                  //               //     child: const Icon(Icons.photo),
-                  //               //   ),
-                  //               // ),
-                  //               // Padding(
-                  //               //   padding: const EdgeInsets.only(top: 16.0),
-                  //               //   child: FloatingActionButton(
-                  //               //     onPressed: () {
-                  //               //       isVideo = false;
-                  //               //       _onImageButtonPressed(ImageSource.camera, context: context);
-                  //               //     },
-                  //               //     heroTag: 'image2',
-                  //               //     tooltip: 'Take a Photo',
-                  //               //     child: const Icon(Icons.camera_alt),
-                  //               //   ),
-                  //               // ),
-                  //             ],
-                  //           )
-                  //         : Container()
-                  //   ],
+                          : Container())
                   : Container(),
               SizedBox(height: AppSize().height(context) * 0.02),
               Center(
@@ -1076,9 +770,7 @@ class _CreateGroupState extends State<CreateGroup> {
                           child: Center(child: Text('No Colleague Found')),
                         )
                       : Container(
-                          // fit: FlexFit.tight,
                           width: AppSize().width(context),
-                          // height: AppSize().height(context) * 0.34,
                           child: ListView.builder(
                               itemCount: apiProvider
                                   .getAllUserResponse.data!.users!.length,
@@ -1112,26 +804,22 @@ class _CreateGroupState extends State<CreateGroup> {
                                               userids.length.toString());
                                           print(userids.toList().toString());
                                         },
-                                        child:
-
-                                            // apiProvider.getAllUserResponse.data!.users![index].username==null ?Container():
-                                            apiProvider
-                                                            .getAllUserResponse
-                                                            .data!
-                                                            .users![index]
-                                                            .username !=
-                                                        null &&
-                                                    apiProvider
-                                                            .getAllUserResponse
-                                                            .data!
-                                                            .users![index]
-                                                            .sId! !=
-                                                        sids
-                                                ? ColleagueDetail(
-                                                    apiProvider
-                                                        .getAllUserResponse,
-                                                    index)
-                                                : Container());
+                                        child: apiProvider
+                                                        .getAllUserResponse
+                                                        .data!
+                                                        .users![index]
+                                                        .username !=
+                                                    null &&
+                                                apiProvider
+                                                        .getAllUserResponse
+                                                        .data!
+                                                        .users![index]
+                                                        .sId! !=
+                                                    sids
+                                            ? ColleagueDetail(
+                                                apiProvider.getAllUserResponse,
+                                                index)
+                                            : Container());
                               }))
                   : Center(child: CircularProgressIndicator()),
               Container(
@@ -1142,11 +830,7 @@ class _CreateGroupState extends State<CreateGroup> {
                       itemCount: userids.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (BuildContext context, int index) {
-                        return
-                            // index != userids.length
-                            //   ?
-                            memberWidget(userids, index);
-                        // : addWidget();
+                        return memberWidget(userids, index);
                       })),
               Padding(
                 padding: EdgeInsets.only(top: AppSize().height(context) * 0.02),
@@ -1165,7 +849,6 @@ class _CreateGroupState extends State<CreateGroup> {
                       ids.clear();
                       userids.clear();
                       setState(() {});
-                      // locator<NavigationService>().navigateToReplace(otpscreen);
                     },
                   ),
                 ),
@@ -1183,15 +866,10 @@ class _CreateGroupState extends State<CreateGroup> {
                         AppColor.buttonColor,
                       ),
                     ),
-                    //  RaisedButton(
-                    //   color: AppColor.buttonColor,
                     child: getBoldText(AppString().confirm,
                         textColor: AppColor.white, fontSize: 14),
                     onPressed: () {
                       formValidation();
-                      // print(ids.toList().toString());
-                      // locator<NavigationService>()
-                      //     .navigateToReplace(grouplisting);
                     },
                   ),
                 ),

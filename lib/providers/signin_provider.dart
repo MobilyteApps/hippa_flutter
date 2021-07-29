@@ -42,7 +42,7 @@ class SignInProvider with ChangeNotifier {
     ApiProvider().sigInApi(loader, input).then((value) {
       if (value != null) {
         this.userResponse = value;
-        // locator<NavigationService>().navigateToReplace(grouplisting);
+
       }
     });
   }
@@ -51,7 +51,6 @@ class SignInProvider with ChangeNotifier {
     ApiProvider().forgotpassApi(loader, input).then((value) {
       if (value != null) {
         this.forgotpassresp = value;
-        // locator<NavigationService>().navigateToReplace(signin);
       }
     });
   }
@@ -60,7 +59,6 @@ class SignInProvider with ChangeNotifier {
     ApiProvider().signoutApi(loader, input).then((value) {
       if (value != null) {
         this.signoutresponse = value;
-        // locator<NavigationService>().navigateToReplace(signin);
       }
     });
   }
@@ -69,7 +67,6 @@ class SignInProvider with ChangeNotifier {
     ApiProvider().sendOtpApi(loader, input).then((value) {
       if (value != null) {
         this.sendotpresponse = value;
-        // locator<NavigationService>().navigateToReplace(otpscreen);
       }
     });
   }
@@ -78,7 +75,6 @@ class SignInProvider with ChangeNotifier {
     ApiProvider().resendOtpApi(loader, input).then((value) {
       if (value != null) {
         this.sendotpresponse = value;
-        // locator<NavigationService>().navigateToReplace(otpscreen);
       }
     });
   }
@@ -87,7 +83,6 @@ class SignInProvider with ChangeNotifier {
     ApiProvider().verifyOtpApi(loader, input).then((value) {
       if (value != null) {
         this.userResponse = value;
-        // locator<NavigationService>().navigateToReplace(grouplisting);
       }
     });
   }
@@ -96,7 +91,6 @@ class SignInProvider with ChangeNotifier {
     ApiProvider().changepassword(loader, input).then((value) {
       if (value != null) {
         this.verifyotpresponse = value;
-        // locator<NavigationService>().navigateToReplace(grouplisting);
       }
     });
   }
@@ -105,7 +99,6 @@ class SignInProvider with ChangeNotifier {
     ApiProvider().creategroup(loader, input).then((value) {
       if (value != null) {
         this.createGroupResponse = value;
-        // locator<NavigationService>().navigateToReplace(grouplisting);
       }
     });
   }
@@ -114,7 +107,6 @@ class SignInProvider with ChangeNotifier {
     ApiProvider().getallusers(loader, search).then((value) {
       if (value != null) {
         this.getAllUserResponse = value;
-        // locator<NavigationService>().navigateToReplace(grouplisting);
       }
     });
   }
@@ -123,7 +115,6 @@ class SignInProvider with ChangeNotifier {
     ApiProvider().adduserstogroup(loader, input, id).then((value) {
       if (value != null) {
         this.addUsertoGroupResponse = value;
-        // locator<NavigationService>().navigateToReplace(grouplisting);
       }
     });
   }
@@ -132,7 +123,6 @@ class SignInProvider with ChangeNotifier {
     ApiProvider().deletegroup(loader, input).then((value) {
       if (value != null) {
         this.deleteGroupResponse = value;
-        // locator<NavigationService>().navigateToReplace(grouplisting);
       }
     });
   }
@@ -141,7 +131,6 @@ class SignInProvider with ChangeNotifier {
     ApiProvider().groupdetail(loader, input).then((value) {
       if (value != null) {
         this.groupDetailResponse = value;
-        // locator<NavigationService>().navigateToReplace(grouplisting);
       }
     });
   }
@@ -150,7 +139,6 @@ class SignInProvider with ChangeNotifier {
     ApiProvider().groupleave(loader, input, id).then((value) {
       if (value != null) {
         this.groupLeaveResponse = value;
-        // locator<NavigationService>().navigateToReplace(grouplisting);
       }
     });
   }
@@ -159,7 +147,6 @@ class SignInProvider with ChangeNotifier {
     ApiProvider().groupleaves(loader, input, id).then((value) {
       if (value != null) {
         this.groupLeaveResponse = value;
-        // locator<NavigationService>().navigateToReplace(grouplisting);
       }
     });
   }
@@ -168,7 +155,6 @@ class SignInProvider with ChangeNotifier {
     ApiProvider().removegroupleave(loader, input).then((value) {
       if (value != null) {
         this.groupLeaveResponse = value;
-        // locator<NavigationService>().navigateToReplace(grouplisting);
       }
     });
   }
@@ -177,7 +163,6 @@ class SignInProvider with ChangeNotifier {
     ApiProvider().addfav(loader, input).then((value) {
       if (value != null) {
         this.groupLeaveResponse = value;
-        // locator<NavigationService>().navigateToReplace(grouplisting);
       }
     });
   }
@@ -186,7 +171,6 @@ class SignInProvider with ChangeNotifier {
     ApiProvider().rewmfav(loader, input).then((value) {
       if (value != null) {
         this.groupLeaveResponse = value;
-        // locator<NavigationService>().navigateToReplace(grouplisting);
       }
     });
   }
@@ -195,7 +179,6 @@ class SignInProvider with ChangeNotifier {
     ApiProvider().viewgrouplist(loader, input).then((value) {
       if (value != null) {
         this.viewGroupListingResponse = value;
-        // locator<NavigationService>().navigateToReplace(grouplisting);
       }
     });
   }
@@ -204,7 +187,6 @@ class SignInProvider with ChangeNotifier {
     ApiProvider().updategroup(loader, input).then((value) {
       if (value != null) {
         this.deleteGroupResponse = value;
-        // locator<NavigationService>().navigateToReplace(grouplisting);
       }
     });
   }

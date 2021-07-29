@@ -27,24 +27,13 @@ Future<void> main() async {
   runApp(MyApp(
     cameras: cameras,
   ));
-  // runApp(MyApp());
 }
-
-// void main() {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-//   setupLocator();
-//   runApp(MyApp());
-// }
 
 class MyApp extends StatefulWidget {
   final List<CameraDescription> cameras;
 
   MyApp({Key? key, required this.cameras}) : super(key: key);
 
-  // List<CameraDescription> cameras = [];
-  // MyApp({required this.cameras});
-  // This widget is the root of your application.
   @override
   _MyAppState createState() => _MyAppState();
 }

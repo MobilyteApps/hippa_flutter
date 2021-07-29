@@ -113,9 +113,7 @@ class ApiProvider {
 
       if (response.statusCode == 302) {
         showToastMsg("Incorrect username / password");
-      }
-// Map<String, dynamic> ouptut = json.decode(response.body);
-      else if (response.statusCode == 200) {
+      } else if (response.statusCode == 200) {
         showToastMsg('Logged in Successfully');
         loginstatus('true');
 
@@ -129,24 +127,18 @@ class ApiProvider {
         print('--');
         print(signinresponse.toJson().toString());
         sid(signinresponse.data!.user!.sId.toString());
-        // showToastMsg("token is " + signinresponse.data!.token.toString());
-        // showToastMsg("Sid is " + signinresponse.data!.user!.sId.toString());
         print("token is " + signinresponse.data!.token.toString());
         print("sid is " + signinresponse.data!.user!.sId.toString());
         print('hell');
         print("karam" + signinresponse.data!.token.toString());
         String user = jsonEncode(signinresponse);
         print(user);
-        //  prefs.getInt('token',response.body['data']['token']);
-        //  print(response.body['data']['token'].toString());
         return signinresponse;
       } else {
         showToastMsg("Incorrect username / password");
       }
     } catch (e) {
       loader.setloader(false);
-      //     showToastMsg("Sign In failed");
-      // return null;
     }
     return signinresponse;
   }
@@ -183,8 +175,6 @@ class ApiProvider {
       }
     } catch (e) {
       loader.setloader(false);
-      //     showToastMsg("Sign In failed");
-      // return null;
     }
     return forgotpassword;
   }
@@ -200,7 +190,6 @@ class ApiProvider {
       final response = await http.post(postUri, body: input, headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': 'application/json',
-        // 'Authorization': 'Bearer ${token}',
       });
       print(
         " response -------------${response.body} api${response.statusCode}",
@@ -224,8 +213,6 @@ class ApiProvider {
       }
     } catch (e) {
       loader.setloader(false);
-      //     showToastMsg("Sign In failed");
-      // return null;
     }
     return signoutresponse;
   }
@@ -238,7 +225,7 @@ class ApiProvider {
     Map<String, String> header = new Map();
     print("sign in api $input----${baseurl + AppString().signInUrl}");
     header["content-type"] = "application/x-www-form-urlencoded";
-    // loader.setloader(true);
+
     try {
       var postUri = Uri.parse('$baseurl' + 'sendOTP');
       final response = await http.post(postUri, body: input, headers: header);
@@ -257,10 +244,6 @@ class ApiProvider {
         locator<NavigationService>().navigateTo(otpscreen);
         sendotp = SendOtpResponse.fromJson(json.decode(response.body));
 
-        // showToastMsg("Otp is " + sendotp.data!.otp.toString());
-        // getotp(sendotp.data!.otp.toString());
-
-        // ApiProvider().code(code: sendotp.data!.otp.toString());
         String user = jsonEncode(sendotp);
         prefs.setString('user', user);
         return sendotp;
@@ -271,8 +254,6 @@ class ApiProvider {
       }
     } catch (e) {
       loader.setloader(false);
-      //     showToastMsg("Sign In failed");
-      // return null;
     }
     return sendotp;
   }
@@ -299,11 +280,6 @@ class ApiProvider {
       if (ouptut["status"] == 200) {
         showToastMsg(ouptut["message"]);
 
-        // locator<NavigationService>().navigateToReplace(otpscreen);
-        // sendotp = SendOtpResponse.fromJson(json.decode(response.body));
-        //
-        // showToastMsg("Otp is " + sendotp.data!.otp.toString());
-        // getotp(sendotp.data!.otp.toString());
         String user = jsonEncode(sendotp);
         prefs.setString('user', user);
         return sendotp;
@@ -313,8 +289,6 @@ class ApiProvider {
       }
     } catch (e) {
       loader.setloader(false);
-      //     showToastMsg("Sign In failed");
-      // return null;
     }
     return sendotp;
   }
@@ -325,7 +299,7 @@ class ApiProvider {
     Map<String, String> header = new Map();
     print("sign in api $input----${baseurl + AppString().signInUrl}");
     header["content-type"] = "application/x-www-form-urlencoded";
-    // loader.setloader(true);
+
     try {
       var postUri = Uri.parse('$baseurl' + 'verifyOTP');
       final response = await http.post(postUri, body: input, headers: header);
@@ -350,27 +324,17 @@ class ApiProvider {
         print('--');
         print(signinresponse.toJson().toString());
         sid(signinresponse.data!.user!.sId.toString());
-        // showToastMsg("token is " + signinresponse.data!.token.toString());
-        // showToastMsg("Sid is " + signinresponse.data!.user!.sId.toString());
         print("token is " + signinresponse.data!.token.toString());
         print("sid is " + signinresponse.data!.user!.sId.toString());
         print('hell');
         print("karam" + signinresponse.data!.token.toString());
         String user = jsonEncode(signinresponse);
         print(user);
-        // locator<NavigationService>().navigateToReplace(grouplisting);
-        // verifyOtpresponse =
-        //     VerifyOtpResponse.fromJson(json.decode(response.body));
-        // String user = jsonEncode(verifyOtpresponse);
-        // prefs.setString('user', user);
-        // return signinresponse;
       } else {
         showToastMsg("Try again");
       }
     } catch (e) {
       loader.setloader(false);
-      //     showToastMsg("Sign In failed");
-      // return null;
     }
     return signinresponse;
   }
@@ -389,7 +353,7 @@ class ApiProvider {
         'Accept': 'application/json',
         'Authorization': 'Bearer ${signinresponse.data!.token}',
       });
-      // final response = await http.post(postUri, body: input, headers: header);
+
       print(
         " response -------------${response.body} api${response.statusCode}",
       );
@@ -413,8 +377,6 @@ class ApiProvider {
       }
     } catch (e) {
       loader.setloader(false);
-      //     showToastMsg("Sign In failed");
-      // return null;
     }
     return verifyOtpresponse;
   }
@@ -423,26 +385,23 @@ class ApiProvider {
       Loader loader, Map<String, dynamic> input) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, String> header = new Map();
-    // print("sign in api $input----${baseurl + AppString().signInUrl}");
     header["content-type"] = "application/x-www-form-urlencoded";
     String? token = prefs.getString('token');
     String? id = prefs.getString('sid');
-    // print("__________");
+
     print(json.encode(input));
     print("#####");
-    // print(prefs.getString('token'));
+
     loader.setloader(true);
     try {
       var postUri = Uri.parse('$userurl' + 'createGroup');
-      // print(input.toString().toString());
+
       print(postUri);
       final response =
           await http.post(postUri, body: json.encode(input), headers: {
-        // 'Content-Type': 'application/x-www-form-urlencoded',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ${token.toString()}',
       });
-      // final response = await http.post(postUri, body: input, headers: header);
       print(
         " response -------------${response.body} api${response.statusCode}",
       );
@@ -454,8 +413,6 @@ class ApiProvider {
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
         showToastMsg('Group created successfully');
-
-        // locator<NavigationService>().navigateToReplace(grouplisting);
         createGroupResponse =
             CreateGroupResponse.fromJson(json.decode(response.body));
         String user = jsonEncode(createGroupResponse);
@@ -466,19 +423,14 @@ class ApiProvider {
 
         signInProvider.viewgrouplist(loader, inputs);
 
-        // var input = {
-        //   "group_id" : createGroupResponse.data!.sId!
-        // };
         groupid(createGroupResponse.data!.sId!);
-        // signInProvider.groupdetail(loader, input);
         return createGroupResponse;
       } else {
         showToastMsg("Try again");
       }
     } catch (e) {
       loader.setloader(false);
-      //     showToastMsg("Sign In failed");
-      // return null;
+      ;
     }
     return createGroupResponse;
   }
@@ -486,7 +438,6 @@ class ApiProvider {
   Future<GetAllUserResponse> getallusers(Loader loader, String search) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, String> header = new Map();
-    // print("sign in api $input----${baseurl + AppString().signInUrl}");
     header["content-type"] = "application/x-www-form-urlencoded";
     String? token = prefs.getString('token');
     print(prefs.getString('token'));
@@ -494,14 +445,13 @@ class ApiProvider {
     loader.setloader(true);
     try {
       var postUri = Uri.parse('$userurl' + 'getAllUsers' + '?search=$search');
-      // print(ApiProvider().signinresponse.data!.token);
+
       print(postUri.toString());
       final response = await http.get(postUri, headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': 'application/json',
         'Authorization': 'Bearer ${token.toString()}',
       });
-      // final response = await http.post(postUri, body: input, headers: header);
       print(
         " response -------------${response.body} api${response.statusCode}",
       );
@@ -512,21 +462,14 @@ class ApiProvider {
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
-        // showToastMsg(ouptut["message"]);
-
-        // locator<NavigationService>().navigateToReplace(grouplisting);
         getAllUserResponse =
             GetAllUserResponse.fromJson(json.decode(response.body));
-        // String user = jsonEncode(createGroupResponse);
-        // prefs.setString('user', user);
         return getAllUserResponse;
       } else {
         showToastMsg("Try Again");
       }
     } catch (e) {
       loader.setloader(false);
-      //     showToastMsg("Sign In failed");
-      // return null;
     }
     return getAllUserResponse;
   }
@@ -543,22 +486,19 @@ class ApiProvider {
       var postUri = Uri.parse('$userurl' + 'addUsertoGroup');
       final response =
           await http.post(postUri, body: json.encode(input), headers: {
-        // 'Content-Type': 'application/x-www-form-urlencoded',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ${token.toString()}',
       });
-      // final response = await http.post(postUri, body: input, headers: header);
+
       print(
         " response -------------${response.body} api${response.statusCode}",
       );
-      // loader.setloader(false);
 
       if (response.statusCode == 302) {
         showToastMsg("Try Again");
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
-        // showToastMsg(ouptut["message"]);
         var input = {"group_id": id};
 
         signInProvider.groupdetail(
@@ -570,8 +510,7 @@ class ApiProvider {
           loader.setloader(false);
           locator<NavigationService>().backPress();
         });
-        // locator<NavigationService>().backPress();
-        // locator<NavigationService>().argsnavigateToReplace(groupdetails, id);
+
         addUsertoGroupResponse =
             AddUsertoGroupResponse.fromJson(json.decode(response.body));
         String user = jsonEncode(createGroupResponse);
@@ -582,8 +521,6 @@ class ApiProvider {
       }
     } catch (e) {
       loader.setloader(false);
-      //     showToastMsg("Sign In failed");
-      // return null;
     }
     return addUsertoGroupResponse;
   }
@@ -600,11 +537,9 @@ class ApiProvider {
     try {
       var postUri = Uri.parse('$userurl' + 'deleteGroup');
       final response = await http.post(postUri, body: input, headers: {
-        // 'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': 'application/json',
         'Authorization': 'Bearer ${token.toString()}',
       });
-      // final response = await http.post(postUri, body: input, headers: header);
       print(
         " response -------------${response.body} api${response.statusCode}",
       );
@@ -632,8 +567,6 @@ class ApiProvider {
       }
     } catch (e) {
       loader.setloader(false);
-      //     showToastMsg("Sign In failed");
-      // return null;
     }
     return deleteGroupResponse;
   }
@@ -642,26 +575,24 @@ class ApiProvider {
       Loader loader, Map<String, dynamic> input) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, String> header = new Map();
-    // print("sign in api $input----${baseurl + AppString().signInUrl}");
     header["content-type"] = "application/x-www-form-urlencoded";
     String? token = prefs.getString('token');
-    // print("__________");
+
     print(json.encode(input));
     String? id = prefs.getString('sid');
     print("#####");
-    // print(prefs.getString('token'));
+
     loader.setloader(true);
     try {
       var postUri = Uri.parse('$userurl' + 'viewGroupDetails');
-      // print(input.toString().toString());
+
       print(postUri);
       final response =
           await http.post(postUri, body: json.encode(input), headers: {
-        // 'Content-Type': 'application/x-www-form-urlencoded',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ${token.toString()}',
       });
-      // final response = await http.post(postUri, body: input, headers: header);
+
       print(
         " response -------------${response.body} api${response.statusCode}",
       );
@@ -672,13 +603,10 @@ class ApiProvider {
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
-        // showToastMsg(ouptut["message"]);
-
         var input = {"user_id": id!};
 
         signInProvider.viewgrouplist(loader, input);
 
-        // locator<NavigationService>().navigateTo(groupdetails);
         groupDetailResponse =
             GroupDetailResponse.fromJson(json.decode(response.body));
         String user = jsonEncode(createGroupResponse);
@@ -689,8 +617,6 @@ class ApiProvider {
       }
     } catch (e) {
       loader.setloader(false);
-      //     showToastMsg("Sign In failed");
-      // return null;
     }
     return groupDetailResponse;
   }
@@ -699,27 +625,25 @@ class ApiProvider {
       Loader loader, Map<String, String> input, String idss) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, String> header = new Map();
-    // print("sign in api $input----${baseurl + AppString().signInUrl}");
+
     header["content-type"] = "application/x-www-form-urlencoded";
     String? token = prefs.getString('token');
     String? sids = prefs.getString('sid');
     print(token);
-    // print("__________");
+
     print(json.encode(input));
     print(input);
     print("#####");
-    // print(prefs.getString('token'));
+
     loader.setloader(true);
     try {
       var postUri = Uri.parse('$userurl' + 'leaveGroup');
-      // print(input.toString().toString());
+
       print(postUri);
       final response = await http.post(postUri, body: input, headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        // 'Content-Type': 'application/json',
         'Authorization': 'Bearer ${token.toString()}',
       });
-      // final response = await http.post(postUri, body: input, headers: header);
       print(
         " response -------------${response.body} api${response.statusCode}",
       );
@@ -732,8 +656,7 @@ class ApiProvider {
       if (ouptut["status"] == 200) {
         showToastMsg(ouptut["message"]);
         var inputs = {"group_id": idss};
-        // Timer(Duration(seconds: 2), () {
-        // Future.microtask(() async {
+
         signInProvider.groupdetail(
           loader,
           inputs,
@@ -741,8 +664,6 @@ class ApiProvider {
         var input = {"user_id": sids!};
 
         signInProvider.viewgrouplist(loader, input);
-        // locator<NavigationService>().backPress();
-        // locator<NavigationService>().argsnavigateToReplace(groupdetails, idss);
 
         groupLeaveResponse =
             GroupLeaveResponse.fromJson(json.decode(response.body));
@@ -754,8 +675,6 @@ class ApiProvider {
       }
     } catch (e) {
       loader.setloader(false);
-      //     showToastMsg("Sign In failed");
-      // return null;
     }
     return groupLeaveResponse;
   }
@@ -764,27 +683,26 @@ class ApiProvider {
       Loader loader, Map<String, String> input, String idss) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, String> header = new Map();
-    // print("sign in api $input----${baseurl + AppString().signInUrl}");
+
     header["content-type"] = "application/x-www-form-urlencoded";
     String? token = prefs.getString('token');
     String? sids = prefs.getString('sid');
     print(token);
-    // print("__________");
+
     print(json.encode(input));
     print(input);
     print("#####");
-    // print(prefs.getString('token'));
+
     loader.setloader(true);
     try {
       var postUri = Uri.parse('$userurl' + 'leaveGroup');
-      // print(input.toString().toString());
+
       print(postUri);
       final response = await http.post(postUri, body: input, headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        // 'Content-Type': 'application/json',
         'Authorization': 'Bearer ${token.toString()}',
       });
-      // final response = await http.post(postUri, body: input, headers: header);
+
       print(
         " response -------------${response.body} api${response.statusCode}",
       );
@@ -810,8 +728,6 @@ class ApiProvider {
       }
     } catch (e) {
       loader.setloader(false);
-      //     showToastMsg("Sign In failed");
-      // return null;
     }
     return groupLeaveResponse;
   }
@@ -820,27 +736,25 @@ class ApiProvider {
       Loader loader, Map<String, String> input) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, String> header = new Map();
-    // print("sign in api $input----${baseurl + AppString().signInUrl}");
+
     header["content-type"] = "application/x-www-form-urlencoded";
     String? token = prefs.getString('token');
     String? sids = prefs.getString('sid')!;
     print(token);
-    // print("__________");
+
     print(json.encode(input));
     print(input);
     print("#####");
-    // print(prefs.getString('token'));
+
     loader.setloader(true);
     try {
       var postUri = Uri.parse('$userurl' + 'leaveGroup');
-      // print(input.toString().toString());
+
       print(postUri);
       final response = await http.post(postUri, body: input, headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        // 'Content-Type': 'application/json',
         'Authorization': 'Bearer ${token.toString()}',
       });
-      // final response = await http.post(postUri, body: input, headers: header);
       print(
         " response -------------${response.body} api${response.statusCode}",
       );
@@ -867,8 +781,6 @@ class ApiProvider {
       }
     } catch (e) {
       loader.setloader(false);
-      //     showToastMsg("Sign In failed");
-      // return null;
     }
     return groupLeaveResponse;
   }
@@ -877,26 +789,25 @@ class ApiProvider {
       Loader loader, Map<String, String> input) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, String> header = new Map();
-    // print("sign in api $input----${baseurl + AppString().signInUrl}");
+
     header["content-type"] = "application/x-www-form-urlencoded";
     String? token = prefs.getString('token');
     print(token);
-    // print("__________");
+
     print(json.encode(input));
     print(input);
     print("#####");
-    // print(prefs.getString('token'));
+
     loader.setloader(true);
     try {
       var postUri = Uri.parse('$userurl' + 'addFavouriteGroups');
-      // print(input.toString().toString());
+
       print(postUri);
       final response = await http.post(postUri, body: input, headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        // 'Content-Type': 'application/json',
         'Authorization': 'Bearer ${token.toString()}',
       });
-      // final response = await http.post(postUri, body: input, headers: header);
+
       print(
         " response -------------${response.body} api${response.statusCode}",
       );
@@ -919,8 +830,6 @@ class ApiProvider {
       }
     } catch (e) {
       loader.setloader(false);
-      //     showToastMsg("Sign In failed");
-      // return null;
     }
     return groupLeaveResponse;
   }
@@ -929,26 +838,24 @@ class ApiProvider {
       Loader loader, Map<String, String> input) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, String> header = new Map();
-    // print("sign in api $input----${baseurl + AppString().signInUrl}");
+
     header["content-type"] = "application/x-www-form-urlencoded";
     String? token = prefs.getString('token');
     print(token);
-    // print("__________");
+
     print(json.encode(input));
     print(input);
     print("#####");
-    // print(prefs.getString('token'));
+
     loader.setloader(true);
     try {
       var postUri = Uri.parse('$userurl' + 'removeFavouriteGroups');
-      // print(input.toString().toString());
+
       print(postUri);
       final response = await http.post(postUri, body: input, headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        // 'Content-Type': 'application/json',
         'Authorization': 'Bearer ${token.toString()}',
       });
-      // final response = await http.post(postUri, body: input, headers: header);
       print(
         " response -------------${response.body} api${response.statusCode}",
       );
@@ -971,8 +878,6 @@ class ApiProvider {
       }
     } catch (e) {
       loader.setloader(false);
-      //     showToastMsg("Sign In failed");
-      // return null;
     }
     return groupLeaveResponse;
   }
@@ -981,26 +886,25 @@ class ApiProvider {
       Loader loader, Map<String, String> input) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, String> header = new Map();
-    // print("sign in api $input----${baseurl + AppString().signInUrl}");
+
     header["content-type"] = "application/x-www-form-urlencoded";
     String? token = prefs.getString('token');
     print(token);
-    // print("__________");
+
     print(json.encode(input));
     print(input);
     print("#####");
-    // print(prefs.getString('token'));
+
     loader.setloader(true);
     try {
       var postUri = Uri.parse('$userurl' + 'viewGroupListing');
-      // print(input.toString().toString());
+
       print(postUri);
       final response = await http.post(postUri, body: input, headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        // 'Content-Type': 'application/json',
         'Authorization': 'Bearer ${token.toString()}',
       });
-      // final response = await http.post(postUri, body: input, headers: header);
+
       print(
         " response -------------${response.body} api${response.statusCode}",
       );
@@ -1011,7 +915,6 @@ class ApiProvider {
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
       if (ouptut["status"] == 200) {
-        // showToastMsg(ouptut["message"]);
         viewGroupListingResponse =
             ViewGroupListingResponse.fromJson(json.decode(response.body));
         String user = jsonEncode(viewGroupListingResponse);
@@ -1022,8 +925,6 @@ class ApiProvider {
       }
     } catch (e) {
       loader.setloader(false);
-      //     showToastMsg("Sign In failed");
-      // return null;
     }
     return viewGroupListingResponse;
   }
@@ -1032,26 +933,25 @@ class ApiProvider {
       Loader loader, Map<String, String> input) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, String> header = new Map();
-    // print("sign in api $input----${baseurl + AppString().signInUrl}");
+
     header["content-type"] = "application/x-www-form-urlencoded";
     String? token = prefs.getString('token');
     print(token);
-    // print("__________");
+
     print(json.encode(input));
     print(input);
     print("#####");
-    // print(prefs.getString('token'));
+
     loader.setloader(true);
     try {
       var postUri = Uri.parse('$userurl' + 'updateGroupDetails');
-      // print(input.toString().toString());
+
       print(postUri);
       final response = await http.post(postUri, body: input, headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        // 'Content-Type': 'application/json',
         'Authorization': 'Bearer ${token.toString()}',
       });
-      // final response = await http.post(postUri, body: input, headers: header);
+
       print(
         " response -------------${response.body} api${response.statusCode}",
       );
@@ -1074,8 +974,6 @@ class ApiProvider {
       }
     } catch (e) {
       loader.setloader(false);
-      //     showToastMsg("Sign In failed");
-      // return null;
     }
     return deleteGroupResponse;
   }

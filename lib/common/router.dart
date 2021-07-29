@@ -1,11 +1,9 @@
 import 'package:app/common/navigator_route.dart';
 import 'package:app/common/testing.dart';
 import 'package:app/screens/CameraScreen.dart';
-import 'package:app/screens/aws_demo.dart';
 import 'package:app/screens/change_password.dart';
 import 'package:app/screens/chat_screen.dart';
 import 'package:app/screens/colleagues.dart';
-import 'package:app/screens/country_testing.dart';
 import 'package:app/screens/create_group.dart';
 import 'package:app/screens/fingerprint.dart';
 import 'package:app/screens/forgot_password_screen.dart';
@@ -14,7 +12,6 @@ import 'package:app/screens/group_listing.dart';
 import 'package:app/screens/imgpicker.dart';
 import 'package:app/screens/manage_profile.dart';
 import 'package:app/screens/manage_repllies.dart';
-import 'package:app/screens/notification.dart';
 import 'package:app/screens/otp_screen.dart';
 import 'package:app/screens/privacy.dart';
 import 'package:app/screens/profile_screen.dart';
@@ -23,7 +20,6 @@ import 'package:app/screens/selection.dart';
 import 'package:app/screens/settings.dart';
 import 'package:app/screens/signin_screen.dart';
 import 'package:app/screens/terms_use.dart';
-import 'package:app/screens/testbottomsheet.dart';
 import 'package:app/screens/urgent_messages.dart';
 import 'package:app/screens/your_email.dart';
 import 'package:app/screens/your_phone_screen.dart';
@@ -81,16 +77,9 @@ class Router {
             builder: (_) => GroupDetail(
                   index: settings.arguments.toString(),
                 ));
-      // case groupdetails:
-      //   return MaterialPageRoute(builder: (_) => GroupDetail(settings.arguments));
-      case country:
-        return MaterialPageRoute(builder: (_) => CountryTesting());
-      // case test:
-      //   return MaterialPageRoute(builder: (_) => HomeScreenn());
+
       case img:
         return MaterialPageRoute(builder: (_) => CameraTest());
-      case testbottom:
-        return MaterialPageRoute(builder: (_) => TestBottomsheet());
 
       default:
         return MaterialPageRoute(builder: (_) {

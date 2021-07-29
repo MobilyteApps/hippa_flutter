@@ -42,15 +42,6 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
 
   Widget countryFieldWidget() {
     return TextFormField(
-      // onChanged: formValidatonColor(),
-      // validator: (value) {
-      //   if (value?.trim().isEmpty ?? true) {
-      //     return 'Please Enter Phone Number';
-      //   } else if (value!.length < 10) {
-      //     return 'Please Enter Valid Phone Number';
-      //   }
-      //   return null;
-      // },
       keyboardType: TextInputType.phone,
       controller: counrtyCtrl,
       maxLength: 4,
@@ -84,15 +75,6 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
 
   Widget phoneFieldWidget() {
     return TextFormField(
-      // onChanged: formValidatonColor(),
-      // validator: (value) {
-      //   if (value?.trim().isEmpty ?? true) {
-      //     return 'Please Enter Phone Number';
-      //   } else if (value!.length < 10) {
-      //     return 'Please Enter Valid Phone Number';
-      //   }
-      //   return null;
-      // },
       keyboardType: TextInputType.phone,
       controller: phoneCtrl,
       maxLength: 10,
@@ -103,8 +85,6 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
         fontWeight: FontWeight.w600,
       ),
       inputFormatters: <TextInputFormatter>[
-        // FilteringTextInputFormatter.allow(0!!-9)
-        //   WhitelistingTextInputFormatter.digitsOnly,
         FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
         LengthLimitingTextInputFormatter(10)
       ],
@@ -129,16 +109,6 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
 
   formValidation() async {
     FocusScope.of(context).requestFocus(new FocusNode());
-    // if (counrtyCtrl.text.trim().isEmpty == true) {
-    //   ApiProvider().showToastMsg("Please Enter valid country code");
-    // } else if (counrtyCtrl.text.trim() == '0') {
-    //   ApiProvider().showToastMsg("Please Enter valid country code");
-    // } else if (counrtyCtrl.text.trim() == '00') {
-    //   ApiProvider().showToastMsg("Please Enter valid country code");
-    // } else if (counrtyCtrl.text.trim() == '000') {
-    //   ApiProvider().showToastMsg("Please Enter valid country code");
-    // }
-    //  else
     if (phoneCtrl.text.trim().isEmpty == true) {
       ApiProvider().showToastMsg("Please Enter valid phone number");
     } else if (phoneCtrl.text.trim() == '00000') {
@@ -153,14 +123,7 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
       ApiProvider().showToastMsg("Please Enter valid phone number");
     } else if (phoneCtrl.text.trim() == '000000000') {
       ApiProvider().showToastMsg("Please Enter valid phone number");
-    }
-    // else if (passwordCtrl?.text?.trim()?.isEmpty ?? true) {
-    //   passwordCtrl.clear();
-    //   ApiProvider().showToastMsg("Please Enter password");
-    // } else if (!validatePassword(passwordCtrl?.text?.trim())) {
-    //   ApiProvider().showToastMsg("Incorrect username / password");
-    // }
-    else {
+    } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('phonenumber', phoneCtrl.text.trim());
       prefs.setString('countryCode', country);
@@ -301,10 +264,6 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
                       child: Row(children: [
                         Expanded(
                           flex: 3,
-                          // padding: EdgeInsets.only(
-                          //     top: AppSize().height(context) * 0.02,
-                          //     left: AppSize().width(context) * 0.1,
-                          //     right: AppSize().width(context) * 0.1),
                           child: CountryCodePicker(
                             textStyle: TextStyle(
                               color: AppColor.textColor,
@@ -318,68 +277,15 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
                               });
                               print('12+11' + val.dialCode.toString());
                             },
-                            // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
                             initialSelection: 'IN',
-                            // favorite: ['+39', 'FR'],
-                            // countryFilter: ['IT', 'FR'],
-                            // flag can be styled with BoxDecoration's `borderRadius` and `shape` fields
-                            // flagDecoration: BoxDecoration(
-                            //   borderRadius: BorderRadius.circular(1),
-                            // ),
                             showFlag: false,
                           ),
-                          // countryFieldWidget(),
                         ),
                         Expanded(
                           flex: 6,
-                          // padding: EdgeInsets.only(
-                          //     top: AppSize().height(context) * 0.02,
-                          //     left: AppSize().width(context) * 0.1,
-                          //     right: AppSize().width(context) * 0.1),
                           child: phoneFieldWidget(),
                         ),
                       ])),
-                  // Text(country),
-                  // CountryCodePicker(
-                  //   onChanged: print,
-                  //   // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
-                  //   initialSelection: 'IN',
-                  //   // favorite: ['+39', 'FR'],
-                  //   // countryFilter: ['IT', 'FR'],
-                  //   // flag can be styled with BoxDecoration's `borderRadius` and `shape` fields
-                  //   flagDecoration: BoxDecoration(
-                  //     borderRadius: BorderRadius.circular(7),
-                  //   ),
-                  // ),
-                  // Padding(
-                  //   padding: EdgeInsets.only(
-                  //       top: AppSize().height(context) * 0.02,
-                  //       left: AppSize().width(context) * 0.1,
-                  //       right: AppSize().width(context) * 0.1),
-                  //   child: phoneFieldWidget(),
-                  // ),
-                  // Padding(
-                  //   padding: EdgeInsets.only(
-                  //       top: AppSize().height(context) * 0.04,
-                  //       left: AppSize().width(context) * 0.1,
-                  //       right: AppSize().width(context) * 0.1),
-                  //   child: InkWell(
-                  //     onTap: () {
-                  //       formValidation();
-                  //       // locator<NavigationService>().navigateToReplace(otpscreen);
-                  //     },
-                  //     child: Container(
-                  //       width: AppSize().width(context) * 0.8,
-                  //       height: AppSize().height(context) * 0.06,
-                  //       color: AppColor.buttonColor,
-                  //       child: getSemiBolText(
-                  //         AppString().send.toUpperCase(),
-                  //         textColor: AppColor.white,
-                  //         fontSize: 14,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                   Padding(
                     padding: EdgeInsets.only(
                         top: AppSize().height(context) * 0.04,
@@ -401,7 +307,6 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
                         ),
                         onPressed: () {
                           formValidation();
-                          // locator<NavigationService>().navigateToReplace(otpscreen);
                         },
                       ),
                     ),

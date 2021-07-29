@@ -81,10 +81,7 @@ class _SettingsState extends State<Settings> {
           Padding(
             padding: EdgeInsets.only(right: AppSize().width(context) * 0.1),
             child: InkWell(
-              onTap: () {
-                // locator<NavigationService>().navigateToReplace(urgentmessages);
-                //
-              },
+              onTap: () {},
               child: SvgPicture.asset(
                 'assets/images/settings.svg',
                 color: AppColor.black,
@@ -103,15 +100,12 @@ class _SettingsState extends State<Settings> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
-            onTap: () {
-              // locator<NavigationService>().navigateToReplace(profile);
-            },
+            onTap: () {},
             child: Container(
               width: AppSize().width(context),
               height: AppSize().height(context) * 0.11,
               decoration: BoxDecoration(
                   color: AppColor.white,
-                  // borderRadius: BorderRadius.all(Radius.circular(10)),
                   border: Border(
                       bottom: BorderSide(width: 1, color: AppColor.grey))),
               child: Row(
@@ -140,7 +134,6 @@ class _SettingsState extends State<Settings> {
             height: AppSize().height(context) * 0.15,
             decoration: BoxDecoration(
                 color: AppColor.white,
-                // borderRadius: BorderRadius.all(Radius.circular(10)),
                 border:
                     Border(bottom: BorderSide(width: 1, color: AppColor.grey))),
             child: Column(
@@ -195,9 +188,7 @@ class _SettingsState extends State<Settings> {
             ),
           ),
           InkWell(
-            onTap: () {
-              // locator<NavigationService>().navigateToReplace(managereply);
-            },
+            onTap: () {},
             child: Container(
               width: AppSize().width(context),
               height: AppSize().height(context) * 0.11,
@@ -232,7 +223,6 @@ class _SettingsState extends State<Settings> {
             height: AppSize().height(context) * 0.11,
             decoration: BoxDecoration(
                 color: AppColor.white,
-                // borderRadius: BorderRadius.all(Radius.circular(10)),
                 border:
                     Border(bottom: BorderSide(width: 1, color: AppColor.grey))),
             child: Row(
@@ -280,10 +270,6 @@ class _SettingsState extends State<Settings> {
                               textColor: AppColor.buttonColor, fontSize: 14),
                           onPressed: () {
                             getotp();
-                            // SharedPreferences prefs = await SharedPreferences.getInstance();
-                            // String abc = prefs.getString('user');
-                            // print(abc);
-                            // print(signinresponse.data!.token.toString());
                           },
                         ),
                       ],
@@ -295,7 +281,6 @@ class _SettingsState extends State<Settings> {
               height: AppSize().height(context) * 0.11,
               decoration: BoxDecoration(
                   color: AppColor.white,
-                  // borderRadius: BorderRadius.all(Radius.circular(10)),
                   border: Border(
                       bottom: BorderSide(width: 1, color: AppColor.grey))),
               child: Row(

@@ -55,7 +55,6 @@ class _ColleagueInfoState extends State<ColleagueInfo> {
                           child: Text(
                         widget.groupDetailResponse.data![0]
                             .members![widget.index].username![0],
-                        // getAllUserResponse.data!.users![index].name![0],
                         style: TextStyle(color: Colors.red),
                       )),
                     ),

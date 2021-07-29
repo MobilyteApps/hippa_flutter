@@ -35,10 +35,7 @@ class _TermOfUseState extends State<TermOfUse> {
           ),
         ),
         title: InkWell(
-            onTap: () {
-              // locator<NavigationService>().navigateToReplace(creategroup);
-            },
-            child: Image.asset('assets/images/maskgroup.png')),
+            onTap: () {}, child: Image.asset('assets/images/maskgroup.png')),
         centerTitle: true,
       ),
       backgroundColor: AppColor.backgroundColor,
@@ -50,13 +47,11 @@ class _TermOfUseState extends State<TermOfUse> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // SizedBox(height: AppSize().height(context) * 0.1),
             getBoldText(AppString().termofuse,
                 textColor: AppColor.black, fontSize: 24),
             SizedBox(height: AppSize().height(context) * 0.02),
             getRegularText('Coming soon...',
                 textColor: AppColor.black, fontSize: 16),
-
             Padding(
               padding: EdgeInsets.only(top: AppSize().height(context) * 0.01),
               child: SizedBox(
@@ -67,11 +62,8 @@ class _TermOfUseState extends State<TermOfUse> {
                       AppColor.white,
                     ),
                   ),
-                  // RaisedButton(
-                  //   color: AppColor.white,
                   child: getBoldText(AppString().cancel,
                       textColor: AppColor.black, fontSize: 14),
-                  // child: Text(AppString().cancel,style:TextStyle(color:AppColor.blue,)),
                   onPressed: () {
                     locator<NavigationService>().navigateToReplace(signin);
                   },
@@ -88,11 +80,8 @@ class _TermOfUseState extends State<TermOfUse> {
                       AppColor.buttonColor,
                     ),
                   ),
-                  //  RaisedButton(
-                  //   color: AppColor.buttonColor,
                   child: getBoldText(AppString().accept,
                       textColor: AppColor.white, fontSize: 14),
-                  // child: Text(AppString().accept,style:TextStyle(color:AppColor.white)),
                   onPressed: () {
                     locator<NavigationService>().navigateToReplace(signin);
                   },

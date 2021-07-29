@@ -36,8 +36,6 @@ class _OtpScreenState extends State<OtpScreen> {
   );
   int ab = 0;
 
-  // SendOtpResponse sendotp = SendOtpResponse();
-
   Loader loader = Loader();
   SignInProvider signInProvider = SignInProvider();
   final codeCtrl = TextEditingController();
@@ -53,12 +51,10 @@ class _OtpScreenState extends State<OtpScreen> {
 
   void getotp() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    // codeCtrl.text = prefs.getString('code')!;
   }
 
   Widget codeFieldWidget() {
     return TextFormField(
-      // onChanged: formValidatonColor(),
       validator: (value) {
         if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Code';
@@ -102,17 +98,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
   formValidation() async {
     FocusScope.of(context).requestFocus(new FocusNode());
-    // if (usernameCtrl?.text?.trim()?.isEmpty ?? true) {
-    //   ApiProvider().showToastMsg("Please Enter email address");
-    // } else if (!validateEmail(usernameCtrl?.text?.trim())) {
-    //   ApiProvider().showToastMsg("Please Enter a valid email address");
-    // } else if (passwordCtrl?.text?.trim()?.isEmpty ?? true) {
-    //   passwordCtrl.clear();
-    //   ApiProvider().showToastMsg("Please Enter password");
-    // } else if (!validatePassword(passwordCtrl?.text?.trim())) {
-    //   ApiProvider().showToastMsg("Incorrect username / password");
-    // }
-    //  else {
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print(prefs.getString('phonenumber'));
     print(prefs.getString('countryCode'));
@@ -124,7 +110,6 @@ class _OtpScreenState extends State<OtpScreen> {
       loader,
       input,
     );
-    // }
   }
 
   verifyValidation() async {
@@ -133,16 +118,7 @@ class _OtpScreenState extends State<OtpScreen> {
       ApiProvider().showToastMsg("Please Enter 6 digit Otp");
     } else if (codeCtrl.text.trim().length < 6) {
       ApiProvider().showToastMsg("Please Enter 6 digit Otp");
-    }
-    //  else if (!validateEmail(usernameCtrl?.text?.trim())) {
-    //   ApiProvider().showToastMsg("Please Enter a valid email address");
-    // } else if (passwordCtrl?.text?.trim()?.isEmpty ?? true) {
-    //   passwordCtrl.clear();
-    //   ApiProvider().showToastMsg("Please Enter password");
-    // } else if (!validatePassword(passwordCtrl?.text?.trim())) {
-    //   ApiProvider().showToastMsg("Incorrect username / password");
-    // }
-    else {
+    } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       print(prefs.getString('phonenumber'));
       print(prefs.getString('countryCode'));
@@ -198,9 +174,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   padding: EdgeInsets.only(
                       top: AppSize().height(context) * 0.02,
                       left: AppSize().width(context) * 0.1,
-                      right: AppSize().width(context) * 0.1
-                      // right: AppSize().width(context) * 0.1
-                      ),
+                      right: AppSize().width(context) * 0.1),
                   child: codeFieldWidget(),
                 ),
                 Padding(
@@ -217,8 +191,6 @@ class _OtpScreenState extends State<OtpScreen> {
                           AppColor.buttonColor,
                         ),
                       ),
-                      // child: Button(
-                      //   color: ARaisedppColor.buttonColor,
                       child: getSemiBolText(
                         AppString().verify.toUpperCase(),
                         textColor: AppColor.white,
@@ -239,7 +211,6 @@ class _OtpScreenState extends State<OtpScreen> {
                         child: InkWell(
                       onTap: () {
                         formValidation();
-                        // signInProvider.sendotpApi(true);
                       },
                       child: getSemiBolText('Resend',
                           fontSize: 14, textColor: AppColor.textColor),

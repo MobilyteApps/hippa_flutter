@@ -13,12 +13,10 @@ import 'package:app/common/navigator_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:notification_permissions/notification_permissions.dart';
-
-// import 'package:permission_handler/permission_handler.dart';
 import 'package:notification_permissions/notification_permissions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io' as IO;
-// import 'dart:html';
+
 class Selection extends StatefulWidget {
   const Selection({Key? key}) : super(key: key);
 
@@ -46,35 +44,11 @@ class _SelectionState extends State<Selection> with WidgetsBindingObserver {
   late Future<void> cameraValue;
   ApiProvider apiprovider = ApiProvider();
 
-  // void getotp() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //    setState(() {
-  //                             login = prefs.getString('islogged')!;
-
-  //                           });
-  // }
-
-  //   void initState() {
-  //   super.initState();
-  //   login = '';
-  //   Future.delayed(Duration(seconds: 5), () {
-  //     getotp();
-  //   });
-  // }
   @override
   void initState() {
     super.initState();
 
-    // if (IO.Platform.isAndroid) {
-      // Android-specific code/UI Component
-      cameraperms();
-    // } else if (IO.Platform.isIOS) {
-      // iOS-specific code/UI Component
-    // }
-    // cameraperms();
-    // locator<NavigationService>().navigateTo(n);
-    // permissionStatusFuture = getCheckNotificationPermStatus();
-    // WidgetsBinding.instance!.addObserver(this);
+    cameraperms();
   }
 
   permhand() async {}
@@ -93,10 +67,6 @@ class _SelectionState extends State<Selection> with WidgetsBindingObserver {
       });
     }
   }
-
-  // void initState() {
-  //   super.initState();
-  //   }
 
   Future<String> getCheckNotificationPermStatus() {
     return NotificationPermissions.getNotificationPermissionStatus()
@@ -156,12 +126,10 @@ class _SelectionState extends State<Selection> with WidgetsBindingObserver {
                   onPressed: () {
                     Navigator.pop(context);
 
-                    // show the dialog/open settings screen
                     NotificationPermissions.requestNotificationPermissions(
                             iosSettings: const NotificationSettingsIos(
                                 sound: true, badge: true, alert: true))
                         .then((_) {
-                      // when finished, check the permission status
                       setState(() {
                         permissionStatusFuture =
                             getCheckNotificationPermStatus();
@@ -177,7 +145,6 @@ class _SelectionState extends State<Selection> with WidgetsBindingObserver {
 
   Widget usernameFieldWidget() {
     return TextFormField(
-      // onChanged: formValidatonColor(),
       validator: (value) {
         if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Username';
@@ -204,7 +171,6 @@ class _SelectionState extends State<Selection> with WidgetsBindingObserver {
             child: Image.asset(
               'assets/images/user.png',
               color: AppColor.white,
-              // fit: BoxFit.fill,
             ),
           ),
           labelStyle: TextStyle(color: AppColor.white),
@@ -233,7 +199,6 @@ class _SelectionState extends State<Selection> with WidgetsBindingObserver {
 
   Widget passwordFieldWidget() {
     return TextFormField(
-      // onChanged: formValidatonColor(),
       validator: (value) {
         if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Password';
@@ -291,14 +256,7 @@ class _SelectionState extends State<Selection> with WidgetsBindingObserver {
     return Scaffold(
       backgroundColor: HexColor('#E8F4FF'),
       body: SingleChildScrollView(
-        child:
-            // Stack(
-            //   children: [
-            // Image.asset('assets/images/secure_text.png',
-            //     height: MediaQuery.of(context).size.height,
-            //     width: MediaQuery.of(context).size.width,
-            //     fit: BoxFit.fill),
-            Padding(
+        child: Padding(
           padding: EdgeInsets.only(
               left: AppSize().width(context) * 0.1,
               right: AppSize().width(context) * 0.1),
@@ -316,20 +274,11 @@ class _SelectionState extends State<Selection> with WidgetsBindingObserver {
                   child: getBoldText('Welcome SecureText',
                       textColor: HexColor('#0E3746'), fontSize: 24),
                 ),
-                // Padding(
-                //     padding:
-                //         EdgeInsets.only(top: AppSize().height(context) * 0.02),
-                //     child: getRegularText(
-                //         'Create a New Account or Login to begin',
-                //         textColor: AppColor.buttonColor,
-                //         fontSize: 16)),
                 Padding(
                   padding:
                       EdgeInsets.only(top: AppSize().height(context) * 0.05),
                   child: InkWell(
                       onTap: () {
-                        //   askpermission();
-                        // // locator<NavigationService>().navigateTo(n);
                         locator<NavigationService>().navigateTo(signin);
                       },
                       child: Container(
@@ -337,10 +286,8 @@ class _SelectionState extends State<Selection> with WidgetsBindingObserver {
                           color: HexColor('#62D3BE'),
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
-                        // color:HexColor('#62D3BE'),
                         width: AppSize().width(context),
                         height: AppSize().height(context) * 0.07,
-                        // color: Colors.white,
                         child: Center(
                           child: getSemiBolText(AppString().signinemail,
                               textColor: Colors.white, fontSize: 14),
@@ -352,15 +299,6 @@ class _SelectionState extends State<Selection> with WidgetsBindingObserver {
                       EdgeInsets.only(top: AppSize().height(context) * 0.02),
                   child: InkWell(
                       onTap: () async {
-                        // var status = await Permission.camera.status;
-                        // if (status.isDenied) {
-                        //   // We didn't ask for permission yet or the permission has been denied before but not permanently.
-                        // }
-
-                        //   // You can can also directly ask the permission about its status.
-                        // if (await Permission.location.isRestricted) {
-                        //   // The OS restricts access, for example because of parental controls.
-                        // }
                         locator<NavigationService>().navigateTo(yourphone);
                       },
                       child: Container(
@@ -370,7 +308,6 @@ class _SelectionState extends State<Selection> with WidgetsBindingObserver {
                         ),
                         width: AppSize().width(context),
                         height: AppSize().height(context) * 0.07,
-                        // color: HexColor('#2291FF'),
                         child: Center(
                           child: getSemiBolText(AppString().signinphno,
                               textColor: Colors.white, fontSize: 14),

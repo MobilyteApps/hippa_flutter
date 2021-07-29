@@ -56,7 +56,6 @@ class _SearchColleaguesState extends State<SearchColleagues> {
             fontFamily: 'JosenfinSansRegular',
             fontWeight: FontWeight.w400,
           ),
-          // hintStyle: TextStyle(color: greyColor, fontSize: 16),
           filled: true,
           contentPadding: new EdgeInsets.only(left: 10, top: 10),
           fillColor: AppColor.white,
@@ -86,7 +85,6 @@ class _SearchColleaguesState extends State<SearchColleagues> {
             child: InkWell(
               onTap: () {
                 locator<NavigationService>().navigateToReplace(urgentmessages);
-                //
               },
               child: SvgPicture.asset(
                 'assets/images/settings.svg',

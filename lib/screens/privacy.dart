@@ -50,8 +50,7 @@ class _PrivacyState extends State<Privacy> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // SizedBox(height: AppSize().height(context) * 0.1),
-            getBoldText(AppString().privacy,
+             getBoldText(AppString().privacy,
                 textColor: AppColor.black, fontSize: 24),
             SizedBox(height: AppSize().height(context) * 0.02),
             getRegularText('Coming soon...',

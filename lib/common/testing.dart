@@ -191,8 +191,7 @@ class _HomeScreennState extends State<HomeScreenn> {
         children: <Widget>[
           Expanded(
             flex: 1,
-            // child: Padding(
-            //   padding: MediaQuery.of(context).viewInsets,
+
             child: SizedBox(
               height: AppSize().height(context) * 0.07,
               width: AppSize().width(context),
@@ -209,7 +208,7 @@ class _HomeScreennState extends State<HomeScreenn> {
                 },
               ),
             ),
-            // ),
+
           ),
           SizedBox(height: 10),
           SizedBox(height: AppSize().height(context) * 0.02),

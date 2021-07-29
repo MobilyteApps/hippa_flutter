@@ -16,7 +16,6 @@ class Group extends StatelessWidget {
   Widget build(BuildContext context) {
     List<String> group_name = ['Add New'];
     List<Color> colors = [
-      // AppColor.starGrey,
       AppColor.starOrange,
       AppColor.starblue,
       AppColor.starGreen,

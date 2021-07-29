@@ -24,7 +24,6 @@ class _ManageProfileState extends State<ManageProfile> {
 
   Widget usernamesFieldWidget() {
     return TextFormField(
-      // onChanged: formValidatonColor(),
       validator: (value) {
         if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Username';
@@ -73,7 +72,6 @@ class _ManageProfileState extends State<ManageProfile> {
 
   Widget addressFieldWidget() {
     return TextFormField(
-      // onChanged: formValidatonColor(),
       validator: (value) {
         if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Username';
@@ -122,7 +120,6 @@ class _ManageProfileState extends State<ManageProfile> {
 
   Widget officeFieldWidget() {
     return TextFormField(
-      // onChanged: formValidatonColor(),
       validator: (value) {
         if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Username';
@@ -171,7 +168,6 @@ class _ManageProfileState extends State<ManageProfile> {
 
   Widget chiefofmedFieldWidget() {
     return TextFormField(
-      // onChanged: formValidatonColor(),
       validator: (value) {
         if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Username';
@@ -220,7 +216,6 @@ class _ManageProfileState extends State<ManageProfile> {
 
   Widget departmentnameFieldWidget() {
     return TextFormField(
-      // onChanged: formValidatonColor(),
       validator: (value) {
         if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Username';

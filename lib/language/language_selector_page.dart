@@ -8,7 +8,6 @@ class LanguageSelectorPage extends StatefulWidget {
 }
 
 class _LanguageSelectorPageState extends State<LanguageSelectorPage> {
-  //languagesList also moved to the Application class just like the languageCodesList
   static final List<String> languagesList = application.supportedLanguages;
   static final List<String> languageCodesList =
       application.supportedLanguagesCodes;

@@ -51,13 +51,12 @@ class _FavouriteGroupState extends State<FavouriteGroup> {
     // TODO: implement initState
     super.initState();
     sid();
-    // FocusScope.of(context).requestFocus(FocusNode());
   }
 
   void sid() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     sids = prefs.getString('sid')!;
-    // prefs.setString('gid', '');
+
     setState(() {
       check = true;
     });
@@ -94,14 +93,8 @@ class _FavouriteGroupState extends State<FavouriteGroup> {
               itemCount: apiProvider.viewGroupListingResponse.data!.length + 1,
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 200,
-                  // childAspectRatio: 2 / 1,
                   crossAxisSpacing: 20,
                   mainAxisSpacing: 20),
-              // crossAxisCount: 2,
-              // crossAxisSpacing: 8,
-              // mainAxisSpacing: 8,
-              // childAspectRatio: (2 / 1),
-              // ),
               itemBuilder: (BuildContext ctx, index) {
                 return GestureDetector(
                     onTap: () async {
@@ -110,16 +103,10 @@ class _FavouriteGroupState extends State<FavouriteGroup> {
                       } else {
                         SharedPreferences prefs =
                             await SharedPreferences.getInstance();
-                        // prefs.setString(
-                        //     'gid',
-                        //     apiProvider.viewGroupListingResponse
-                        //         .data![index - 1].sId!);
                         locator<NavigationService>().argsnavigateToReplace(
                             groupdetails,
                             apiProvider.viewGroupListingResponse
                                 .data![index - 1].sId!);
-                        // locator<NavigationService>().argsnavigateToReplace(groupdetails, apiProvider.viewGroupListingResponse
-                        //     .data![index - 1].sId!);
                       }
                     },
                     child: Group(index, apiProvider.viewGroupListingResponse));

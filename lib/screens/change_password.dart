@@ -46,7 +46,6 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   Widget usernameFieldWidget() {
     return TextFormField(
-      // onChanged: formValidatonColor(),
       validator: (value) {
         if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Password';
@@ -63,10 +62,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         fontWeight: FontWeight.w400,
         fontSize: 16,
       ),
-      // maxLength: 10,
-      inputFormatters: <TextInputFormatter>[
-        // LengthLimitingTextInputFormatter(10)
-      ],
+      inputFormatters: <TextInputFormatter>[],
       decoration: InputDecoration(
           prefixIcon: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -101,7 +97,6 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   Widget passwordFieldWidget() {
     return TextFormField(
-      // onChanged: formValidatonColor(),
       validator: (value) {
         if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Password';
@@ -113,9 +108,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       keyboardType: TextInputType.text,
       controller: passwordCtrl,
       maxLength: 10,
-      inputFormatters: <TextInputFormatter>[
-        // LengthLimitingTextInputFormatter(10)
-      ],
+      inputFormatters: <TextInputFormatter>[],
       decoration: InputDecoration(
           prefixIcon: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -199,7 +192,6 @@ class _ChangePasswordState extends State<ChangePassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: AppColor.lightBlue,
       body: SingleChildScrollView(
         child: Stack(
           children: [

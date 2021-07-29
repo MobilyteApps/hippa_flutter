@@ -35,8 +35,6 @@ class ColleagueDetail extends StatelessWidget {
                 child: Container(
                   width: AppSize().width(context) * 0.13,
                   height: AppSize().height(context) * 0.1,
-                  // width: 48,
-                  // height: 48,
                   decoration: BoxDecoration(
                     color: AppColor.lightBlue,
                     shape: BoxShape.circle,

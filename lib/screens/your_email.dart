@@ -35,15 +35,6 @@ class _YourEmailScreenState extends State<YourEmailScreen> {
 
   Widget emailFieldWidget() {
     return TextFormField(
-      // onChanged: formValidatonColor(),
-      // validator: (value) {
-      //   if (value?.trim().isEmpty ?? true) {
-      //     print('Please Enter Phone Number');
-      //   } else if (value!.length < 10) {
-      //      print('Please Enter Valid Phone Number');
-      //   }
-      //   print('hee');
-      // },
       keyboardType: TextInputType.emailAddress,
       controller: emailCtrl,
       // maxLength: 10,
@@ -85,7 +76,6 @@ class _YourEmailScreenState extends State<YourEmailScreen> {
       var input = {
         "email": emailCtrl.text.trim(),
       };
-      // signInProvider.loginWithEmail(loader, input);
       locator<NavigationService>().navigateToReplace(signin);
     }
   }
@@ -100,11 +90,7 @@ class _YourEmailScreenState extends State<YourEmailScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Image.asset('assets/images/tmp_1623687415135.jpg',
-                //     width: MediaQuery.of(context).size.width,
-                //     fit: BoxFit.fitWidth),
                 SizedBox(height: AppSize().height(context) * 0.1),
-
                 Align(
                     alignment: Alignment.topCenter,
                     child: Image.asset(
@@ -157,8 +143,6 @@ class _YourEmailScreenState extends State<YourEmailScreen> {
                           AppColor.buttonColor,
                         ),
                       ),
-                      //  RaisedButton(
-                      //   color: AppColor.buttonColor,
                       child: getSemiBolText(
                         AppString().send.toUpperCase(),
                         textColor: AppColor.white,
@@ -166,7 +150,6 @@ class _YourEmailScreenState extends State<YourEmailScreen> {
                       ),
                       onPressed: () {
                         formValidation();
-                        // locator<NavigationService>().navigateToReplace(signin);
                       },
                     ),
                   ),

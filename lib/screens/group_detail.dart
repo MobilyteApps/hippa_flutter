@@ -29,11 +29,6 @@ class GroupDetail extends StatefulWidget {
     required this.index,
   });
 
-  // final int index;
-  //
-  //
-  // const GroupDetail(this.index);
-
   @override
   _GroupDetailState createState() => _GroupDetailState();
 }
@@ -79,11 +74,7 @@ class _GroupDetailState extends State<GroupDetail> {
     if (this.signInProvider != signInProvider || this.loader != loader) {
       this.signInProvider = signInProvider;
       this.loader = loader;
-      // Timer(Duration(seconds: 2), () {
-      //   Future.microtask(() async {
       signInProvider.getallusers(loader, '');
-      //   });
-      // });
     }
   }
 
@@ -105,14 +96,10 @@ class _GroupDetailState extends State<GroupDetail> {
     prefs.setString('gid', id);
 
     var input = {"group_id": id};
-    // Timer(Duration(seconds: 2), () {
-    // Future.microtask(() async {
     signInProvider.groupdetail(
       loader,
       input,
     );
-    // });
-    // });
 
     Timer(Duration(seconds: 2), () {
       Future.microtask(() async {
@@ -145,7 +132,6 @@ class _GroupDetailState extends State<GroupDetail> {
             fontFamily: 'PoppinsSemiBold',
             fontWeight: FontWeight.w600,
           ),
-          // hintStyle: TextStyle(color: greyColor, fontSize: 16),
           filled: true,
           fillColor: AppColor.white,
           hintText: 'Group ABC'),
@@ -199,8 +185,6 @@ class _GroupDetailState extends State<GroupDetail> {
                   setState(() {
                     ids.remove(u[index].id!);
                     i.remove(u[index].id!);
-                    // ids.removeAt(index);
-                    // print(ids);
                     u.removeAt(index);
                   });
                 },
@@ -227,7 +211,6 @@ class _GroupDetailState extends State<GroupDetail> {
       controller: addmemberctrl,
       onChanged: (v) {
         _debouncer.run(() {
-          // signInProvider.getallusers(loader, addmemberctrl.text.trim());
           signInProvider.getallusers(loader, v.trim());
         });
       },
@@ -251,7 +234,6 @@ class _GroupDetailState extends State<GroupDetail> {
             fontFamily: 'JosenfinSansRegular',
             fontWeight: FontWeight.w400,
           ),
-          // hintStyle: TextStyle(color: greyColor, fontSize: 16),
           filled: true,
           contentPadding: new EdgeInsets.only(left: 10, top: 10),
           fillColor: AppColor.white,
@@ -275,7 +257,6 @@ class _GroupDetailState extends State<GroupDetail> {
     var input = {"members_id": i, "group_id": "${id.toString()}"};
     print(input.toString());
     print("________-");
-    // signInProvider.addusertogroup(loader, input);
   }
 
   delformValidationer() async {
@@ -320,16 +301,11 @@ class _GroupDetailState extends State<GroupDetail> {
     print(input.toString());
     print("________-");
     signInProvider.groupleave(loader, input, groupid);
-    setState(() {
-      // checking=true;
-    });
+    setState(() {});
 
     Timer(Duration(seconds: 5), () {
       Future.microtask(() async {
-        setState(() {
-          // checking=false;
-        });
-        // signInProvider.getallusers(loader, '');
+        setState(() {});
       });
     });
   }
@@ -508,7 +484,6 @@ class _GroupDetailState extends State<GroupDetail> {
                                       InkWell(
                                         onTap: () {
                                           setState(() {
-                                            // delformValidationer();
                                             creategroupctrl.text = apiProvider
                                                 .groupDetailResponse
                                                 .data![0]
@@ -563,7 +538,6 @@ class _GroupDetailState extends State<GroupDetail> {
                                               setState(() {
                                                 changetitle = false;
                                               });
-                                              // locator<NavigationService>().navigateToReplace(otpscreen);
                                             },
                                           ),
                                         ),
@@ -584,8 +558,6 @@ class _GroupDetailState extends State<GroupDetail> {
                                                 AppColor.buttonColor,
                                               ),
                                             ),
-                                            //  RaisedButton(
-                                            //   color: AppColor.buttonColor,
                                             child: getBoldText(
                                                 AppString().confirm,
                                                 textColor: AppColor.white,
@@ -598,9 +570,6 @@ class _GroupDetailState extends State<GroupDetail> {
                                               Timer(Duration(seconds: 2), () {
                                                 sid();
                                               });
-                                              // print(ids.toList().toString());
-                                              // locator<NavigationService>()
-                                              //     .navigateToReplace(grouplisting);
                                             },
                                           ),
                                         ),
@@ -630,8 +599,6 @@ class _GroupDetailState extends State<GroupDetail> {
                                               var input = {
                                                 "group_id": widget.index!
                                               };
-                                              // Timer(Duration(seconds: 2), () {
-                                              // Future.microtask(() async {
                                               signInProvider.groupdetail(
                                                 loader,
                                                 input,
@@ -740,8 +707,6 @@ class _GroupDetailState extends State<GroupDetail> {
                                                 AppColor.buttonColor,
                                               ),
                                             ),
-                                            //  RaisedButton(
-                                            //   color: AppColor.buttonColor,
                                             child: getBoldText('Exit Group',
                                                 textColor: AppColor.white,
                                                 fontSize: 14),
@@ -749,9 +714,6 @@ class _GroupDetailState extends State<GroupDetail> {
                                               Timer(Duration(seconds: 2), () {
                                                 removeformValidation(sids, gid);
                                               });
-                                              // print(ids.toList().toString());
-                                              // locator<NavigationService>()
-                                              //     .navigateToReplace(grouplisting);
                                             },
                                           ),
                                         ),

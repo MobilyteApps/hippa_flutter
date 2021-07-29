@@ -45,7 +45,6 @@ class _SigninState extends State<Signin> {
 
   Widget usernameFieldWidget() {
     return TextFormField(
-      // onChanged: formValidatonColor(),
       validator: (value) {
         if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Username';
@@ -62,10 +61,7 @@ class _SigninState extends State<Signin> {
         fontWeight: FontWeight.w400,
         fontSize: 16,
       ),
-      // maxLength: 10,
-      inputFormatters: <TextInputFormatter>[
-        // LengthLimitingTextInputFormatter(10)
-      ],
+      inputFormatters: <TextInputFormatter>[],
       decoration: InputDecoration(
           prefixIcon: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -101,7 +97,6 @@ class _SigninState extends State<Signin> {
 
   Widget passwordFieldWidget() {
     return TextFormField(
-      // onChanged: formValidatonColor(),
       validator: (value) {
         if (value?.trim().isEmpty ?? true) {
           return 'Please Enter Password';
@@ -113,7 +108,6 @@ class _SigninState extends State<Signin> {
       obscureText: showpass,
       keyboardType: TextInputType.text,
       controller: passwordCtrl,
-      // maxLength: 10,
       inputFormatters: <TextInputFormatter>[
         LengthLimitingTextInputFormatter(10)
       ],
@@ -223,7 +217,6 @@ class _SigninState extends State<Signin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: AppColor.lightBlue,
       body: SingleChildScrollView(
         child: Stack(
           children: [
@@ -338,8 +331,6 @@ class _SigninState extends State<Signin> {
                               AppColor.white,
                             ),
                           ),
-                          // RaisedButton(
-                          //   color: AppColor.white,
                           child: getRegularText(AppString().signin,
                               textColor: AppColor.buttonColor, fontSize: 16),
                           onPressed: () {
@@ -348,34 +339,6 @@ class _SigninState extends State<Signin> {
                         ),
                       ),
                     ),
-                    // Padding(
-                    //   padding: EdgeInsets.only(
-                    //     top: AppSize().height(context) * 0.05,
-                    //   ),
-                    //   child: Align(
-                    //     alignment: Alignment.topCenter,
-                    //     child: getRegularText(AppString().donthaveaccount,
-                    //         textColor: AppColor.white, fontSize: 16),
-                    //   ),
-                    // ),
-                    // Padding(
-                    //   padding: EdgeInsets.only(
-                    //     top: AppSize().height(context) * 0.06,
-                    //   ),
-                    //   child: InkWell(
-                    //     onTap: () {
-                    //       _authenticate();
-                    //     },
-                    //     child: Align(
-                    //       alignment: Alignment.topCenter,
-                    //       child: SvgPicture.asset(
-                    //         'assets/images/fingerprint.svg',
-                    //         color: AppColor.white,
-                    //         matchTextDirection: true,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                   ]),
             ),
             loader.isLoading == false

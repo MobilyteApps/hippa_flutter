@@ -2,14 +2,9 @@ import 'dart:math';
 import 'package:app/network/api_provider.dart';
 import 'package:app/screens/CameraView.dart';
 
-// import 'package:gallery_saver/gallery_saver.dart';
-// import 'package:image_picker/image_picker.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
-// import 'package:path_provider/path_provider.dart';
-
-// List<CameraDescription> cameras=[];
 
 class CameraScreen extends StatefulWidget {
   CameraScreen({Key? key}) : super(key: key);
@@ -88,26 +83,7 @@ class _CameraScreenState extends State<CameraScreen> {
                                 : _cameraController.setFlashMode(FlashMode.off);
                           }),
                       GestureDetector(
-                        onLongPress: () async {
-                          // _recordVideo();
-                          //   await _cameraController.startVideoRecording();
-                          //   setState(() {
-                          //     isRecoring = true;
-                          //   });
-                          // },
-                          // onLongPressUp: () async {
-                          //   XFile videopath =
-                          //       await _cameraController.stopVideoRecording();
-                          //   setState(() {
-                          //     isRecoring = false;
-                          //   });
-                          //   Navigator.push(
-                          //       context,
-                          //       MaterialPageRoute(
-                          //           builder: (builder) => VideoViewPage(
-                          //                 path: videopath.path,
-                          //               )));
-                        },
+                        onLongPress: () async {},
                         onTap: () {
                           if (!isRecoring) takePhoto(context);
                         },
@@ -173,22 +149,4 @@ class _CameraScreenState extends State<CameraScreen> {
                   path: file.path,
                 )));
   }
-// void _recordVideo() async {
-//   ImagePicker().getVideo(source: ImageSource.camera)
-//       .then((PickedFile? recordedVideo) {
-//     if (recordedVideo != null && recordedVideo.path != null) {
-//       setState(() {
-//         print('saving in progress...');
-//         // secondButtonText = 'saving in progress...';
-//       });
-//       GallerySaver.saveVideo(recordedVideo.path, albumName: 'albumName')
-//           .then((bool? success) {
-//         setState(() {
-//           // secondButtonText = 'video saved!';
-//           print('video saved!');
-//         });
-//       });
-//     }
-//   });
-// }
 }

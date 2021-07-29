@@ -7,12 +7,7 @@ class Loader with ChangeNotifier {
 
   setloader(bool value) {
     isLoading = value;
-    // if (value == true) {
-    //   CircularProgressIndicator();
-    // }
-    // if (value == false) {
-    //   Container();
-    // }
+
     notifyListeners();
     print("object+++++++ $isLoading");
   }

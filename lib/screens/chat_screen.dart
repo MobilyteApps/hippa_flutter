@@ -49,7 +49,6 @@ class _ChatScreenState extends State<ChatScreen> {
             fontFamily: 'JosenfinSansRegular',
             fontWeight: FontWeight.w400,
           ),
-          // hintStyle: TextStyle(color: greyColor, fontSize: 16),
           filled: true,
           contentPadding: new EdgeInsets.only(left: 10, top: 10),
           fillColor: AppColor.white,
@@ -126,8 +125,6 @@ class _ChatScreenState extends State<ChatScreen> {
                     children: [
                       getBoldText('Justin Oliver',
                           textColor: AppColor.black, fontSize: 16),
-                      // SizedBox(width:  AppSize().width(context) * 0.28,),
-
                       Padding(
                         padding: EdgeInsets.only(
                             top: AppSize().height(context) * 0.015),
@@ -170,7 +167,7 @@ class _ChatScreenState extends State<ChatScreen> {
             child: InkWell(
               onTap: () {
                 locator<NavigationService>().navigateToReplace(urgentmessages);
-                //
+
               },
               child: SvgPicture.asset(
                 'assets/images/attachment.svg',
@@ -184,7 +181,7 @@ class _ChatScreenState extends State<ChatScreen> {
             child: InkWell(
               onTap: () {
                 locator<NavigationService>().navigateToReplace(urgentmessages);
-                //
+
               },
               child: Image.asset(
                 'assets/images/image.png',
@@ -218,7 +215,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 onTap: () {
                   locator<NavigationService>()
                       .navigateToReplace(urgentmessages);
-                  //
+
                 },
                 child: Icon(
                   Icons.send,
