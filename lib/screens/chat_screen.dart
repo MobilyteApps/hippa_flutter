@@ -167,7 +167,6 @@ class _ChatScreenState extends State<ChatScreen> {
             child: InkWell(
               onTap: () {
                 locator<NavigationService>().navigateToReplace(urgentmessages);
-
               },
               child: SvgPicture.asset(
                 'assets/images/attachment.svg',
@@ -181,7 +180,6 @@ class _ChatScreenState extends State<ChatScreen> {
             child: InkWell(
               onTap: () {
                 locator<NavigationService>().navigateToReplace(urgentmessages);
-
               },
               child: Image.asset(
                 'assets/images/image.png',
@@ -215,7 +213,6 @@ class _ChatScreenState extends State<ChatScreen> {
                 onTap: () {
                   locator<NavigationService>()
                       .navigateToReplace(urgentmessages);
-
                 },
                 child: Icon(
                   Icons.send,

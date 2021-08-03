@@ -30,7 +30,7 @@ Widget myMessageView() {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(15)),
                 color: HexColor('#FFDEDE')),
-             child: getBoldText('T-60 MIN',
+            child: getBoldText('T-60 MIN',
                 textColor: HexColor('#FF0000'), fontSize: 9),
           ),
         ],

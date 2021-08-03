@@ -19,10 +19,8 @@ class Application {
     "es",
   ];
 
-
   Iterable<Locale> supportedLocales() =>
       supportedLanguagesCodes.map<Locale>((language) => Locale(language, ""));
-
 
   late LocaleChangeCallback onLocaleChanged;
 }

@@ -42,7 +42,6 @@ class SignInProvider with ChangeNotifier {
     ApiProvider().sigInApi(loader, input).then((value) {
       if (value != null) {
         this.userResponse = value;
-
       }
     });
   }

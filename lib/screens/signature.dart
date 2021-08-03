@@ -24,7 +24,6 @@ class _SignaturePageState extends State<SignaturePage> {
   @override
   void initState() {
     super.initState();
-
     controller = SignatureController(
       penStrokeWidth: 5,
       penColor: Colors.black,
@@ -63,7 +62,6 @@ class _SignaturePageState extends State<SignaturePage> {
             fontFamily: 'JosenfinSansRegular',
             fontWeight: FontWeight.w400,
           ),
-          // hintStyle: TextStyle(color: greyColor, fontSize: 16),
           filled: true,
           contentPadding: new EdgeInsets.only(left: 10, top: 10),
           fillColor: AppColor.light,
@@ -82,7 +80,6 @@ class _SignaturePageState extends State<SignaturePage> {
                 onTap: () {
                   locator<NavigationService>()
                       .navigateToReplace(urgentmessages);
-                  //
                 },
                 child: SvgPicture.asset(
                   'assets/images/close.svg',
@@ -125,7 +122,6 @@ class _SignaturePageState extends State<SignaturePage> {
             child: InkWell(
               onTap: () {
                 locator<NavigationService>().navigateToReplace(urgentmessages);
-                //
               },
               child: SvgPicture.asset(
                 'assets/images/attachment.svg',
@@ -139,7 +135,6 @@ class _SignaturePageState extends State<SignaturePage> {
             child: InkWell(
               onTap: () {
                 locator<NavigationService>().navigateToReplace(urgentmessages);
-                //
               },
               child: Image.asset(
                 'assets/images/image.png',
@@ -153,7 +148,6 @@ class _SignaturePageState extends State<SignaturePage> {
             child: InkWell(
               onTap: () {
                 locator<NavigationService>().navigateToReplace(urgentmessages);
-                //
               },
               child: Image.asset(
                 'assets/images/icons_edit.png',
@@ -172,7 +166,6 @@ class _SignaturePageState extends State<SignaturePage> {
                 onTap: () {
                   locator<NavigationService>()
                       .navigateToReplace(urgentmessages);
-                  //
                 },
                 child: Icon(
                   Icons.send,
@@ -234,11 +227,9 @@ class _SignaturePageState extends State<SignaturePage> {
       onTap: () async {
         if (controller.isNotEmpty) {
           final signature = await exportSignature();
-
           await Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => SignaturePreviewPage(signature: signature),
           ));
-
           controller.clear();
         }
       },
@@ -267,10 +258,8 @@ class _SignaturePageState extends State<SignaturePage> {
       exportBackgroundColor: Colors.black,
       points: controller.points,
     );
-
     final signature = await exportController.toPngBytes();
     exportController.dispose();
-
     return signature;
   }
 

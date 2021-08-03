@@ -80,7 +80,7 @@ class _CameraTestState extends State<CameraTest> {
       try {
         final pickedFile = await _picker.pickImage(
           source: source,
-          );
+        );
         setState(() {
           _imageFile = pickedFile;
         });
@@ -146,7 +146,7 @@ class _CameraTestState extends State<CameraTest> {
           child: ListView.builder(
             key: UniqueKey(),
             itemBuilder: (context, index) {
-               return Semantics(
+              return Semantics(
                 label: 'image_picker_example_picked_image',
                 child: kIsWeb
                     ? Image.network(_imageFileList![index].path)
@@ -266,7 +266,6 @@ class _CameraTestState extends State<CameraTest> {
               child: const Icon(Icons.photo),
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.only(top: 16.0),
             child: FloatingActionButton(
@@ -279,7 +278,6 @@ class _CameraTestState extends State<CameraTest> {
               child: const Icon(Icons.camera_alt),
             ),
           ),
-
         ],
       ),
     );

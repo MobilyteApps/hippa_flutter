@@ -47,7 +47,6 @@ class _GroupListingState extends State<GroupListing>
                 onTap: () {
                   FocusScope.of(context).requestFocus(FocusNode());
                   locator<NavigationService>().navigateTo(settingsscreen);
-                  //
                 },
                 child: SvgPicture.asset(
                   'assets/images/settings.svg',
@@ -78,9 +77,7 @@ class _GroupListingState extends State<GroupListing>
                       left: AppSize().width(context) * 0.05,
                       right: AppSize().width(context) * 0.05),
                   child: TabBar(
-                    onTap: (index) {
-                      // Tab index when user select it, it start from zero
-                    },
+                    onTap: (index) {},
                     isScrollable: false,
                     indicator: BoxDecoration(
                       border: Border.all(width: 100),
@@ -91,18 +88,11 @@ class _GroupListingState extends State<GroupListing>
                     indicatorColor: Colors.green,
                     labelColor: AppColor.white,
                     tabs: [
-                      Expanded(
-                        // flex: 1,
-                        child: Tab(
-                          text: 'Colleagues',
-                        ),
+                      Tab(
+                        text: 'Colleagues',
                       ),
-                      Expanded(
-                        // flex: 1,
-                        child: Tab(
-                          text: 'Groups',
-                          // // icon: Icon(Icons.person),
-                        ),
+                      Tab(
+                        text: 'Groups',
                       )
                     ],
                     controller: _tabController,
@@ -111,8 +101,8 @@ class _GroupListingState extends State<GroupListing>
                 ),
               ),
             ),
-            Expanded(
-              // flex: 4,
+            Container(
+              height: AppSize().height(context) * 0.8,
               child: TabBarView(
                 children: [Colleagues(), FavouriteGroup()],
                 controller: _tabController,
