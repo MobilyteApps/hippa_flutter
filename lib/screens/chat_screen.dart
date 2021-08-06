@@ -63,16 +63,22 @@ class _ChatScreenState extends State<ChatScreen> {
         bottom: PreferredSize(
             child: Container(color: AppColor.grey, height: 1.0),
             preferredSize: Size.fromHeight(4.0)),
-        leading: Padding(
-          padding: EdgeInsets.only(
-              top: AppSize().width(context) * 0.05,
-              bottom: AppSize().width(context) * 0.05,
-              right: AppSize().width(context) * 0.01,
-              left: AppSize().width(context) * 0.01),
-          child: SvgPicture.asset(
-            'assets/images/arrow_back.svg',
-            color: AppColor.black,
-            matchTextDirection: true,
+        leading: InkWell(
+          onTap: (){
+            locator<NavigationService>()
+                .backPress();
+          },
+          child: Padding(
+            padding: EdgeInsets.only(
+                top: AppSize().width(context) * 0.05,
+                bottom: AppSize().width(context) * 0.05,
+                right: AppSize().width(context) * 0.01,
+                left: AppSize().width(context) * 0.01),
+            child: SvgPicture.asset(
+              'assets/images/arrow_back.svg',
+              color: AppColor.black,
+              matchTextDirection: true,
+            ),
           ),
         ),
         actions: [
@@ -80,8 +86,8 @@ class _ChatScreenState extends State<ChatScreen> {
             padding: EdgeInsets.only(right: AppSize().width(context) * 0.03),
             child: InkWell(
                 onTap: () {
-                  locator<NavigationService>()
-                      .navigateToReplace(settingsscreen);
+                  // locator<NavigationService>()
+                  //     .navigateToReplace(settingsscreen);
                   //
                 },
                 child: Icon(Icons.search, color: AppColor.starGrey)),
@@ -166,7 +172,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 right: AppSize().width(context) * 0.03),
             child: InkWell(
               onTap: () {
-                locator<NavigationService>().navigateToReplace(urgentmessages);
+                // locator<NavigationService>().navigateToReplace(urgentmessages);
               },
               child: SvgPicture.asset(
                 'assets/images/attachment.svg',
@@ -179,7 +185,7 @@ class _ChatScreenState extends State<ChatScreen> {
             padding: EdgeInsets.only(right: AppSize().width(context) * 0.03),
             child: InkWell(
               onTap: () {
-                locator<NavigationService>().navigateToReplace(urgentmessages);
+                // locator<NavigationService>().navigateToReplace(urgentmessages);
               },
               child: Image.asset(
                 'assets/images/image.png',
@@ -192,9 +198,11 @@ class _ChatScreenState extends State<ChatScreen> {
             padding: EdgeInsets.only(right: AppSize().width(context) * 0.03),
             child: InkWell(
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => SignaturePage(),
-                ));
+                locator<NavigationService>()
+                    .navigateTo(signature);
+                // Navigator.of(context).push(MaterialPageRoute(
+                //   builder: (context) => SignaturePage(),
+                // ));
               },
               child: Image.asset(
                 'assets/images/icons_edit.png',
@@ -211,8 +219,8 @@ class _ChatScreenState extends State<ChatScreen> {
             padding: EdgeInsets.only(left: AppSize().width(context) * 0.03),
             child: InkWell(
                 onTap: () {
-                  locator<NavigationService>()
-                      .navigateToReplace(urgentmessages);
+                  // locator<NavigationService>()
+                  //     .navigateToReplace(urgentmessages);
                 },
                 child: Icon(
                   Icons.send,

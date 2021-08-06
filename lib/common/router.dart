@@ -3,6 +3,7 @@ import 'package:app/common/testing.dart';
 import 'package:app/screens/CameraScreen.dart';
 import 'package:app/screens/change_password.dart';
 import 'package:app/screens/chat_screen.dart';
+import 'package:app/screens/chat_screens.dart';
 import 'package:app/screens/colleagues.dart';
 import 'package:app/screens/create_group.dart';
 import 'package:app/screens/fingerprint.dart';
@@ -18,12 +19,14 @@ import 'package:app/screens/profile_screen.dart';
 import 'package:app/screens/search_colleagues.dart';
 import 'package:app/screens/selection.dart';
 import 'package:app/screens/settings.dart';
+import 'package:app/screens/signature.dart';
 import 'package:app/screens/signin_screen.dart';
 import 'package:app/screens/terms_use.dart';
 import 'package:app/screens/urgent_messages.dart';
 import 'package:app/screens/your_email.dart';
 import 'package:app/screens/your_phone_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:signature/signature.dart';
 
 class Router {
   static Route<dynamic> generateRoute(
@@ -72,6 +75,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => CameraScreen());
       case colleagues:
         return MaterialPageRoute(builder: (_) => Colleagues());
+      case signature:
+        return MaterialPageRoute(builder: (_) => SignaturePage());
       case groupdetails:
         return MaterialPageRoute(
             builder: (_) => GroupDetail(

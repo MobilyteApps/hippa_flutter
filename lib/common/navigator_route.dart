@@ -26,3 +26,5 @@ const String createmessage = 'createmessage';
 const String test = 'test';
 const String img = 'img';
 const String testbottom = 'testbottom';
+const String chatscreens = 'chatscreens';
+const String signature = 'signature';

@@ -10,7 +10,6 @@ import 'package:app/common/navigator_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:app/response/signin_response.dart';
 
 class Settings extends StatefulWidget {
@@ -100,7 +99,9 @@ class _SettingsState extends State<Settings> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
-            onTap: () {},
+            onTap: () {
+              locator<NavigationService>().navigateTo(chatscreen);
+            },
             child: Container(
               width: AppSize().width(context),
               height: AppSize().height(context) * 0.11,
@@ -254,7 +255,7 @@ class _SettingsState extends State<Settings> {
                       title: getBoldText('Sign Out',
                           textColor: AppColor.black, fontSize: 18),
                       content: getRegularText(
-                          'Are you sure you want to sign out to SecureText',
+                          'Are you sure you want to sign out of SecureText',
                           textColor: AppColor.black,
                           fontSize: 18),
                       actions: [

@@ -79,7 +79,7 @@ class _SignaturePageState extends State<SignaturePage> {
               child: InkWell(
                 onTap: () {
                   locator<NavigationService>()
-                      .navigateToReplace(urgentmessages);
+                      .backPress();
                 },
                 child: SvgPicture.asset(
                   'assets/images/close.svg',
