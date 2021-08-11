@@ -17,6 +17,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_auth_invisible/flutter_local_auth_invisible.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class Signin extends StatefulWidget {
   const Signin({Key? key}) : super(key: key);
@@ -170,9 +171,9 @@ class _SigninState extends State<Signin> {
   formValidation() {
     FocusScope.of(context).requestFocus(new FocusNode());
     if (usernameCtrl.text.trim().isEmpty == true) {
-      ApiProvider().showToastMsg("Please Enter email address");
+      ApiProvider().showToastMsg("Please enter email address");
     } else if (!validateEmail(usernameCtrl.text.trim())) {
-      ApiProvider().showToastMsg("Please Enter a valid email address");
+      ApiProvider().showToastMsg("Please enter a valid email address");
     } else if (passwordCtrl.text.trim().isEmpty == true) {
       passwordCtrl.clear();
       ApiProvider().showToastMsg("Please Enter password");
@@ -217,6 +218,14 @@ class _SigninState extends State<Signin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+      appBar: AppBar(
+          backgroundColor: Colors.blue,
+          leading: InkWell(
+              onTap: () {
+                locator<NavigationService>().backPress();
+              },
+              child: Icon(Icons.arrow_back))),
       body: SingleChildScrollView(
         child: Stack(
           children: [

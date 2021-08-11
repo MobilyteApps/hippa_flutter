@@ -137,6 +137,13 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(backgroundColor:AppColor.backgroundColor ,
+        leading: InkWell(
+            onTap: (){
+              locator<NavigationService>().backPress();
+            },
+            child: Icon(Icons.arrow_back,color: Colors.black,)),
+      ),
       backgroundColor: AppColor.backgroundColor,
       body: Stack(children: [
         SingleChildScrollView(

@@ -221,6 +221,14 @@ class _YourPhoneScreenState extends State<YourPhoneScreen> {
       ],
       home: Scaffold(
         backgroundColor: HexColor('#E8F4FF'),
+        appBar: AppBar(
+          backgroundColor: HexColor('#E8F4FF'),
+          leading: InkWell(
+              onTap: (){
+                locator<NavigationService>().backPress();
+              },
+              child: Icon(Icons.arrow_back,color: Colors.black,)),
+        ),
         body: Stack(children: [
           SingleChildScrollView(
             child: Column(

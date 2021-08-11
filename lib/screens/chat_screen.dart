@@ -1,7 +1,13 @@
+import 'dart:io';
+
 import 'package:app/common/colors.dart';
+import 'package:app/common/imagepickerhandler.dart';
 import 'package:app/common/sender_message.dart';
 import 'package:app/common/size.dart';
 import 'package:app/common/textstyle.dart';
+import 'package:app/models/loader.dart';
+import 'package:app/providers/signin_provider.dart';
+import 'package:app/response/chat_details_response.dart';
 import 'package:app/screens/signature.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +16,10 @@ import 'package:app/common/navigator_route.dart';
 import 'package:app/common/navigator_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:provider/provider.dart';
+
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -18,7 +28,40 @@ class ChatScreen extends StatefulWidget {
   _ChatScreenState createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ChatScreenState extends State<ChatScreen>
+    with TickerProviderStateMixin, ImagePickerListener {
+  final messageTextController = TextEditingController();
+  Color blackColor = Colors.black;
+
+  bool shouldWait = false;
+
+  //messageList..
+  // List<MessageBubble> messages = List();
+
+  // select image
+  var bytes;
+  late File image;
+  late File _cameraVideo;
+  late Socket socket;
+  late double height;
+  late double width;
+
+  int msgItemLength = 0;
+
+  //CheckForSurvey_Response checkSurveyData;
+  late ImagePickerHandler imagePicker;
+  late AnimationController _controller;
+
+  // ItemScrollController itemScrollController = ItemScrollController();
+  // ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
+  SignInProvider? signInProvider;
+  Loader? loader;
+  String storageAccountConnectionString =
+      "DefaultEndpointsProtocol=https;AccountName=sunny75;AccountKey=7CJjx9TVC9WC2kRVhJT4S5LDlXmiExLwNVE6oTsEd2873Vf5/21MH7OCyZo9VW3LHJRZMjD9NL824xYg61i2rA==;EndpointSuffix=core.windows.net";
+  String containerAzure = "chat";
+  String baseUrlAzure = 'https://sunny75.blob.core.windows.net/chat/';
+  String mediaUrl = "";
+  bool showSendButton = false;
   int memberCount = 1;
   final creategroupctrl = TextEditingController();
   final border = OutlineInputBorder(
@@ -57,6 +100,368 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final signInProvider = Provider.of<SignInProvider>(this.context);
+    final loader = Provider.of<Loader>(this.context);
+
+    if (this.signInProvider != signInProvider || this.loader != loader) {
+      this.signInProvider = signInProvider;
+      this.loader = loader;
+      // Future.microtask(() async {
+      //   await signInProvider.checkForSurvey(loader, widget.tripId);
+      //   await signInProvider.getTripMembersList(
+      //       loader, widget.tripId, signInProvider.userResponse);
+      //   getPreviousMessages();
+      //   _connectSocket01();
+      // });
+    }
+  }
+
+  @override
+  void dispose() {
+    //WidgetsBinding.instance.removeObserver(true);
+    socket.destroy(); //disconnect socket and dispose not needed controllers
+    messageTextController.dispose();
+    print('response----------------------------- disconnect');
+    // signInProvider.messagesResponse = null;
+    // signInProvider.checkForSurveyRes = null;
+    // signInProvider.tripMembersRes = null;
+    super.dispose();
+  }
+
+  //disconnect socket
+  disconnectSocket() async {
+    if (socket != null) {
+      socket.destroy();
+    }
+  }
+
+  getPreviousMessages() async {
+    // var res = await signInProvider.getChatMessagesList(
+    //     loader, signInProvider.userResponse, widget.tripId, 1, 100);
+    //
+    // if (signInProvider.messagesResponse != null &&
+    //     signInProvider.messagesResponse.data.length > 0) {
+    //   for (int i = 0; i < signInProvider.messagesResponse.data.length; i++) {
+    //     addMessagesToList(signInProvider.messagesResponse.data[i]);
+    //   }
+    // }
+  }
+
+  addMessagesToList(Data data) {
+    // bool checkUser = data.senderId.sId.toString() ==
+    //     signInProvider.userResponse.data.id.toString();
+
+    // Message msgBubble = Message(
+    //   sender: data.senderId.sId,
+    //   content: data.message,
+    //   avatar: data.senderId.image,
+    //   timestamp: data.createdAt,
+    //   isMe: checkUser,
+    //   messageType: data.messageType,
+    //   messageCategory: data.messageCategory,
+    //   senderName: data.senderId.fullName,
+    //   tripName: '${signInProvider.tripMembersRes.data?.tripName}',
+    // );
+    setState(() {
+      // messages.add(msgBubble);
+    });
+  }
+
+  // _connectSocket01() {
+  //   //update your domain before using
+  //   // Dart client
+  //   IO.Socket socket = IO.io(
+  //       'http://203.190.154.100:8087/',
+  //       OptionBuilder()
+  //           .setTransports(['websocket']) // for Flutter or Dart VM
+  //           .disableAutoConnect() // disable auto-connection
+  //           .setExtraHeaders({'foo': 'bar'}) // optional
+  //           .build());
+  //   socket.connect();
+  //
+  //   socket.onConnect((_) {
+  //     print('response----------------------------- connect');
+  //     // socket.emit('joinChannel', widget.tripId);
+  //   });
+  //
+  //   socket.on('getMessage', (data) {
+  //     //messageTextController.clear();
+  //
+  //     Data messageData = Data.fromJson(data);
+  //     print('msg----------------------------- ' + messageData.toString());
+  //     addMessagesToList(messageData);
+  //
+  //     // if (messages != null && messages.length > 2) {
+  //     //   itemScrollController.scrollTo(
+  //     //       index: messages.length - 1,
+  //     //       duration: Duration(milliseconds: 200),
+  //     //       curve: Curves.decelerate);
+  //     // }
+  //   });
+  //
+  //   socket.onDisconnect((_) => print('disconnect'));
+  //   socket.on('fromServer', (_) => print(_));
+  // }
+
+  String profileImage =
+      "https://cultivatedculture.com/wp-content/uploads/2019/12/LinkedIn-Profile-Picture-Example-Madeline-Mann.jpeg";
+
+// stack avatar showing avatar of person who text on particular list
+  Widget positionedAvatar(/*InvitedData invitiesData*/) {
+    return Align(
+      heightFactor: 0.75,
+      widthFactor: 0.75,
+      alignment: Alignment.centerLeft,
+      child: CircleAvatar(
+        radius: 12,
+        backgroundColor: Colors.white,
+        // child: CircleAvatar(
+        //   radius: 11,
+        //   backgroundImage:
+        //       invitiesData.image != null && invitiesData.image != ""
+        //           ? NetworkImage(invitiesData.image)
+        //           : AssetImage(
+        //               "assets/images/profile.png",
+        //             ),
+        // ),
+      ),
+    );
+  }
+
+// total message on particular conversation
+  Widget totalMessageCircle(int count) {
+    return Align(
+      heightFactor: 0.75,
+      widthFactor: 0.9,
+      alignment: Alignment.centerLeft,
+      child: CircleAvatar(
+        radius: 12,
+        // backgroundColor: appColor,
+        child: CircleAvatar(
+          backgroundColor: Colors.white,
+          radius: 11,
+          child: Text(
+            '+${count - 3}',
+            style: TextStyle(/*color: appColor,*/ fontSize: 12),
+          ),
+        ),
+      ),
+    );
+  }
+  _connectSocket01() {
+    //update your domain before using
+    // Dart client
+    socket = io(
+      //'http://api.sunny-75.com:8087/',
+      //'http://10.10.30.20:8087/',
+      //   'http://sunny75.mobilytedev.com:8087/',
+        'http://3.142.72.8:3000/',
+        OptionBuilder()
+            .setTransports(['websocket']) // for Flutter or Dart VM
+            .disableAutoConnect() // disable auto-connection
+            .setExtraHeaders({'foo': 'bar'}) // optional
+            .build());
+    socket.connect();
+
+    socket.onConnect((_) {
+      print('response----------------------------- connect');
+      socket.emit('joinChannel', 't45ts54pv045');
+    });
+
+    socket.on('getMessage', (data) {
+      //messageTextController.clear();
+
+      Data messageData = Data.fromJson(data);
+      print('msg----------------------------- ' + messageData.toString());
+      addMessagesToList(messageData);
+
+      // if(messages!=null && messages.length>2){
+      //   itemScrollController.scrollTo(
+      //       index: messages.length-1,
+      //       duration: Duration(milliseconds: 200),
+      //       curve: Curves.decelerate);
+      // }
+    });
+    var messageData = {
+      "senderId": '60ef5bf342bfc70add091d4d',
+      "receiverId":'867574743',
+      "roomid": 't45ts54pv045',
+      "msg": 'hello',
+      "msgType": "text",
+      "seen":false,
+      "msgCategory" : "collegue",
+    };
+    socket.emit("sendMessage",
+        messageData);
+    // socket.onDisconnect((_) => print('disconnect'));
+    // socket.on('fromServer', (_) => print(_));
+  }
+
+// header of chat screen
+  Widget header() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(
+          width: width * 0.02,
+        ),
+        InkWell(
+          onTap: () {
+            Navigator.pop(this.context);
+          },
+          child: Icon(
+            Icons.arrow_back,
+            size: width * 0.09,
+          ),
+        ),
+        InkWell(
+            onTap: () async {
+              // TripMembersResModel response = await signInProvider.getTripMembersList(loader,widget.tripId,signInProvider.userResponse);
+              // Navigator.push(
+              //     this.context,
+              //     MaterialPageRoute(
+              //         builder: (context) =>
+              //             Members(signInProvider.tripMembersRes.data)));
+            },
+            child: headerTitle())
+      ],
+    );
+  }
+
+//header title with image
+  headerTitle() {
+    return Container(
+      padding: EdgeInsets.all(width * 0.02),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CircleAvatar(
+            radius: width * 0.07,
+            // backgroundImage:
+            //     NetworkImage(signInProvider.tripMembersRes.data.image),
+          ),
+          SizedBox(
+            width: width * 0.02,
+          ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: width * 0.65,
+                child: Text(
+                  /*signInProvider.tripMembersRes.data?.tripName ??*/
+                  "",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: blackColor, fontSize: width * 0.05),
+                ),
+              ),
+              // SizedBox(
+              //   height: 35,
+              //   width: width * 0.65,
+              //   child: ListView.builder(
+              //     itemCount: signInProvider
+              //         .tripMembersRes.data.totalInviteeGoing.length,
+              //     shrinkWrap: true,
+              //     scrollDirection: Axis.horizontal,
+              //     itemBuilder: (BuildContext context, int index) {
+              //       if (index < 3) {
+              //         return positionedAvatar(signInProvider
+              //             .tripMembersRes.data.totalInviteeGoing[index]);
+              //       } else if (index == 3) {
+              //         return totalMessageCircle(signInProvider
+              //             .tripMembersRes.data.totalInviteeGoing.length);
+              //       } else {
+              //         return Container();
+              //       }
+              //     },
+              //   ),
+              // ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    _connectSocket01();
+    // super.initState();
+    // _controller = new AnimationController(
+    //   vsync: this,
+    //   duration: const Duration(milliseconds: 500),
+    // );
+    //
+    // imagePicker = new ImagePickerHandler(this, _controller);
+    // imagePicker.init();
+  }
+
+  // @override
+  // userImage(File _image) {
+  //   if (_image != null) {
+  //     uploadFileToAzure(_image, "image").then((value) {
+  //       mediaUrl = value;
+  //       this.image = _image;
+  //       setState(() {});
+  //     });
+  //   }
+  // }
+
+  // Future<String> uploadFileToAzure(File image, String type) async {
+  //   mediaUrl = "";
+  //   try {
+  //     String fileName = basename(image.path);
+  //     if (type == "video") {
+  //       fileName = fileName.replaceAll('.jpg', '.mp4');
+  //     }
+  //
+  //     print("file name check chnage-----------" + fileName.toString());
+  //     // read file as Uint8List
+  //     Uint8List content = await image.readAsBytes();
+  //     var storage = AzureStorage.parse(storageAccountConnectionString);
+  //     String container = containerAzure;
+  //     // get the mine type of the file
+  //     String contentType = lookupMimeType(fileName);
+  //     await storage.putBlob('/$container/$fileName',
+  //         bodyBytes: content,
+  //         contentType: contentType,
+  //         type: BlobType.BlockBlob);
+  //
+  //     String responseUrl = baseUrlAzure + fileName;
+  //     print("file url video check !!!!!!!! " + responseUrl);
+  //     return responseUrl;
+  //   } on AzureStorageException catch (ex) {
+  //     print(ex.message);
+  //   } catch (err) {
+  //     print(err);
+  //   }
+  // }
+
+  @override
+  // userVideo(File _video) {
+  //   if (_video != null) {
+  //     uploadFileToAzure(_video, "video").then((value) {
+  //       mediaUrl = value;
+  //
+  //       var messageData = {
+  //         "sender": signInProvider.userResponse.data.id,
+  //         "trip": widget.tripId,
+  //         "room": widget.tripId,
+  //         "message": mediaUrl,
+  //         "messageType": "video"
+  //       };
+  //       socket.emit("sendMessage", messageData);
+  //     });
+  //   }
+  // }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -64,9 +469,8 @@ class _ChatScreenState extends State<ChatScreen> {
             child: Container(color: AppColor.grey, height: 1.0),
             preferredSize: Size.fromHeight(4.0)),
         leading: InkWell(
-          onTap: (){
-            locator<NavigationService>()
-                .backPress();
+          onTap: () {
+            locator<NavigationService>().backPress();
           },
           child: Padding(
             padding: EdgeInsets.only(
@@ -198,11 +602,7 @@ class _ChatScreenState extends State<ChatScreen> {
             padding: EdgeInsets.only(right: AppSize().width(context) * 0.03),
             child: InkWell(
               onTap: () {
-                locator<NavigationService>()
-                    .navigateTo(signature);
-                // Navigator.of(context).push(MaterialPageRoute(
-                //   builder: (context) => SignaturePage(),
-                // ));
+                locator<NavigationService>().navigateTo(signature);
               },
               child: Image.asset(
                 'assets/images/icons_edit.png',
@@ -230,5 +630,17 @@ class _ChatScreenState extends State<ChatScreen> {
         ],
       ),
     );
+  }
+
+  @override
+  userImage(File _image) {
+    // TODO: implement userImage
+    throw UnimplementedError();
+  }
+
+  @override
+  userVideo(File _Video) {
+    // TODO: implement userVideo
+    throw UnimplementedError();
   }
 }

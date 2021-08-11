@@ -48,7 +48,7 @@ class _SelectionState extends State<Selection> with WidgetsBindingObserver {
   void initState() {
     super.initState();
 
-    // cameraperms();
+    cameraperms();
   }
 
   permhand() async {}

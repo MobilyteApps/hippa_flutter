@@ -102,7 +102,7 @@ class ApiProvider {
     Map<String, String> header = new Map();
     print("sign in api $input----${baseurl + AppString().signInUrl}");
     header["content-type"] = "application/x-www-form-urlencoded";
-    loader.setloader(true);
+    // loader.setloader(true);
     try {
       var postUri = Uri.parse('$baseurl' + 'signin');
       final response = await http.post(postUri, body: input, headers: header);
@@ -111,7 +111,8 @@ class ApiProvider {
       );
       loader.setloader(false);
 
-      if (response.statusCode == 302) {
+      if (response.statusCode == 401) {
+        loader.setloader(false);
         showToastMsg("Incorrect username / password");
       } else if (response.statusCode == 200) {
         showToastMsg('Logged in Successfully');
@@ -149,7 +150,7 @@ class ApiProvider {
     Map<String, String> header = new Map();
     print("sign in api $input----${baseurl + AppString().signInUrl}");
     header["content-type"] = "application/x-www-form-urlencoded";
-    loader.setloader(true);
+    // loader.setloader(true);
     try {
       var postUri = Uri.parse('$baseurl' + 'forgotpassword');
       final response = await http.post(postUri, body: input, headers: header);
@@ -158,7 +159,8 @@ class ApiProvider {
       );
       loader.setloader(false);
 
-      if (response.statusCode == 302) {
+      if (response.statusCode == 401) {
+        loader.setloader(false);
         showToastMsg("Incorrect username");
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
@@ -234,7 +236,8 @@ class ApiProvider {
       );
       loader.setloader(false);
 
-      if (response.statusCode == 302) {
+      if (response.statusCode == 401) {
+        loader.setloader(false);
         showToastMsg("Try again");
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);
@@ -264,7 +267,7 @@ class ApiProvider {
     Map<String, String> header = new Map();
     print("sign in api $input----${baseurl + AppString().signInUrl}");
     header["content-type"] = "application/x-www-form-urlencoded";
-    loader.setloader(true);
+    // loader.setloader(true);
     try {
       var postUri = Uri.parse('$baseurl' + 'resendOTP');
       final response = await http.post(postUri, body: input, headers: header);
@@ -273,7 +276,8 @@ class ApiProvider {
       );
       loader.setloader(false);
 
-      if (response.statusCode == 302) {
+      if (response.statusCode == 401) {
+        loader.setloader(false);
         showToastMsg("Try Again");
       } else {}
       Map<String, dynamic> ouptut = json.decode(response.body);

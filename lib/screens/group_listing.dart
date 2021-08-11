@@ -59,8 +59,8 @@ class _GroupListingState extends State<GroupListing>
           backgroundColor: AppColor.backgroundColor,
           title: getBoldText(
               _tabController!.index == 0
-                  ? AppString().grouplisting
-                  : 'Favorite Groups',
+                  ? 'Colleague Listing'
+                  : 'Group Listing',
               textColor: AppColor.black,
               fontSize: 18),
           centerTitle: true,

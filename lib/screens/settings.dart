@@ -255,7 +255,7 @@ class _SettingsState extends State<Settings> {
                       title: getBoldText('Sign Out',
                           textColor: AppColor.black, fontSize: 18),
                       content: getRegularText(
-                          'Are you sure you want to sign out of SecureText',
+                          'Are you sure you want to sign out from SecureText',
                           textColor: AppColor.black,
                           fontSize: 18),
                       actions: [

@@ -1,3 +1,5 @@
+import 'package:app/common/get_it.dart';
+import 'package:app/common/navigator_service.dart';
 import 'package:app/common/size.dart';
 import 'package:app/common/textstyle.dart';
 import 'package:app/common/utils.dart';
@@ -184,7 +186,9 @@ class _HomeScreennState extends State<HomeScreenn> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+      // padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+      padding:
+          EdgeInsets.fromLTRB(18, AppSize().height(context) * 0.07, 18, 10),
       child: Column(
         verticalDirection: VerticalDirection.up,
         mainAxisSize: MainAxisSize.min,
@@ -284,6 +288,16 @@ class _HomeScreennState extends State<HomeScreenn> {
                   )),
                 )
               : Container(),
+          InkWell(
+              onTap: () {
+                locator<NavigationService>().backPress();
+              },
+              child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                  ))),
         ],
       ),
     );
