@@ -46,7 +46,8 @@ dependencies:
   country_code_picker: ^2.0.2
   notification_permissions: ^0.5.0
   amazon_cognito_identity_dart_2: ^1.0.3
-  socket_io_client: ^2.0.0-beta.2
+  socket_io_client: ^2.0.0-beta.4-nullsafety.0
+#  socket_io_client: ^2.0.0-beta.2
 #  socket_io_client: ^1.0.1
 #  aws_s3: ^0.1.1+hotfix.5
   # image_picker: ^0.8.1+3
