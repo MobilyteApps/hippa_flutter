@@ -20,6 +20,7 @@ import 'package:provider/provider.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
+// import 'package:socket_io_client/socket_io_client.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -42,7 +43,8 @@ class _ChatScreenState extends State<ChatScreen>
   var bytes;
   late File image;
   late File _cameraVideo;
-  late Socket socket;
+
+  // late Socket socket;
   late double height;
   late double width;
 
@@ -121,7 +123,7 @@ class _ChatScreenState extends State<ChatScreen>
   @override
   void dispose() {
     //WidgetsBinding.instance.removeObserver(true);
-    socket.destroy(); //disconnect socket and dispose not needed controllers
+    // socket.destroy(); //disconnect socket and dispose not needed controllers
     messageTextController.dispose();
     print('response----------------------------- disconnect');
     // signInProvider.messagesResponse = null;
@@ -131,11 +133,11 @@ class _ChatScreenState extends State<ChatScreen>
   }
 
   //disconnect socket
-  disconnectSocket() async {
-    if (socket != null) {
-      socket.destroy();
-    }
-  }
+  // disconnectSocket() async {
+  //   if (socket != null) {
+  //     socket.destroy();
+  //   }
+  // }
 
   getPreviousMessages() async {
     // var res = await signInProvider.getChatMessagesList(
@@ -149,11 +151,11 @@ class _ChatScreenState extends State<ChatScreen>
     // }
   }
 
-  addMessagesToList(Data data) {
+  addMessagesToList(DataM data) {
     // bool checkUser = data.senderId.sId.toString() ==
     //     signInProvider.userResponse.data.id.toString();
-
-    // Message msgBubble = Message(
+    //
+    // myreceiverMessageView msgBubble = myreceiverMessageView(
     //   sender: data.senderId.sId,
     //   content: data.message,
     //   avatar: data.senderId.image,
@@ -164,9 +166,10 @@ class _ChatScreenState extends State<ChatScreen>
     //   senderName: data.senderId.fullName,
     //   tripName: '${signInProvider.tripMembersRes.data?.tripName}',
     // );
-    setState(() {
-      // messages.add(msgBubble);
-    });
+    // setState(() {
+    //
+    //   // messages.add(msgBubble);
+    // });
   }
 
   // _connectSocket01() {
@@ -250,13 +253,11 @@ class _ChatScreenState extends State<ChatScreen>
       ),
     );
   }
+
   _connectSocket01() {
     //update your domain before using
     // Dart client
-    socket = io(
-      //'http://api.sunny-75.com:8087/',
-      //'http://10.10.30.20:8087/',
-      //   'http://sunny75.mobilytedev.com:8087/',
+    IO.Socket socket = IO.io(
         'http://3.142.72.8:3000/',
         OptionBuilder()
             .setTransports(['websocket']) // for Flutter or Dart VM
@@ -264,39 +265,221 @@ class _ChatScreenState extends State<ChatScreen>
             .setExtraHeaders({'foo': 'bar'}) // optional
             .build());
     socket.connect();
-
     socket.onConnect((_) {
       print('response----------------------------- connect');
       socket.emit('joinChannel', 't45ts54pv045');
+      var messageData = {
+        "senderId": '60ef5bf342bfc70add091d4d',
+        "receiverId": '60f9b25cbc7fd8c764938d04',
+        "roomId": 't45ts54ui945',
+        "msg": 'hello sir',
+        "msgType": "text",
+        "seen": false,
+        "msgCategory": "collegue",
+      };
+      // socket.emit("sendMessage", messageData);
+      socket.emitWithAck("sendMessage", messageData, ack: (data) {
+        print('ack $data') ;
+        if (data != null) {
+          print('from server $data');
+        } else {
+          print("Null") ;
+        }
+      });
+    // });
     });
-
+    socket.on('getMessage', (data) {
+      final dataList = data as List;
+      final ack = dataList.last as Function;
+      print(dataList.toList().toString());
+      ack(null);
+    });
     socket.on('getMessage', (data) {
       //messageTextController.clear();
+      // print(data.toString());
+      DataM res = DataM.fromJson(data);
+      // print(res.toJson().toString());
+      print('msg----------------------------- ${res.toString()}');
+      addMessagesToList(res);
 
-      Data messageData = Data.fromJson(data);
-      print('msg----------------------------- ' + messageData.toString());
-      addMessagesToList(messageData);
-
-      // if(messages!=null && messages.length>2){
+      // if (messages != null && messages.length > 2) {
       //   itemScrollController.scrollTo(
-      //       index: messages.length-1,
+      //       index: messages.length - 1,
       //       duration: Duration(milliseconds: 200),
       //       curve: Curves.decelerate);
       // }
     });
-    var messageData = {
-      "senderId": '60ef5bf342bfc70add091d4d',
-      "receiverId":'867574743',
-      "roomid": 't45ts54pv045',
-      "msg": 'hello',
-      "msgType": "text",
-      "seen":false,
-      "msgCategory" : "collegue",
-    };
-    socket.emit("sendMessage",
-        messageData);
+    // socket.on('getMessage', (data) {
+    //   //messageTextController.clear();
+    //
+    //   Data messageData = Data.fromJson(data);
+    //   print('msg----------------------------- ' + messageData.toString());
+    //   addMessagesToList(messageData);
+    //
+    //   // if(messages!=null && messages.length>2){
+    //   //   itemScrollController.scrollTo(
+    //   //       index: messages.length-1,
+    //   //       duration: Duration(milliseconds: 200),
+    //   //       curve: Curves.decelerate);
+    //   // }
+    // });
+
     // socket.onDisconnect((_) => print('disconnect'));
-    // socket.on('fromServer', (_) => print(_));
+    // socket.on('getMessage', (_) => print(_));
+    // print(socket.json.toString());
+    socket.on('event', (data) => print(data));
+    socket.onDisconnect((_) => print('disconnect'));
+    socket.on('fromServer', (_) => print(_));
+  }
+
+  void connectToServer() {
+    try {
+      // Configure socket transports must be sepecified
+      IO.Socket socket = IO.io('http://3.142.72.8:3000/',
+          // socket = io('http://127.0.0.1:3000',
+          <String, dynamic>{
+            'transports': ['websocket'],
+
+            'autoConnect': false,
+          });
+
+      // Connect to websocket
+      socket.connect();
+
+      // Handle socket events
+      socket.on('connect', (_) => print('connect: ${socket.id}'));
+      // socket.on('location', handleLocationListen);
+      // socket.on('typing', handleTyping);
+      socket.on('getMessage', (_) => print('message'));
+      socket.on('disconnect', (_) => print('disconnect'));
+      socket.on('fromServer', (_) => print(_));
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+// Send Location to Server
+// sendLocation(Map<String, dynamic> data) {
+//   socket.emit("location", data);
+// }
+
+// Listen to Location updates of connected usersfrom server
+// handleLocationListen(Map<String, dynamic> data) async {
+//   print(data);
+// }
+
+// Send update of user's typing status
+// sendTyping(bool typing) {
+//   socket.emit("typing",
+//       {
+//         "id": socket.id,
+//         "typing": typing,
+//       });
+// }
+
+// Listen to update of typing status from connected users
+// void handleTyping(Map<String, dynamic> data) {
+//   print(data);
+// }
+
+// Send a Message to the server
+// sendMessage(String message) {
+//   socket.emit("message",
+//     {
+//       "id": socket.id,
+//       "message": message, // Message to be sent
+//       "timestamp": DateTime.now().millisecondsSinceEpoch,
+//     },
+//   );
+// }
+
+// Listen to all message events from connected users
+  void handleMessage(Map<String, dynamic> data) {
+    print(data);
+  }
+
+  _connectSocket02() {
+    //update your domain before using
+    // Dart client
+    // IO.Socket socket = IO.io('http://3.142.72.8:3000/');
+
+    IO.Socket socket = IO.io(
+        'http://3.142.72.8:3000/',
+        OptionBuilder()
+            .setTransports(['websocket']) // for Flutter or Dart VM
+            .disableAutoConnect()
+            .setExtraHeaders({'foo': 'bar'}) // optional
+            .build());
+
+    // socket = io(
+    //   //'http://api.sunny-75.com:8087/',
+    //   //'http://10.10.30.20:8087/',
+    //   //   'http://sunny75.mobilytedev.com:8087/',
+    //     'http://3.142.72.8:3000/',
+    //     OptionBuilder()
+    //         .setTransports(['websocket']) // for Flutter or Dart VM
+    //         .disableAutoConnect() // disable auto-connection
+    //         .setExtraHeaders({'foo': 'bar'}) // optional
+    //         .build());
+    socket.connect();
+    socket.onConnect((_) {
+      print('connect');
+      socket.emit('joinChannel', 't45ts54pv045');
+    });
+
+    // socket.onConnect((_) {
+    //   print('response----------------------------- connect');
+    //   socket.emit('joinChannel', 't45ts54pv045');
+    //   var messageData = {
+    //     "senderId": '60ef5bf342bfc70add091d4d',
+    //     "receiverId":'6101bfdb9836893913804b53',
+    //     "roomId": 't45ts54ui945',
+    //     "msg": 'hello sir',
+    //     "msgType": "text",
+    //     "seen":false,
+    //     "msgCategory" : "collegue",
+    //   };
+    //   socket.emit("sendMessage",
+    //       messageData);
+    //
+    // });
+    socket.on('connect', (data) => print('Connectde...'));
+    socket.on('getMessage', (data) {
+      //messageTextController.clear();
+      // print(data.toString());
+      DataM res = DataM.fromJson(data);
+      // print(res.toJson().toString());
+      print('msg----------------------------- ${res.toString()}');
+      addMessagesToList(res);
+
+      // if (messages != null && messages.length > 2) {
+      //   itemScrollController.scrollTo(
+      //       index: messages.length - 1,
+      //       duration: Duration(milliseconds: 200),
+      //       curve: Curves.decelerate);
+      // }
+    });
+    // socket.on('getMessage', (data) {
+    //   //messageTextController.clear();
+    //
+    //   Data messageData = Data.fromJson(data);
+    //   print('msg----------------------------- ' + messageData.toString());
+    //   addMessagesToList(messageData);
+    //
+    //   // if(messages!=null && messages.length>2){
+    //   //   itemScrollController.scrollTo(
+    //   //       index: messages.length-1,
+    //   //       duration: Duration(milliseconds: 200),
+    //   //       curve: Curves.decelerate);
+    //   // }
+    // });
+
+    // socket.onDisconnect((_) => print('disconnect'));
+    // socket.on('getMessage', (_) => print(_));
+    // print(socket.json.toString());
+    socket.on('event', (data) => print(data));
+    socket.onDisconnect((_) => print('disconnect'));
+    socket.on('fromServer', (_) => print(_));
   }
 
 // header of chat screen
@@ -393,6 +576,7 @@ class _ChatScreenState extends State<ChatScreen>
   void initState() {
     _connectSocket01();
     // super.initState();
+    // connectToServer();
     // _controller = new AnimationController(
     //   vsync: this,
     //   duration: const Duration(milliseconds: 500),
@@ -402,64 +586,64 @@ class _ChatScreenState extends State<ChatScreen>
     // imagePicker.init();
   }
 
-  // @override
-  // userImage(File _image) {
-  //   if (_image != null) {
-  //     uploadFileToAzure(_image, "image").then((value) {
-  //       mediaUrl = value;
-  //       this.image = _image;
-  //       setState(() {});
-  //     });
-  //   }
-  // }
+// @override
+// userImage(File _image) {
+//   if (_image != null) {
+//     uploadFileToAzure(_image, "image").then((value) {
+//       mediaUrl = value;
+//       this.image = _image;
+//       setState(() {});
+//     });
+//   }
+// }
 
-  // Future<String> uploadFileToAzure(File image, String type) async {
-  //   mediaUrl = "";
-  //   try {
-  //     String fileName = basename(image.path);
-  //     if (type == "video") {
-  //       fileName = fileName.replaceAll('.jpg', '.mp4');
-  //     }
-  //
-  //     print("file name check chnage-----------" + fileName.toString());
-  //     // read file as Uint8List
-  //     Uint8List content = await image.readAsBytes();
-  //     var storage = AzureStorage.parse(storageAccountConnectionString);
-  //     String container = containerAzure;
-  //     // get the mine type of the file
-  //     String contentType = lookupMimeType(fileName);
-  //     await storage.putBlob('/$container/$fileName',
-  //         bodyBytes: content,
-  //         contentType: contentType,
-  //         type: BlobType.BlockBlob);
-  //
-  //     String responseUrl = baseUrlAzure + fileName;
-  //     print("file url video check !!!!!!!! " + responseUrl);
-  //     return responseUrl;
-  //   } on AzureStorageException catch (ex) {
-  //     print(ex.message);
-  //   } catch (err) {
-  //     print(err);
-  //   }
-  // }
+// Future<String> uploadFileToAzure(File image, String type) async {
+//   mediaUrl = "";
+//   try {
+//     String fileName = basename(image.path);
+//     if (type == "video") {
+//       fileName = fileName.replaceAll('.jpg', '.mp4');
+//     }
+//
+//     print("file name check chnage-----------" + fileName.toString());
+//     // read file as Uint8List
+//     Uint8List content = await image.readAsBytes();
+//     var storage = AzureStorage.parse(storageAccountConnectionString);
+//     String container = containerAzure;
+//     // get the mine type of the file
+//     String contentType = lookupMimeType(fileName);
+//     await storage.putBlob('/$container/$fileName',
+//         bodyBytes: content,
+//         contentType: contentType,
+//         type: BlobType.BlockBlob);
+//
+//     String responseUrl = baseUrlAzure + fileName;
+//     print("file url video check !!!!!!!! " + responseUrl);
+//     return responseUrl;
+//   } on AzureStorageException catch (ex) {
+//     print(ex.message);
+//   } catch (err) {
+//     print(err);
+//   }
+// }
 
   @override
-  // userVideo(File _video) {
-  //   if (_video != null) {
-  //     uploadFileToAzure(_video, "video").then((value) {
-  //       mediaUrl = value;
-  //
-  //       var messageData = {
-  //         "sender": signInProvider.userResponse.data.id,
-  //         "trip": widget.tripId,
-  //         "room": widget.tripId,
-  //         "message": mediaUrl,
-  //         "messageType": "video"
-  //       };
-  //       socket.emit("sendMessage", messageData);
-  //     });
-  //   }
-  // }
+// userVideo(File _video) {
+//   if (_video != null) {
+//     uploadFileToAzure(_video, "video").then((value) {
+//       mediaUrl = value;
+//
+//       var messageData = {
+//         "sender": signInProvider.userResponse.data.id,
+//         "trip": widget.tripId,
+//         "room": widget.tripId,
+//         "message": mediaUrl,
+//         "messageType": "video"
+//       };
+//       socket.emit("sendMessage", messageData);
+//     });
+//   }
+// }
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,7 @@
 import 'package:app/common/colors.dart';
 import 'package:app/common/size.dart';
 import 'package:app/common/textstyle.dart';
+import 'package:app/screens/chat_testing.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -189,7 +190,9 @@ class _SettingsState extends State<Settings> {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+
+            },
             child: Container(
               width: AppSize().width(context),
               height: AppSize().height(context) * 0.11,

@@ -5,6 +5,7 @@ import 'package:app/common/navigator_route.dart';
 import 'package:app/common/navigator_service.dart';
 import 'package:app/providers/signin_provider.dart';
 import 'package:app/response/addusertogroup_response.dart';
+import 'package:app/response/chat_details_response.dart';
 import 'package:app/response/create_group_response.dart';
 import 'package:app/response/delete_group_response.dart';
 import 'package:app/response/getalluser_response.dart';
@@ -941,7 +942,6 @@ class ApiProvider {
     header["content-type"] = "application/x-www-form-urlencoded";
     String? token = prefs.getString('token');
     print(token);
-
     print(json.encode(input));
     print(input);
     print("#####");
@@ -981,4 +981,46 @@ class ApiProvider {
     }
     return deleteGroupResponse;
   }
+
+  // Future<GetPrevMessages?> getAllChatMessages(Loader loader,
+  //     UserResponse userData, String tripId, int pageId, int limit) async {
+  //   loader.setloader(true);
+  //   try {
+  //     final response = await http.get(
+  //         '$baseurl' +
+  //             'chat/' +
+  //             '${tripId ?? ""}?sort=createdAt&order=asc&page=$pageId&limit=$limit',
+  //         headers: {
+  //           'Content-Type': 'application/x-www-form-urlencoded',
+  //           'Accept': 'application/json',
+  //           'Authorization': 'Bearer ${userData?.token}',
+  //         });
+  //     print('$baseurl' +
+  //         'chat/' +
+  //         '${tripId ?? ""}?sort=createdAt&order=asc&page=$pageId&limit=$limit');
+  //     print(
+  //       " response -------------${response.body} api${response.statusCode}",
+  //     );
+  //     loader.setloader(false);
+  //     Map<String, dynamic> ouptut = json.decode(response.body);
+  //
+  //     if (ouptut['status'] == 'SUCCESS') {
+  //       GetPrevMessages messageResponse;
+  //       messageResponse = GetPrevMessages.fromJson(ouptut);
+  //
+  //       return messageResponse;
+  //     } else {
+  //       showToastMsg('Chat messages Fetch Failed');
+  //       return null;
+  //     }
+  //   } catch (e) {
+  //     loader.setloader(false);
+  //
+  //     return null;
+  //   }
+  //
+  //   //return null;
+  // }
 }
+
+

@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:app/common/colleague_detail.dart';
 import 'package:app/common/colors.dart';
+import 'package:app/common/get_it.dart';
+import 'package:app/common/navigator_route.dart';
+import 'package:app/common/navigator_service.dart';
 import 'package:app/common/size.dart';
 import 'package:app/common/textstyle.dart';
 import 'package:app/common/utils.dart';
@@ -9,6 +12,7 @@ import 'package:app/models/loader.dart';
 import 'package:app/network/api_provider.dart';
 import 'package:app/providers/signin_provider.dart';
 import 'package:app/response/getalluser_response.dart';
+import 'package:app/screens/chat_testing.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -151,8 +155,17 @@ class _ColleaguesState extends State<Colleagues> {
                                           apiProvider.getAllUserResponse.data!
                                                   .users![index].sId !=
                                               sids
-                                      ? ColleagueDetail(
-                                          apiProvider.getAllUserResponse, index)
+                                      ?
+
+                                  InkWell(
+                                    onTap: (){
+                                      print(apiProvider.getAllUserResponse.data!
+                                          .users![index].sId);
+                                      locator<NavigationService>().navigateTo(chatscreen);
+                                    },
+                                    child: ColleagueDetail(
+                                            apiProvider.getAllUserResponse, index),
+                                  )
                                       : Container();
                                 })),
               ],
